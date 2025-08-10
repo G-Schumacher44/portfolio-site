@@ -19,7 +19,17 @@
     /* Minimal opinions so it looks good even without custom CSS */
     :root { --bg:#0c0d10; --card:#14161a; --text:#e9edf1; --muted:#a7b0bb; --brand:#69c; --line:#22262c; }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      background-image: url('img/logos/dark_light_logo_banner.png');
+      background-repeat: repeat-y;
+      background-size: auto;
+      background-position: top center;
+    }
     a{color:var(--brand);text-decoration:none}
     header.hero{padding:64px 16px 32px;border-bottom:1px solid var(--line);text-align:center}
     .hero img{max-width:520px;width:90%;height:auto;display:block;margin:0 auto 20px}
@@ -70,8 +80,7 @@
 
   <main>
 
-    <!-- OPTIONAL BANNER DIVIDER -->
-    <img class="banner" src="img/logos/dark_light_logo_banner.png" alt="GS Banner" />
+
 
     <!-- ABOUT -->
     <section id="about">
@@ -153,7 +162,6 @@
         The fastest way to reach me is email: <a href="mailto:me@garrettschumacher.com">garrettschumacher44@gmail.com</a>.
         You can also connect on <a href="https://www.linkedin.com/in/garrett-schumacher/" target="_blank" rel="noopener">LinkedIn</a>.
       </p>
-      <img class="banner" src="img/logos/dark_logo_banner.png" alt="GS Banner Dark" />
     </section>
   </main>
 
