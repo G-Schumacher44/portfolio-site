@@ -66,22 +66,21 @@
   <!-- HERO -->
   <header class="hero">
     <h1>Garrett Schumacher</h1>
-    <p>Data Analyst • SQL Storytelling • ML Evaluation • Automation</p>
+    <p>Data Analyst • Data Storytelling • Human-in-the-Loop ML • Automation • Business &amp; Operations Management</p>
     <div class="cta">
       <a class="btn primary" href="resume.pdf" target="_blank" rel="noopener">Download Resume</a>
       <a class="btn" href="mailto:me@garrettschumacher.com">Email</a>
       <a class="btn" href="https://github.com/G-Schumacher44" target="_blank" rel="noopener">GitHub</a>
-      <a class="btn" href="https://www.linkedin.com/in/garrett-schumacher/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://linkedin.com/in/garrett-schumacher-243a5513a" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </header>
 
   <!-- NAV -->
   <nav class="top">
     <ul>
-      <li><a href="#about">About</a></li>
       <li><a href="#projects">Featured Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#case-studies">Case Studies</a></li>
+      <li><a href="#knowledge-hub">Knowledge Hub</a></li>
     </ul>
   </nav>
 
@@ -93,10 +92,14 @@
     <section id="about">
       <h2>About</h2>
       <p>
-        I build SQL‑first analyses, narrative dashboards, and rigorous model evaluation
-        workflows. My portfolio pairs synthetic data engines with case‑study storytelling to
-        simulate real stakeholder scenarios and produce production‑friendly code.
+        With 15 years in business and operations management, I bring real-world leadership, financial reporting, and marketing expertise to my data work. I use SQL and Python to build narrative dashboards, run rigorous model-evaluation workflows, and document with stakeholder empathy.
       </p>
+      <section id="portfolio-overview">
+        <h2>Portfolio Overview</h2>
+        <p>
+          My portfolio blends production-minded tooling —with synthetic data engines and case-study storytelling. Together, these projects simulate real-world stakeholder scenarios, validate workflows, and deliver production-ready code and insights.
+        </p>
+      </section>
       <p class="meta">Based in the Midwest • Open to remote/contract roles</p>
     </section>
 
@@ -105,60 +108,107 @@
       <h2>Featured Projects</h2>
       <div class="grid">
         <article class="card">
-          <h3>SQL Stories</h3>
+          <h3>Analyst Toolkit</h3>
           <p>
-            Synthetic retail data generator + SQL case studies. YAML‑configurable scenarios,
-            referential integrity, and Looker dashboards for investigative analytics.
+            Modular ETL/diagnostics for Jupyter + CLI. Data validation, outlier detection,
+            duplicate handling, and clean exports with robust logging.
           </p>
-          <p class="meta">Python • SQLite • YAML • Looker</p>
+          <p class="meta">Python • YAML • ETL</p>
           <p>
-            <a href="https://github.com/G-Schumacher44/sql_stories" target="_blank" rel="noopener">View Repo</a>
-            &nbsp;•&nbsp;
-            <a href="https://lookerstudio.google.com/" target="_blank" rel="noopener">Live Dashboard</a>
+            <a href="https://github.com/G-Schumacher44/analyst_toolkit" target="_blank" rel="noopener">View Repository</a>
           </p>
         </article>
 
         <article class="card">
           <h3>Model Evaluation Suite</h3>
           <p>
-            YAML‑driven evaluation with ROC/PR curves, calibration, explainers, and exportable
-            reports. Built for reproducible benchmarking and production validation.
+            YAML‑driven evaluation CLI and notebook suite featuring visualizations, SHAP explainers, and exportable reports. Designed for reproducible benchmarking and production‑grade model validation.
           </p>
-          <p class="meta">scikit‑learn • MLflow • Plotly</p>
+          <p class="meta">scikit-learn • MLflow • YAML • Pydantic</p>
           <p>
-            <a href="https://github.com/G-Schumacher44/model_evaluation_suite" target="_blank" rel="noopener">View Repo</a>
+            <a href="https://github.com/G-Schumacher44/model_evaluation_suite" target="_blank" rel="noopener">View Repository</a>
           </p>
         </article>
 
         <article class="card">
-          <h3>Analyst Toolkit</h3>
+          <h3>E‑commerce Data Generator</h3>
           <p>
-            Modular ETL/diagnostics for Jupyter + CLI. Data validation, outlier detection,
-            duplicate handling, and clean exports with robust logging.
+            Synthetic e‑commerce data engine for realistic transactions, customers, and products. Configurable schemas and volumes for repeatable analysis and demos.
           </p>
-          <p class="meta">Pandas • PyYAML • Logging</p>
+          <p class="meta">Python • SQLite • Faker/YAML</p>
           <p>
-            <a href="https://github.com/G-Schumacher44/analyst_toolkit" target="_blank" rel="noopener">View Repo</a>
+            <a href="#" target="_blank" rel="noopener">View Repository</a>
           </p>
         </article>
       </div>
-      <p class="meta" style="margin-top:10px">
-        Want the full list? See my <a href="https://github.com/G-Schumacher44?tab=repositories" target="_blank" rel="noopener">GitHub repositories</a>.
-      </p>
+    </section>
+
+    <section id="case-studies">
+      <h2>Case Studies</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>SQL Stories</h3>
+          <p>
+            A story‑driven SQL skill‑building suite featuring datasets from the E‑commerce Data Generator. Includes an end‑to‑end case study with analysis, dashboards, and deliverables.
+          </p>
+          <p class="meta">Python • SQLite • Looker</p>
+          <p>
+            <a href="https://github.com/G-Schumacher44/sql_stories" target="_blank" rel="noopener">View Repository</a>
+            &nbsp;•&nbsp;
+            <a href="https://lookerstudio.google.com/s/lgjo_UxFLd0" target="_blank" rel="noopener">Live Dashboard</a>
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Dirty Birds Case Study</h3>
+          <p>
+            A domain‑specific retelling of the Palmer Penguins case study using tools from the
+            <a href="https://github.com/G-Schumacher44/dirty_birds_data_generator" target="_blank" rel="noopener">Dirty Birds Data Generator</a>,
+            <a href="https://github.com/G-Schumacher44/analyst_toolkit" target="_blank" rel="noopener">Analyst Toolkit</a>,
+            and <a href="https://github.com/G-Schumacher44/model_evaluation_suite" target="_blank" rel="noopener">Model Evaluation Suite</a>.
+          </p>
+          <p class="meta"> Python• ML• Dev Tools • Visualization</p>
+          <p>
+            <a href="#" target="_blank" rel="noopener">View Repository</a>
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Placeholder Kaggle Dataset</h3>
+          <p>
+            Exploratory analysis and feature engineering on a public dataset, with reproducible notebooks and a concise written report.
+          </p>
+          <p class="meta">Python • pandas • Notebooks</p>
+          <p>
+            <a href="#" target="_blank" rel="noopener">View Repository</a>
+          </p>
+        </article>
+      </div>
     </section>
 
     <!-- SKILLS -->
     <section id="skills">
       <h2>Skills & Tools</h2>
       <div class="skills">
-        <span class="chip">SQL (SQLite, BigQuery)</span>
-        <span class="chip">Python (pandas, scikit‑learn)</span>
+        <span class="chip">SQL </span>
+        <span class="chip">Python</span>
+        <span class="chip">YAML</span>
         <span class="chip">ETL & Data Quality</span>
-        <span class="chip">Dashboarding (Looker)</span>
+        <span class="chip">Data Visualization</span>
+        <span class="chip">Data Storytelling</span>
+        <span class="chip">Machine Learning</span>
+        <span class="chip">Business Management</span>
+        <span class="chip">Operations Management</span>
+        <span class="chip">Process Optimization</span>
+        <span class="chip">Stakeholder Engagement</span>
+        <span class="chip">Looker and Tableau</span>
         <span class="chip">MLflow</span>
-        <span class="chip">YAML‑driven Pipelines</span>
         <span class="chip">Git/GitHub</span>
+        <span class="chip">Google Workspace</span>
         <span class="chip">Google Cloud</span>
+        <span class="chip">Google Colab</span>
+        <span class="chip">BigQuery</span>
+        <span class="chip">Jupyter Notebooks</span>
       </div>
     </section>
 
@@ -166,9 +216,14 @@
     <section id="contact">
       <h2>Contact</h2>
       <p>
-        The fastest way to reach me is email: <a href="mailto:me@garrettschumacher.com">garrettschumacher44@gmail.com</a>.
-        You can also connect on <a href="https://www.linkedin.com/in/garrett-schumacher/" target="_blank" rel="noopener">LinkedIn</a>.
+        The fastest way to reach me is email: <a href="mailto:me@garrettschumacher.com">me@garrettschumacher.com</a>.
+        You can also connect on <a href="https://linkedin.com/in/garrett-schumacher-243a5513a" target="_blank" rel="noopener">LinkedIn</a>.
       </p>
+    </section>
+
+    <section id="knowledge-hub">
+      <h2>Knowledge Hub</h2>
+      <p class="meta">Curated notes and references (coming soon). I’ll publish workflows, snippets, and write‑ups here.</p>
     </section>
   </main>
 
