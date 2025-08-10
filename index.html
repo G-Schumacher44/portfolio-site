@@ -1,56 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Garrett Schumacher — Data Analytics Portfolio</title>
+  <meta name="description" content="Data analyst building SQL-first stories, robust evaluation pipelines, and automation for real-world decision-making." />
+
+  <!-- Social preview -->
+  <meta property="og:title" content="Garrett Schumacher — Data Analytics Portfolio" />
+  <meta property="og:description" content="SQL Stories • Model Evaluation Suite • Analyst Toolkit" />
+  <meta property="og:image" content="img/logos/gs_analytics_thumb_2.png" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- CSS (root) -->
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Minimal opinions so it looks good even without custom CSS */
+    :root { --bg:#0c0d10; --card:#14161a; --text:#e9edf1; --muted:#a7b0bb; --brand:#69c; --line:#22262c; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    a{color:var(--brand);text-decoration:none}
+    header.hero{padding:64px 16px 32px;border-bottom:1px solid var(--line);text-align:center}
+    .hero img{max-width:520px;width:90%;height:auto;display:block;margin:0 auto 20px}
+    .hero h1{margin:8px 0 4px;font-size:2rem}
+    .hero p{margin:0;color:var(--muted)}
+    .cta{margin-top:18px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .btn{padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:#161a20;color:var(--text)}
+    .btn.primary{background:var(--brand);color:#0b1116;border-color:transparent;font-weight:600}
+    nav.top{position:sticky;top:0;background:#0e1116;border-bottom:1px solid var(--line);z-index:10}
+    nav.top ul{margin:0;display:flex;gap:18px;list-style:none;padding:12px 16px;justify-content:center;flex-wrap:wrap}
+    main{max-width:1100px;margin:0 auto;padding:28px 16px 60px}
+    section{margin:36px 0}
+    h2{margin:0 0 14px;border-bottom:1px solid var(--line);padding-bottom:8px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+    .card h3{margin:0 0 6px}
+    .meta{color:var(--muted);font-size:0.95rem}
+    .skills{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{border:1px solid var(--line);background:#101419;border-radius:999px;padding:6px 10px;font-size:.95rem;color:var(--muted)}
+    .banner{margin:24px auto;display:block;max-width:900px;width:92%;height:auto;opacity:.95}
+    footer{border-top:1px solid var(--line);padding:22px 16px;text-align:center;color:var(--muted)}
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Your Name</h1>
-        <p>Your Professional Title (e.g., Web Developer, Designer)</p>
-    </header>
 
-    <nav>
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+  <!-- HERO -->
+  <header class="hero">
+    <img src="img/logos/gs_analytics_logo_1.png" alt="GS Analytics Logo" />
+    <h1>Garrett Schumacher</h1>
+    <p>Data Analyst • SQL Storytelling • ML Evaluation • Automation</p>
+    <div class="cta">
+      <a class="btn primary" href="resume.pdf" target="_blank" rel="noopener">Download Resume</a>
+      <a class="btn" href="mailto:garrettschumacher44@gmail.com">Email</a>
+      <a class="btn" href="https://github.com/G-Schumacher44" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/garrett-schumacher/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </header>
 
-    <main>
-        <section id="about">
-            <h2>About Me</h2>
-            <p>
-                Welcome to my portfolio! I am a passionate [Your Title] with experience in creating beautiful and functional web applications.
-                I love learning new technologies and solving challenging problems.
-            </p>
-        </section>
+  <!-- NAV -->
+  <nav class="top">
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Featured Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-        <section id="projects">
-            <h2>My Projects</h2>
-            <div class="project-card">
-                <h3>Project One</h3>
-                <p>A brief description of your first project. Talk about the technologies used and what you learned.</p>
-            </div>
-            <div class="project-card">
-                <h3>Project Two</h3>
-                <p>A brief description of your second project. What problem did it solve?</p>
-            </div>
-        </section>
+  <main>
 
-        <section id="contact">
-            <h2>Contact Me</h2>
-            <p>You can reach me via email at <a href="mailto:your.email@example.com">your.email@example.com</a> or connect with me on <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>.</p>
-        </section>
-    </main>
+    <!-- OPTIONAL BANNER DIVIDER -->
+    <img class="banner" src="img/logos/dark_light_logo_banner.png" alt="GS Banner" />
 
-    <footer>
-        <p>&copy; 2024 Your Name. All rights reserved.</p>
-    </footer>
+    <!-- ABOUT -->
+    <section id="about">
+      <h2>About</h2>
+      <p>
+        I build SQL‑first analyses, narrative dashboards, and rigorous model evaluation
+        workflows. My portfolio pairs synthetic data engines with case‑study storytelling to
+        simulate real stakeholder scenarios and produce production‑friendly code.
+      </p>
+      <p class="meta">Based in the Midwest • Open to remote/contract roles</p>
+    </section>
 
-    <script src="js/script.js"></script>
+    <!-- PROJECTS -->
+    <section id="projects">
+      <h2>Featured Projects</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>SQL Stories</h3>
+          <p>
+            Synthetic retail data generator + SQL case studies. YAML‑configurable scenarios,
+            referential integrity, and Looker dashboards for investigative analytics.
+          </p>
+          <p class="meta">Python • SQLite • YAML • Looker</p>
+          <p>
+            <a href="https://github.com/G-Schumacher44/sql_stories" target="_blank" rel="noopener">View Repo</a>
+            &nbsp;•&nbsp;
+            <a href="https://lookerstudio.google.com/" target="_blank" rel="noopener">Live Dashboard</a>
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Model Evaluation Suite</h3>
+          <p>
+            YAML‑driven evaluation with ROC/PR curves, calibration, explainers, and exportable
+            reports. Built for reproducible benchmarking and production validation.
+          </p>
+          <p class="meta">scikit‑learn • MLflow • Plotly</p>
+          <p>
+            <a href="https://github.com/G-Schumacher44/model_evaluation_suite" target="_blank" rel="noopener">View Repo</a>
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Analyst Toolkit</h3>
+          <p>
+            Modular ETL/diagnostics for Jupyter + CLI. Data validation, outlier detection,
+            duplicate handling, and clean exports with robust logging.
+          </p>
+          <p class="meta">Pandas • PyYAML • Logging</p>
+          <p>
+            <a href="https://github.com/G-Schumacher44/analyst_toolkit" target="_blank" rel="noopener">View Repo</a>
+          </p>
+        </article>
+      </div>
+      <p class="meta" style="margin-top:10px">
+        Want the full list? See my <a href="https://github.com/G-Schumacher44?tab=repositories" target="_blank" rel="noopener">GitHub repositories</a>.
+      </p>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <h2>Skills & Tools</h2>
+      <div class="skills">
+        <span class="chip">SQL (SQLite, BigQuery)</span>
+        <span class="chip">Python (pandas, scikit‑learn)</span>
+        <span class="chip">ETL & Data Quality</span>
+        <span class="chip">Dashboarding (Looker)</span>
+        <span class="chip">MLflow</span>
+        <span class="chip">YAML‑driven Pipelines</span>
+        <span class="chip">Git/GitHub</span>
+        <span class="chip">Google Cloud</span>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>
+        The fastest way to reach me is email: <a href="mailto:me@garrettschumacher.com">garrettschumacher44@gmail.com</a>.
+        You can also connect on <a href="https://www.linkedin.com/in/garrett-schumacher/" target="_blank" rel="noopener">LinkedIn</a>.
+      </p>
+      <img class="banner" src="img/logos/dark_logo_banner.png" alt="GS Banner Dark" />
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Garrett Schumacher • GS Analytics</p>
+  </footer>
+
+  <!-- JS (root) -->
+  <script src="script.js"></script>
 </body>
 </html>

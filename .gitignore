@@ -1,0 +1,24 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node / package managers (if you later add a build system)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Logs & temp files
+*.log
+*.tmp
+
+# Build output (if you add a bundler or static site generator)
+dist/
+build/
+
+# Credentials / secrets
+.env
+*.key
+*.pem
+secrets.*
