@@ -39,6 +39,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      background: linear-gradient(to bottom, rgba(12, 13, 16, 0.2), rgba(12, 13, 16, 0.8));
     }
     .hero img{max-width:520px;width:90%;height:auto;display:block;margin:0 auto 20px}
     .hero h1{margin:8px 0 4px;font-size:2rem}
@@ -52,13 +53,42 @@
     section{margin:36px 0}
     h2{margin:0 0 14px;border-bottom:1px solid var(--line);padding-bottom:8px}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
-    .card h3{margin:0 0 6px}
+    .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:16px}
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card h3{
+      margin:0 0 6px;
+      font-size:1.25rem;
+      font-weight:600;
+      color:var(--brand);
+    }
     .meta{color:var(--muted);font-size:0.95rem}
     .skills{display:flex;flex-wrap:wrap;gap:8px}
     .chip{border:1px solid var(--line);background:#101419;border-radius:999px;padding:6px 10px;font-size:.95rem;color:var(--muted)}
     .banner{margin:24px auto;display:block;max-width:900px;width:92%;height:auto;opacity:.95}
     footer{border-top:1px solid var(--line);padding:22px 16px;text-align:center;color:var(--muted)}
+    @media (max-width: 640px) {
+      header.hero {
+        padding: 40px 12px 0;
+        min-height: 75vh;
+      }
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+      .hero p {
+        font-size: 1.1rem;
+      }
+      nav.top ul {
+        gap: 10px;
+        padding: 8px 12px;
+      }
+      nav.top a {
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -79,8 +109,10 @@
   <nav class="top">
     <ul>
       <li><a href="#projects">Featured Projects</a></li>
+      <li>|</li>
       <li><a href="#case-studies">Case Studies</a></li>
-      <li><a href="https://g-schumacher44.github.io/knowledge-hub/" target="_blank" rel="noopener">Knowledge Hub</a></li>
+      <li>|</li>
+      <li><a href="#resource-hub">Analyst Resource Hub</a></li>
     </ul>
   </nav>
 
@@ -101,6 +133,25 @@
         </p>
       </section>
       <p class="meta">Based in the Midwest • Open to remote/contract roles</p>
+    </section>
+
+    <!-- ANALYST RESOURCE HUB -->
+    <section id="resource-hub">
+      <h2>Analyst Resource Hub</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Reference Vault for Data Science & ML</h3>
+          <p>
+            A curated, modular knowledge base of checklists, decision cards, guidebooks, and reusable scripts across Python, SQL, and analytics workflows. Originally built in Obsidian and published for quick, skimmable reference.
+          </p>
+          <p class="meta">QuickRefs • Checklists • Guidebooks • Decision Cards • Templates</p>
+          <p>
+            <a class="btn" href="https://g-schumacher44.github.io/knowledge-hub/" target="_blank" rel="noopener">Visit the Hub ↗</a>
+            &nbsp;•&nbsp;
+            <a href="https://github.com/G-Schumacher44/knowledge-hub" target="_blank" rel="noopener">View Repository</a>
+          </p>
+        </article>
+      </div>
     </section>
 
     <!-- PROJECTS -->
@@ -169,18 +220,18 @@
           </p>
           <p class="meta"> Python• ML• Dev Tools • Visualization</p>
           <p>
-            <a href="#" target="_blank" rel="noopener">View Repository</a>
+            <a href="#" target="_blank" rel="noopener">coming soon</a>
           </p>
         </article>
 
         <article class="card">
-          <h3>Placeholder Kaggle Dataset</h3>
+          <h3>Waze User Churn Case Study</h3>
           <p>
-            Exploratory analysis and feature engineering on a public dataset, with reproducible notebooks and a concise written report.
+            Exploratory analysis and feature engineering on a public dataset, with reproducible notebooks, visualizations, and ML Modeling.
           </p>
           <p class="meta">Python • pandas • Notebooks</p>
           <p>
-            <a href="#" target="_blank" rel="noopener">View Repository</a>
+            <a href="#" target="_blank" rel="noopener">coming soon</a>
           </p>
         </article>
       </div>
