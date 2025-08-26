@@ -64,6 +64,10 @@
       font-size:1.25rem;
       font-weight:600;
       color:var(--brand);
+      overflow-wrap: break-word; /* Ensures long titles wrap */
+    }
+    #sql-stories .card h3 + p {
+      font-size: 0.9rem; /* Slightly smaller text for ecosystem cards */
     }
     .meta{color:var(--muted);font-size:0.95rem}
     .skills{display:flex;flex-wrap:wrap;gap:8px}
