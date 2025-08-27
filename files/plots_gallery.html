@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sample Charts - Model Evaluation Suite</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    :root { --bg:#0c0d10; --card:#14161a; --text:#e9edf1; --muted:#a7b0bb; --brand:#69c; --line:#22262c; }
+    body {
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      background-image: url('../img/logos/dark_light_logo_centered.png');
+      background-repeat: repeat-y;
+      background-size: auto;
+      background-position: top center;
+    }
+    main { max-width: 1200px; margin: 0 auto; padding: 28px 16px 60px; }
+    h1 { margin: 0 0 14px; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+    h2 { margin-top: 36px; border-bottom: 1px solid var(--line); padding-bottom: 4px; color: var(--brand); }
+    .back-link { margin-bottom: 24px; display: inline-block; color: var(--brand); }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 20px; }
+    .gallery-item { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; text-align: center; }
+    .gallery-item img { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 12px; background-color: #fff; }
+    .gallery-item figcaption { color: var(--muted); font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Sample Charts</h1>
+    <a href="../index.html#projects" class="back-link">&larr; Back to Portfolio</a>
+
+    <h2>Classifier Evaluation (xgb_demo_01)</h2>
+    <div class="gallery-grid">
+      <figure class="gallery-item"><img src="/files/plots/xgb_demo_01/evaluation/learning_curve_xgb_demo_01.png" alt="Learning Curve"><figcaption>Learning Curve</figcaption></figure>
+      <figure class="gallery-item"><img src="/files/plots/xgb_demo_01/evaluation/shap_bar_xgb_demo_01.png" alt="SHAP Bar"><figcaption>SHAP BAR</figcaption></figure>
+      <figure class="gallery-item"><img src="/files/plots/xgb_demo_01/evaluation/permutation_importance_xgb_demo_01.png" alt="Feature Importance"><figcaption>Feature Importance</figcaption></figure>
+      <figure class="gallery-item"><img src="/files/plots/xgb_demo_01/evaluation/shap_beeswarm_xgb_demo_01.png" alt="SHAP Summary Plot"><figcaption>SHAP Beeswarm Plot</figcaption></figure>
+    </div>
+
+    <h2>Regressor Evaluation (xgbreg_demo_01)</h2>
+    <div class="gallery-grid">
+      <figure class="gallery-item"><img src="/files/plots/xgbreg_demo_01/evaluation/qq_plot_xgbreg_demo_01.png" alt="QQ Plot"><figcaption>QQ Plot</figcaption></figure>
+      <figure class="gallery-item"><img src="/files/plots/xgb_demo_01_production_validation/evaluation/feature_coefficients_xgb_demo_01_production_validation.png" alt="Feature Coefficients"><figcaption>Feature Coefficients</figcaption></figure>
+      <figure class="gallery-item"><img src="/files/plots/xgb_demo_01_production_validation/evaluation/segment_perf_Department_xgb_demo_01_production_validation.png" alt="Segement Performance"><figcaption>Segement Performance</figcaption></figure>
+      <figure class="gallery-item"><img src="/files/plots/xgbreg_demo_01/evaluation/predicted_vs_actual_xgbreg_demo_01.png" alt="Predicted vs. Actual"><figcaption>Predicted vs. Actual</figcaption></figure>
+    </div>
+  </main>
+</body>
+</html>
