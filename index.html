@@ -59,11 +59,12 @@
       color: var(--muted);
     }
     .feature-box {
-      background: rgba(20, 22, 26, 0.7); /* Card color with transparency */
-      border: 1px solid var(--line);
+      background: rgba(20, 22, 26, 0.8); /* Slightly more opaque */
+      border: 1px solid #2a2e35; /* A slightly lighter border */
       border-radius: 16px;
       padding: 24px;
-      backdrop-filter: blur(2px);
+      backdrop-filter: blur(3px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); /* A soft shadow for depth */
     }
     .feature-box > h2 {
       margin-top: 0;
@@ -137,13 +138,9 @@
   <nav class="top">
     <ul>
       <li><a href="#resource-hub">Analyst Resource Hub</a></li>
-      <li>|</li>
       <li><a href="#sql-stories">SQL Stories Ecosystem</a></li>
-      <li>|</li>
       <li><a href="#projects">Featured Projects</a></li>
-      <li>|</li>
       <li><a href="#case-studies">Case Studies</a></li>
-      <li>|</li>
       <li><a href="#certifications">Certifications</a></li>
     </ul>
   </nav>
@@ -169,57 +166,64 @@
 
     <!-- ANALYST RESOURCE HUB -->
     <section id="resource-hub">
-      <h2>Analyst Resource Hub</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>Reference Vault for Data Science & ML</h3>
-          <p>
-            A curated, modular knowledge base of checklists, decision cards, guidebooks, and reusable scripts across Python, SQL, and analytics workflows. Originally built in Obsidian and published for quick, skimmable reference.
-          </p>
-          <p class="meta">QuickRefs • Checklists • Guidebooks • Decision Cards • Templates</p>
-          <p>
-            <a class="btn" href="https://g-schumacher44.github.io/analyst_resource_hub/" target="_blank" rel="noopener">Visit the Resource Hub ↗</a>
-            &nbsp;•&nbsp;
-            <a href="https://github.com/G-Schumacher44/analyst_resource_hub" target="_blank" rel="noopener">View Repository</a>
-          </p>
-        </article>
+      <div class="feature-box">
+        <h2>Analyst Resource Hub</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>Reference Vault for Data Science & ML</h3>
+            <p>
+              A curated, modular knowledge base of checklists, decision cards, guidebooks, and reusable scripts across Python, SQL, and analytics workflows. Originally built in Obsidian and published for quick, skimmable reference.
+            </p>
+            <p class="meta">QuickRefs • Checklists • Guidebooks • Decision Cards • Templates</p>
+            <p>
+              <a class="btn" href="https://g-schumacher44.github.io/analyst_resource_hub/" target="_blank" rel="noopener">Visit the Resource Hub ↗</a>
+              &nbsp;•&nbsp;
+              <a href="https://github.com/G-Schumacher44/analyst_resource_hub" target="_blank" rel="noopener">View Repository</a>
+            </p>
+          </article>
+        </div>
       </div>
     </section>
 
     <!-- SQL STORIES ECOSYSTEM -->
     <section id="sql-stories">
-      <h2>SQL Stories Ecosystem</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>Ecom Sales Data Generator (The Engine)</h3>
-          <p>
-            A custom Python package that produces the realistic, synthetic e-commerce data used in all the case studies. It's the source of truth for the data.
-          </p>
-          <p class="meta">Python • SQLite • Faker/YAML</p>
-          <p>
-            <a href="https://github.com/G-Schumacher44/ecom_sales_data_generator" target="_blank" rel="noopener">View Repository</a>
-          </p>
-        </article>
-        <article class="card">
-          <h3>SQL Stories: Skills Builder (Learning Lab)</h3>
-          <p>
-            The public-facing skill-building suite. This is the main "product" where my published story modules are available for the community to use for practice and learning.
-          </p>
-          <p class="meta">Python • SQL • Jupyter</p>
-          <p>
-            <a href="https://github.com/G-Schumacher44/sql_stories_skills_builder" target="_blank" rel="noopener">View Repository</a>
-          </p>
-        </article>
-        <article class="card">
-          <h3>Sql Stories: Working Demo (The Showcase)</h3>
-          <p>
-            A curated and polished version of the best case studies, designed specifically to be a professional portfolio. It demonstrates the practical application of the tools and data from the other repositories.
-          </p>
-          <p class="meta">Python • SQL • Storytelling</p>
-          <p>
-            <a href="https://github.com/G-Schumacher44/sql_stories" target="_blank" rel="noopener">View Repository</a>
-          </p>
-        </article>
+      <div class="feature-box">
+        <h2>SQL Stories Ecosystem</h2>
+        <p>
+          I built this ecosystem to bridge the gap between theory and practice. It’s an end-to-end sandbox for exploring how data is generated, connected, and transformed into action. It serves as both my personal learning lab and a resource for others—a practical roadmap from raw data to compelling stories.
+        </p>
+        <div class="grid">
+          <article class="card">
+            <h3>Ecom Sales Data Generator (The Engine)</h3>
+            <p>
+              A custom Python package that produces the realistic, synthetic e-commerce data used in all the case studies. It's the source of truth for the data.
+            </p>
+            <p class="meta">Python • SQLite • Faker/YAML</p>
+            <p>
+              <a href="https://github.com/G-Schumacher44/ecom_sales_data_generator" target="_blank" rel="noopener">View Repository</a>
+            </p>
+          </article>
+          <article class="card">
+            <h3>SQL Stories: Skills Builder (Learning Lab)</h3>
+            <p>
+              The public-facing skill-building suite. This is the main "product" where my published story modules are available for the community to use for practice and learning.
+            </p>
+            <p class="meta">Python • SQL • Jupyter</p>
+            <p>
+              <a href="https://github.com/G-Schumacher44/sql_stories_skills_builder" target="_blank" rel="noopener">View Repository</a>
+            </p>
+          </article>
+          <article class="card">
+            <h3>SQL Stories: Working Demo (The Showcase)</h3>
+            <p>
+              A curated and polished version of the best case studies, designed specifically to be a professional portfolio. It demonstrates the practical application of the tools and data from the other repositories.
+            </p>
+            <p class="meta">Python • SQL • Storytelling</p>
+            <p>
+              <a href="https://github.com/G-Schumacher44/sql_stories" target="_blank" rel="noopener">View Repository</a>
+            </p>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -368,7 +372,7 @@
   </main>
 
   <footer>
-    <p>&copy; 2025 Garrett Schumacher • GS Analytics</p>
+    <p>&copy; 2024 Garrett Schumacher • GS Analytics</p>
   </footer>
 
   <!-- JS (root) -->
