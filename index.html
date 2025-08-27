@@ -52,6 +52,30 @@
     main{max-width:1100px;margin:0 auto;padding:28px 16px 60px}
     section{margin:36px 0}
     h2{margin:0 0 14px;border-bottom:1px solid var(--line);padding-bottom:8px}
+    /* Styles the intro paragraph that follows a section title */
+    section > h2 + p {
+      margin-top: -8px;
+      margin-bottom: 24px;
+      color: var(--muted);
+    }
+    .feature-box {
+      background: rgba(20, 22, 26, 0.7); /* Card color with transparency */
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(2px);
+    }
+    .feature-box > h2 {
+      margin-top: 0;
+      font-size: 1.6rem;
+    }
+    .feature-box > p {
+      max-width: 75ch;
+      margin: -8px 0 24px; /* Match spacing of other section intros */
+      color: var(--muted);
+    }
+    /* Make inner cards contrast with the feature box */
+    .feature-box .card { background: var(--bg); border-color: #333842; }
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
     .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:16px}
     .card:hover {
@@ -132,10 +156,10 @@
     <section id="about">
       <h2>About Me</h2>
       <p>
-        For 15 years, I managed operations and led teams, making critical decisions based on the data I was given. I learned firsthand that the most powerful insights aren't found in raw numbers, but in the stories they tell—stories that reveal deeper meaning, both in business and in life. This realization drove my pivot from a consumer of data to a creator of data-driven narratives.
+        Throughout my career, I’ve managed operations and led teams, making decisions from the data in front of me. I discovered that the real value of data isn’t in raw numbers—it’s in the story they tell and the understanding they reveal. That realization transformed me from a consumer of data into a creator of data-driven narratives.
       </p>
       <p>
-        My background gives me a unique perspective. I don't just see tables and columns; I see the business challenges and stakeholder questions behind them. My work is about bridging the gap between complex technical analysis and the clear, actionable insights that empower teams. Whether it's building a dashboard, an ETL pipeline, or a machine learning model, my goal is to translate data into a compelling story that resonates.
+        My operations background means I don’t just see tables and columns—I see the business challenges and stakeholder questions behind them. I bridge the gap between technical analysis and clear, actionable insights that empower teams. My goal is to deliver clarity that informs decisions and ignites action.
       </p>
       <p>
         This philosophy is the common thread in my portfolio, from the narrative-driven modules in the <strong>SQL Stories Ecosystem</strong> to the practical guides in the <strong>Analyst Resource Hub</strong>. I build tools and tell stories that help others see their work in a new light.
@@ -164,38 +188,43 @@
 
     <!-- SQL STORIES ECOSYSTEM -->
     <section id="sql-stories">
-      <h2>SQL Stories Ecosystem</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>Ecom Sales Data Generator (The Engine)</h3>
-          <p>
-            A custom Python package that produces the realistic, synthetic e-commerce data used in all the case studies. It's the source of truth for the data.
-          </p>
-          <p class="meta">Python • SQLite • Faker/YAML</p>
-          <p>
-            <a href="https://github.com/G-Schumacher44/ecom_sales_data_generator" target="_blank" rel="noopener">View Repository</a>
-          </p>
-        </article>
-        <article class="card">
-          <h3>SQL Stories: Skills Builder (Learning Lab)</h3>
-          <p>
-            The public-facing skill-building suite. This is the main "product" where my published story modules are available for the community to use for practice and learning.
-          </p>
-          <p class="meta">Python • SQL • Jupyter</p>
-          <p>
-            <a href="https://github.com/G-Schumacher44/sql_stories_skills_builder" target="_blank" rel="noopener">View Repository</a>
-          </p>
-        </article>
-        <article class="card">
-          <h3>Sql Stories: Working Demo (The Showcase)</h3>
-          <p>
-            A curated and polished version of the best case studies, designed specifically to be a professional portfolio. It demonstrates the practical application of the tools and data from the other repositories.
-          </p>
-          <p class="meta">Python • SQL • Storytelling</p>
-          <p>
-            <a href="https://github.com/G-Schumacher44/sql_stories" target="_blank" rel="noopener">View Repository</a>
-          </p>
-        </article>
+      <div class="feature-box">
+        <h2>SQL Stories Ecosystem</h2>
+        <p>
+          True understanding comes from doing. I created this interconnected ecosystem to bridge the gap between theory and practice that I faced as a self-taught analyst. It's a complete, end-to-end sandbox I built from scratch to learn how data is generated, connected, and transformed into action. This ecosystem is both my personal learning lab and a resource for others—a practical roadmap from raw data to a compelling story.
+        </p>
+        <div class="grid">
+          <article class="card">
+            <h3>Ecom Sales Data Generator (The Engine)</h3>
+            <p>
+              A custom Python package that produces the realistic, synthetic e-commerce data used in all the case studies. It's the source of truth for the data.
+            </p>
+            <p class="meta">Python • SQLite • Faker/YAML</p>
+            <p>
+              <a href="https://github.com/G-Schumacher44/ecom_sales_data_generator" target="_blank" rel="noopener">View Repository</a>
+            </p>
+          </article>
+          <article class="card">
+            <h3>SQL Stories: Skills Builder (Learning Lab)</h3>
+            <p>
+              The public-facing skill-building suite. This is the main "product" where my published story modules are available for the community to use for practice and learning.
+            </p>
+            <p class="meta">Python • SQL • Jupyter</p>
+            <p>
+              <a href="https://github.com/G-Schumacher44/sql_stories_skills_builder" target="_blank" rel="noopener">View Repository</a>
+            </p>
+          </article>
+          <article class="card">
+            <h3>Sql Stories: Working Demo (The Showcase)</h3>
+            <p>
+              A curated and polished version of the best case studies, designed specifically to be a professional portfolio. It demonstrates the practical application of the tools and data from the other repositories.
+            </p>
+            <p class="meta">Python • SQL • Storytelling</p>
+            <p>
+              <a href="https://github.com/G-Schumacher44/sql_stories" target="_blank" rel="noopener">View Repository</a>
+            </p>
+          </article>
+        </div>
       </div>
     </section>
 
