@@ -29,13 +29,9 @@
     body{
       margin:0;
       font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      background:var(--bg);
+      background: #0e1116 url('img/logos/dark_light_logo_centered.png') repeat-y top center;
       color:var(--text);
       line-height:1.6;
-      background-image: url('img/logos/dark_light_logo_centered.png');
-      background-repeat: repeat-y;
-      background-size: auto;
-      background-position: top center;
     }
     a{color:var(--brand);text-decoration:none}
     header.hero{
@@ -155,6 +151,57 @@
     .meta{color:var(--muted);font-size:0.95rem}
     .skills{display:flex;flex-wrap:wrap;gap:8px}
     .chip{border:1px solid var(--line);background:#101419;border-radius:999px;padding:6px 10px;font-size:.95rem;color:var(--muted)}
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .skill-category {
+      background: transparent;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .skill-category h3 {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+      color: var(--brand);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+    }
+    .skills-and-seeking-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .seeking-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      position: sticky;
+      top: 80px; /* Adjust this based on your sticky nav height + desired spacing */
+    }
+    .profile-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--brand);
+      margin-bottom: 16px;
+    }
+    .seeking-card h3 {
+      margin: 0 0 8px;
+      color: var(--brand);
+      font-size: 1.2rem;
+    }
+    .seeking-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
     .banner{margin:24px auto;display:block;max-width:900px;width:92%;height:auto;opacity:.95}
     footer{border-top:1px solid var(--line);padding:22px 16px;text-align:center;color:var(--muted)}
 
@@ -173,6 +220,14 @@
     .close-modal{all:unset;cursor:pointer;color:var(--muted);padding:6px 10px;border-radius:8px}
     .close-modal:hover{background:rgba(255,255,255,.06);color:var(--text)}
     
+    @media (max-width: 900px) {
+      .skills-and-seeking-grid {
+        grid-template-columns: 1fr; /* Stack on smaller screens */
+      }
+      .seeking-card {
+        position: static; /* Unstick on mobile */
+      }
+    }
     @media (max-width: 640px) {
       header.hero {
         padding: 40px 12px 0;
@@ -202,8 +257,9 @@
     <div class="cta">
       <a class="btn primary" href="pdf/GSchumacherresume.pdf" target="_blank" rel="noopener">Download Resume</a>
       <a class="btn" href="mailto:me@garrettschumacher.com">Email</a>
-      <a class="btn" href="https://github.com/G-Schumacher44" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn primary" href="https://github.com/G-Schumacher44" target="_blank" rel="noopener">GitHub</a>
       <a class="btn" href="https://linkedin.com/in/garrett-schumacher-243a5513a" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://calendar.app.google/49XfSdvBVQMz9Zni9" class="btn primary" target="_blank" rel="noopener noreferrer">Book a Meeting</a>
     </div>
   </header>
 
@@ -215,6 +271,7 @@
       <li><a href="#projects">Featured Projects</a></li>
       <li><a href="#case-studies">Case Studies</a></li>
       <li><a href="#certifications">Certifications</a></li>
+      <li><a href="https://calendar.app.google/49XfSdvBVQMz9Zni9" target="_blank" rel="noopener noreferrer">Book a Meeting</a></li>
     </ul>
   </nav>
 
@@ -359,7 +416,7 @@
           </div>
           <h3>Dirty Birds Data Generator</h3>
           <p>
-            Simulates penguin tagging data for ecological analysis, QA, and model prototyping. Features customizable randomness, messiness injection, and resight logic to mimic longitudinal studies.
+            This project simulates penguin tagging data for ecological analysis, QA, and model prototyping. Inspired by the Palmer Penguins dataset, it adds custom randomness, messiness injection, and resight logic to better reflect longitudinal field studies.
           </p>
           <p class="meta">Python • YAML • Data Generation</p>
           <ul class="card-links">
@@ -445,38 +502,83 @@
     </section>
 
     <!-- SKILLS -->
-    <section id="skills">
-      <h2>Skills & Tools</h2>
-      <div class="skills">
-        <span class="chip">SQL </span>
-        <span class="chip">Python</span>
-        <span class="chip">YAML</span>
-        <span class="chip">ETL & Data Quality</span>
-        <span class="chip">Data Visualization</span>
-        <span class="chip">Data Storytelling</span>
-        <span class="chip">Machine Learning</span>
-        <span class="chip">Business Management</span>
-        <span class="chip">Operations Management</span>
-        <span class="chip">Process Optimization</span>
-        <span class="chip">Stakeholder Engagement</span>
-        <span class="chip">Looker and Tableau</span>
-        <span class="chip">MLflow</span>
-        <span class="chip">Git/GitHub</span>
-        <span class="chip">Google Workspace</span>
-        <span class="chip">Google Cloud</span>
-        <span class="chip">Google Colab</span>
-        <span class="chip">BigQuery</span>
-        <span class="chip">Jupyter Notebooks</span>
-      </div>
-    </section>
+    <div class="skills-and-seeking-grid">
+      <section id="skills">
+        <h2>Skills & Tools</h2>
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h3>Languages & Databases</h3>
+            <div class="skills">
+              <span class="chip">Python</span>
+              <span class="chip">SQL</span>
+              <span class="chip">HTML/CSS</span>
+              <span class="chip">JavaScript</span>
+              <span class="chip">Google Apps Script</span>
+              <span class="chip">YAML</span>
+              <span class="chip">SQLite</span>
+              <span class="chip">BigQuery</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Analysis & Visualization</h3>
+            <div class="skills">
+              <span class="chip">Data Storytelling</span>
+              <span class="chip">Data Visualization</span>
+              <span class="chip">ETL & Data Quality</span>
+              <span class="chip">Looker / Tableau</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Machine Learning & MLOps</h3>
+            <div class="skills">
+              <span class="chip">Machine Learning</span>
+              <span class="chip">scikit-learn</span>
+              <span class="chip">Pydantic</span>
+              <span class="chip">MLflow</span>
+              <span class="chip">Jupyter / Colab</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Cloud, Tools & Business</h3>
+            <div class="skills">
+              <span class="chip">Google Cloud Platform</span>
+              <span class="chip">Google Workspace</span>
+              <span class="chip">Git / GitHub</span>
+              <span class="chip">Business & Operations</span>
+              <span class="chip">Process Optimization</span>
+              <span class="chip">Stakeholder Engagement</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="seeking">
+        <div class="seeking-card">
+          <img
+            src="img/logos/temp_headshot.png?v=2"
+            alt="Photo of Garrett Schumacher"
+            class="profile-photo"
+            width="120"
+            height="120"
+            loading="lazy"
+          />
+          <h3>Where I’m Headed</h3>
+          <p>I aim to build a career at the intersection of operations and analytics—using data to drive decisions, improve processes, and create measurable value. I’m looking for opportunities that support growth, collaboration, and impact.</p>
+          <p><em>Thank you for taking the time to explore my work. I’m excited to keep learning, contributing, and growing as I take the next steps in my analytics career.</em></p>
+        </div>
+      </section>
+    </div>
 
     <!-- CONTACT -->
     <section id="contact">
-      <h2>Contact</h2>
+      <h2>Let's Connect</h2>
       <p>
-        The fastest way to reach me is email: <a href="mailto:me@garrettschumacher.com">me@garrettschumacher.com</a>.
-        You can also connect on <a href="https://linkedin.com/in/garrett-schumacher-243a5513a" target="_blank" rel="noopener">LinkedIn</a>.
+        I'm always open to discussing new projects, creative ideas, or opportunities to be part of an amazing team. The best way to reach me is through email or LinkedIn.
       </p>
+      <div class="cta" style="margin-top: 24px;">
+        <a href="https://calendar.app.google/49XfSdvBVQMz9Zni9" class="btn primary" target="_blank" rel="noopener noreferrer">Book a Meeting</a>
+        <a class="btn primary" href="mailto:me@garrettschumacher.com">Email Me</a>
+        <a class="btn primary" href="https://linkedin.com/in/garrett-schumacher-243a5513a" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
     </section>
 
   </main>
