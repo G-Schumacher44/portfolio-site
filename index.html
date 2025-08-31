@@ -111,6 +111,8 @@
       border: 1px solid var(--line);
     }
     .project-gallery-thumb img { display: block; width: 100%; height: auto; }
+    /* Utility: constrain large logo thumbs to fit neatly */
+    .thumb-fit { display: block; max-height: 220px; width: auto; margin: 0 auto; }
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
     .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:16px}
     .card:hover {
@@ -118,6 +120,10 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+    /* Horizontal card layout helper */
+    .card-horizontal { display: flex; gap: 16px; align-items: flex-start; }
+    .card-horizontal .project-gallery-thumb { min-width: 200px; max-width: 240px; margin-bottom: 0; }
+    .card-horizontal .card-content { flex: 1; }
     .card h3{
       margin:0 0 6px;
       font-size:1.25rem;
@@ -233,6 +239,9 @@
         padding: 40px 12px 0;
         min-height: 75vh;
       }
+      /* Stack horizontal cards on mobile */
+      .card-horizontal { flex-direction: column; }
+      .card-horizontal .project-gallery-thumb { max-width: 100%; }
       .hero h1 {
         font-size: 2.4rem;
       }
@@ -324,47 +333,22 @@
           I built this ecosystem to bridge the gap between theory and practice. It’s an end-to-end sandbox for exploring how data is generated, connected, and transformed into action. It serves as both my personal learning lab and a resource for others—a practical roadmap from raw data to compelling stories.
         </p>
         <div class="grid">
-          <article class="card">
+          <article class="card card-horizontal">
             <div class="project-gallery-thumb">
               <img src="img/case_study/sql_stories_logo_thumb.png" alt="SQL Stories Ecosystem Logo">
             </div>
-            <h3>Ecom Sales Data Generator (The Engine)</h3>
-            <p>
-              A custom Python package that produces the realistic, synthetic e-commerce data used in all the case studies. It's the source of truth for the data.
-            </p>
-            <p class="meta">Python • SQLite • Faker/YAML</p>
-            <ul class="card-links">
-              <li><a href="https://github.com/G-Schumacher44/ecom_sales_data_generator" target="_blank" rel="noopener">View Repository</a></li>
-              <li><a href="data/ecom_retailer_v3.db" download>Download Database</a></li>
-            </ul>
-          </article>
-          <article class="card">
-            <div class="project-gallery-thumb">
-              <img src="img/case_study/sql_stories_logo_thumb.png" alt="SQL Stories Ecosystem Logo">
+            <div class="card-content">
+              <h3>SQL Stories Ecosystem</h3>
+              <p>
+                One ecosystem, three parts: the data generation engine, a public learning lab, and a curated showcase — all built on a shared foundation.
+              </p>
+              <p class="meta">Python • SQL • SQLite • Jupyter</p>
+              <ul class="card-links">
+                <li><strong>Ecom Sales Data Generator (Engine):</strong> <a href="https://github.com/G-Schumacher44/ecom_sales_data_generator" target="_blank" rel="noopener">View Repository</a> • <a href="data/ecom_retailer_v3.db" download>Download Database</a></li>
+                <li><strong>SQL Stories: Skills Builder (Learning Lab):</strong> <a href="https://github.com/G-Schumacher44/sql_stories_skills_builder" target="_blank" rel="noopener">View Repository</a> • <a href="files/media/scenario_04_cart_behavior_analysis.html" target="_blank" rel="noopener">Sample Scenario Brief</a></li>
+                <li><strong>SQL Stories: Portfolio Demo (Showcase):</strong> <a href="https://github.com/G-Schumacher44/sql_stories_portfolio_demo" target="_blank" rel="noopener">View Repository</a> • <a href="files/media/storycrafting.html" target="_blank" rel="noopener">Craft Your Own SQL Story</a></li>
+              </ul>
             </div>
-            <h3>SQL Stories: Skills Builder (Learning Lab)</h3>
-            <p>
-              The public-facing skill-building suite. This is the main "product" where my published story modules are available for the community to use for practice and learning.
-            </p>
-            <p class="meta">Python • SQL • Jupyter</p>
-            <ul class="card-links">
-              <li><a href="https://github.com/G-Schumacher44/sql_stories_skills_builder" target="_blank" rel="noopener">View Repository</a></li>
-              <li><a href="files/media/scenario_04_cart_behavior_analysis.html" target="_blank" rel="noopener">Sample Scenario Brief (HTML, static)</a></li>
-            </ul>
-          </article>
-          <article class="card">
-            <div class="project-gallery-thumb">
-              <img src="img/case_study/sql_stories_logo_thumb.png" alt="SQL Stories Ecosystem Logo">
-            </div>
-            <h3>SQL Stories: Portfolio Demo (The Showcase)</h3>
-            <p>
-              Curated case studies powered by the SQL Stories Ecosystem, showcasing practical applications of tools and data from across the portfolio.
-            </p>
-            <p class="meta">Python • SQL • Storytelling</p>
-            <ul class="card-links">
-              <li><a href="https://github.com/G-Schumacher44/sql_stories_portfolio_demo" target="_blank" rel="noopener">View Repository</a></li>
-              <li><a href="files/media/storycrafting.html" target="_blank" rel="noopener">Craft Your Own SQL Story</a></li>
-            </ul>
           </article>
         </div>
       </div>
@@ -375,8 +359,8 @@
       <h2>Featured Projects</h2>
       <div class="grid">
         <article class="card">
-          <div class="project-gallery-item">
-            <img src="img/projects/analyst-toolkit-thumb.png" data-full-src="img/projects/analyst-toolkit.png" alt="Analyst Toolkit Preview">
+          <div class="project-gallery-thumb">
+            <img src="img/projects/analyst_toolkit_thumbnail.png" alt="Analyst Toolkit">
           </div>
           <h3>Analyst Toolkit</h3>
           <p>
@@ -386,6 +370,8 @@
           <p class="meta">Python • YAML • ETL</p>
           <ul class="card-links">
             <li><a href="https://github.com/G-Schumacher44/analyst_toolkit" target="_blank" rel="noopener">View Repository</a></li>
+            <li><a href="https://github.com/G-Schumacher44/analyst_toolkit_deployment_utility" target="_blank" rel="noopener">Project Deployment Utility</a></li>
+            <li><a href="https://github.com/G-Schumacher44/analyst_toolkit_starter_kit" target="_blank" rel="noopener">Project Starter Kit - Deployable Zip</a></li>
             <li><a href="files/media/01_analyst_toolkit_pipeline_demo.html" target="_blank" rel="noopener noreferrer">Pipeline Workflow Demo (HTML, static)</a></li>
             <li><a href="files/media/00_analyst_toolkit_modular_demo.html" target="_blank" rel="noopener noreferrer">Modular Workflow Demo (HTML, static)</a></li>
           </ul>
@@ -393,8 +379,8 @@
         </article>
 
         <article class="card">
-          <div class="project-gallery-item">
-            <img src="img/projects/model-eval-suite-thumb.png" data-full-src="img/projects/model-eval-suite.png" alt="Model Evaluation Suite Preview">
+          <div class="project-gallery-thumb">
+            <img class="thumb-fit" src="img/projects/model_eval_suite_logo.png" alt="Model Evaluation Suite">
           </div>
           <h3>Model Evaluation Suite</h3>
           <p>
@@ -411,8 +397,8 @@
         </article>
 
         <article class="card">
-          <div class="project-gallery-item">
-            <img src="img/projects/dirty-birds-generator-thumb.png" data-full-src="img/projects/dirty-birds-generator.png" alt="Dirty Birds Data Generator Preview">
+          <div class="project-gallery-thumb">
+            <img src="img/projects/dirty-birds-generator-thumb.png" alt="Dirty Birds Data Generator">
           </div>
           <h3>Dirty Birds Data Generator</h3>
           <p>
