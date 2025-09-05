@@ -50,6 +50,8 @@
     .cta{margin-top:18px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
     .btn{padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:#161a20;color:var(--text)}
     .btn.primary{background:var(--brand);color:#0b1116;border-color:transparent;font-weight:600}
+    /* Ensure all hero CTA buttons share the same filled style */
+    .hero .cta .btn { background: var(--brand); color: #0b1116; border-color: transparent; font-weight: 600; }
     nav.top{position:sticky;top:0;background:#0e1116;border-bottom:1px solid var(--line);z-index:10}
     nav.top ul{margin:0;display:flex;gap:18px;list-style:none;padding:12px 16px;justify-content:center;flex-wrap:wrap}
     main{max-width:1100px;margin:0 auto;padding:28px 16px 60px}
@@ -265,9 +267,9 @@
     <p>Data Analyst • Data Storytelling • Human-in-the-Loop ML • Automation • Business &amp; Operations Management</p>
     <div class="cta">
       <a class="btn primary" href="pdf/gschumacher_resume.pdf" target="_blank" rel="noopener">Download Resume</a>
-      <a class="btn" href="mailto:me@garrettschumacher.com">Email</a>
+      <a class="btn primary" href="mailto:me@garrettschumacher.com">Email</a>
     <a class="btn primary" href="https://github.com/G-Schumacher44" target="_blank" rel="noopener">GitHub</a>
-      <a class="btn" href="https://linkedin.com/in/garrett-schumacher-243a5513a" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn primary" href="https://linkedin.com/in/garrett-schumacher-243a5513a" target="_blank" rel="noopener">LinkedIn</a>
       <a href="https://calendar.app.google/49XfSdvBVQMz9Zni9" class="btn primary" target="_blank" rel="noopener noreferrer">Book a Meeting</a>
     </div>
   </header>
