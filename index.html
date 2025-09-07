@@ -139,6 +139,17 @@
       height: auto;
       transition: transform 0.2s ease-in-out;
     }
+    /* Standard caption hint below clickable gallery items */
+    .project-gallery-item::after {
+      content: attr(data-caption);
+      display: block;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      padding-top: 4px;
+    }
+    /* Suppress caption where a custom one already exists (About headshot tile) */
+    #about .project-gallery-item::after { content: none; }
     .project-gallery-item:hover img {
       transform: scale(1.05);
     }
@@ -179,6 +190,9 @@
       color:var(--brand);
       overflow-wrap: break-word; /* Ensures long titles wrap */
     }
+    /* Indicate title is clickable (opens modal) */
+    .card h3 { cursor: pointer; }
+    .card h3:hover { text-decoration: underline; }
     .card-links {
       list-style: none;
       padding-left: 0;
@@ -402,7 +416,7 @@
         <h2>Analyst Resource Hub</h2>
         <div class="grid">
           <article class="card card-horizontal">
-            <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/resource_hub_summary.html">
+            <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/resource_hub_summary.html" data-caption="Open Overview">
               <img 
                 src="img/logos/resource_hub_logo.png"
                 srcset="img/logos/resource_hub_logo_thumb.png 1x, img/logos/resource_hub_logo.png 2x"
@@ -439,7 +453,7 @@
         </p>
         <div class="grid">
           <article class="card card-horizontal">
-            <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/sql_stories_ecosystem_summary.html">
+            <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/sql_stories_ecosystem_summary.html" data-caption="Open Overview">
               <img src="img/case_study/sql_stories_logo_thumb.png" alt="SQL Stories Ecosystem Logo">
             </div>
             <div class="card-content">
@@ -464,7 +478,7 @@
       <h2>Featured Projects</h2>
       <div class="grid">
         <article class="card">
-          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/analyst_toolkit_summary.html">
+          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/analyst_toolkit_summary.html" data-caption="Open Overview">
             <img src="img/projects/analyst_toolkit_thumbnail.png" alt="Analyst Toolkit">
           </div>
           <h3>Analyst Toolkit</h3>
@@ -484,7 +498,7 @@
         </article>
 
         <article class="card">
-          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/model_eval_suite_summary.html">
+          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/model_eval_suite_summary.html" data-caption="Open Overview">
             <img class="thumb-fit" src="img/projects/model_eval_suite_logo.png" alt="Model Evaluation Suite">
           </div>
           <h3>Model Evaluation Suite</h3>
@@ -502,7 +516,7 @@
         </article>
 
         <article class="card">
-          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/dirty_birds_summary.html">
+          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/dirty_birds_summary.html" data-caption="Open Overview">
             <img src="img/projects/dirty-birds-generator-thumb.png" alt="Dirty Birds Data Generator">
           </div>
           <h3>Dirty Birds Data Generator</h3>
@@ -522,7 +536,7 @@
       <h2>Case Studies</h2>
       <div class="grid">
         <article class="card">
-          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/case_vp_sales_summary.html">
+          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/case_vp_sales_summary.html" data-caption="Open Case Study Summary">
             <img src="img/case_study/vp_dashboard_thumb.jpeg" alt="VP of Sales Dashboard Preview">
           </div>
           <h3>Request from the VP of Sales</h3>
@@ -536,7 +550,7 @@
         </article>
 
         <article class="card">
-          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/case_inventory_audit_summary.html">
+          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/case_inventory_audit_summary.html" data-caption="Open Case Study Summary">
             <img src="img/case_study/story_01_dashboard_thumb.png" alt="Inventory Audit Dashboard Preview">
           </div>
           <h3>SQL Stories: Inventory Audit</h3>
@@ -551,7 +565,7 @@
         </article>
 
         <article class="card">
-          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/retention_summary_modal.html">
+          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/retention_summary_modal.html" data-caption="Open Case Study Summary">
             <img src="img/case_study/stk_bar_channel_thumb.png" alt="Customer Retention Chart Preview">
           </div>
           <h3>SQL Stories: Customer Retention</h3>
@@ -709,6 +723,23 @@
 
       if (typeof modal?.showModal !== 'function') { return; }
 
+      // Enhance clickable thumbnails for accessibility (keyboard + labels)
+      document.querySelectorAll('.project-gallery-item').forEach(item => {
+        try {
+          const card = item.closest('.card');
+          const title = card?.querySelector('h3')?.textContent?.trim();
+          const kind = item.getAttribute('data-caption') || 'Preview';
+          if (title) {
+            item.setAttribute('role', 'button');
+            item.setAttribute('tabindex', '0');
+            item.setAttribute('aria-label', `${title} — open ${kind}`);
+            item.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); item.click(); }
+            });
+          }
+        } catch {}
+      });
+
       document.querySelectorAll('.project-gallery-item').forEach(item => {
         item.addEventListener('click', (e) => {
           const galleryItem = e.currentTarget;
@@ -743,6 +774,17 @@
 
           if (!modal.open) modal.showModal();
         });
+      });
+
+      // Make card titles open the same modal as their image
+      document.querySelectorAll('.card h3').forEach(h3 => {
+        const card = h3.closest('.card');
+        const trigger = card?.querySelector('.project-gallery-item');
+        if (trigger) {
+          h3.addEventListener('click', () => trigger.click());
+          h3.setAttribute('title', 'Open ' + (trigger.getAttribute('data-caption') || 'preview'));
+          h3.style.cursor = 'pointer';
+        }
       });
 
       const closeModal = () => {
