@@ -45,12 +45,12 @@
 </head>
 <body>
 
-    <h1>🔄 Executive Summary – Scenario 02: Customer Retention</h1>
+    <h1>Executive Summary – Scenario 02: Customer Retention</h1>
     <p>The Marketing Team specifically requested a retention snapshot to guide strategy, recognizing customer retention as a powerful driver of growth and profitability. This snapshot uncovered key opportunities across three core areas: early engagement, seasonal conversion spikes, and loyalty program gaps. The full analysis and visualizations are available in the <a href="https://nbviewer.org/github/G-Schumacher44/sql_stories_portfolio_demo/blob/main/story_02_customer_retention_snapshot/Executive_Retention_Report.ipynb" target="_blank" rel="noopener">Executive_Retention_Report.ipynb</a>.</p>
 
     <hr>
 
-    <h2>📊 KPI Snapshot</h2>
+    <h2>KPI Snapshot</h2>
     <table>
         <thead>
             <tr><th>Metric</th><th>Value/Insight</th></tr>
@@ -65,9 +65,9 @@
 
     <hr>
 
-    <h2>🧠 Retention Insights & Actions</h2>
+    <h2>Retention Insights & Actions</h2>
 
-    <h3>📌 Early Engagement is Key</h3>
+    <h3>Early Engagement is Key</h3>
     <p>Cohorts lose approximately 11 percentage points in retention between Month 1 and Month 3, with the highest performing cohorts retaining close to 25% by Month 3, while weaker cohorts like Jan and Apr ’25 drop below 5% repeaters. This significant early decay highlights a critical window to engage customers before they churn.</p>
     <div align="center">
         <img src="../img/case_study/heatmap_cohort.png" alt="Cohort Retention Heatmap" width="500"/>
@@ -76,7 +76,7 @@
         <p><strong>Recommendation:</strong> Deploy targeted win-back campaigns within the first 30 days to re-engage at-risk customers, especially focusing on underperforming cohorts like Jan and Apr ’25. Implement A/B tests on different incentive offers and communication channels to identify the most effective tactics for reducing early churn.</p>
     </div>
 
-    <h3>📌 Stable Conversion with Seasonal Spikes</h3>
+    <h3>Stable Conversion with Seasonal Spikes</h3>
     <p>The average first-to-second purchase conversion rate hovers around 34%, but Nov and Dec ’24 cohorts exceed 50%, illustrating a strong holiday effect that boosts initial repeat behavior. This seasonal spike suggests that timing and context significantly influence conversion success.</p>
     <div align="center">
         <img src="../img/case_study/stk_bar_channel.png" alt="First→Second Conversion by Cohort" width="500"/>
@@ -85,7 +85,7 @@
         <p><strong>Recommendation:</strong> Codify the successful elements of the holiday campaigns—such as promotions, bundles, and urgency messaging—and adapt these strategies for other seasonal peaks. Prioritize campaign planning to align with periods of heightened customer activity, and investigate whether these levers could be tailored to drive traffic and conversion during off-season periods with lower volume.</p>
     </div>
 
-    <h3>📌 Loyalty Program Gaps</h3>
+    <h3>Loyalty Program Gaps</h3>
     <p>The Bronze tier, which comprises a substantial portion of the customer base, shows a 0% repeat purchase rate, while Silver and Gold tiers perform below retention benchmarks at ≤15%. In contrast, the Platinum tier retains approximately 45–50% of customers, driving the majority of loyalty program ROI. This disparity indicates that lower tiers are not effectively motivating repeat engagement.</p>
     <div align="center">
         <img src="../img/case_study/loyalty_tier_bars.png" alt="Retention Metrics By Loyalty Tier" width="500"/>
@@ -94,7 +94,7 @@
         <p><strong>Recommendation:</strong> Redesign the Bronze and Silver tier benefits to incentivize early repeat purchases with clear, attainable rewards. Simplify tier progression to create a more compelling growth path that encourages customers to advance through the loyalty program, thereby increasing overall retention and lifetime value.</p>
     </div>
 
-    <h3>📌 Channel CLV Mix Shows Clear Winners and Weak Performers</h3>
+    <h3>Channel CLV Mix Shows Clear Winners and Weak Performers</h3>
     <p>Analysis reveals that the Phone channel drives the highest proportion of high Customer Lifetime Value (CLV) customers at 58%, followed by Website and Email channels each contributing approximately 40% high-CLV customers. In contrast, Social Media underperforms with only 33% high-CLV customers, indicating weaker retention potential from this channel.</p>
     <div align="center">
         <img src="../img/case_study/clv_channel_bar.png" alt="CLV Mix by Signup Channel" width="500"/>
@@ -105,23 +105,39 @@
 
     <hr>
 
-    <h2>📦 Key Deliverables</h2>
+    <h2>Key Deliverables</h2>
     <ul>
-        <li><code>sql_sessions/</code> folder – includes SQL scripts for building cohort, loyalty, and CLV views.</li>
-        <li><code>../sql_sessions/build_02_retention_views.sql</code> – main SQL script to create and refresh retention views.</li>
-        <li><code>../Executive_Retention_Report.ipynb</code> – full analysis notebook with queries, visuals, and insights.</li>
-        <li><code>Executive_Retention_Report.html</code> – HTML version of the full analysis, suitable for non-technical stakeholders.</li>
-        <li><code>executive_retention_summary.md</code> – this one-page executive summary for decision-makers.</li>
-        <li><code>hand_off.md</code> – hand-off guide for stakeholders and future analysts.</li>
+        <li><strong>SQL Sessions:</strong> <code>sql_sessions/</code> – cohort, loyalty, and CLV views</li>
+        <li><strong>Build Script:</strong> <code>sql_sessions/build_02_retention_views.sql</code> – creates and refreshes retention views</li>
+        <li><strong>Notebook (source):</strong> <code>Executive_Retention_Report.ipynb</code> – queries, visuals, insights</li>
+        <li><strong>Notebook (HTML):</strong> <code>Executive_Retention_Report.html</code> – shareable report for stakeholders</li>
+        <li><strong>Executive Summary:</strong> <code>executive_retention_summary.md</code> – one‑page overview</li>
+        <li><strong>Hand‑Off Guide:</strong> <code>hand_off.md</code> – for stakeholders and future analysts</li>
     </ul>
 
-    <hr>
+    <h2>Notebook Viewer</h2>
+    <p class="muted">Preview the notebook directly, or open it full size.</p>
+    <a href="media/Executive_Retention_Report.html" target="_blank" rel="noopener" style="margin: 0 0 8px; display:inline-block;">Open in new tab ↗</a>
+    <iframe
+        src="media/Executive_Retention_Report.html"
+        title="Executive Retention Report"
+        style="width:100%; height:70vh; border:1px solid var(--line); border-radius:8px; background:#ffffff;"
+        loading="lazy"></iframe>
 
-    <h2>📤 In Closing</h2>
+    <h2>In Closing</h2>
     <p>The retention snapshot provides a comprehensive analysis of customer behavior, revealing key opportunities to enhance loyalty and reduce churn through targeted early engagement, seasonal campaign optimization, and loyalty program improvements. These evidence-based insights offer actionable strategies that can drive meaningful business impact by increasing repeat purchase rates and maximizing customer lifetime value.</p>
     <blockquote>
         <p><strong>Portfolio Reviewers:</strong> This case study exemplifies a structured approach to data analysis and storytelling, delivering clear, actionable insights that align with strategic decision-making. It serves as a valuable reference for portfolio review, demonstrating how rigorous evaluation and focused recommendations can support sustained growth and customer retention initiatives.</p>
     </blockquote>
+
+    <h2>Links</h2>
+    <ul>
+        <li><a href="https://github.com/G-Schumacher44/sql_stories_portfolio_demo/tree/main" target="_blank" rel="noopener">Case Study (Repository)</a></li>
+        <li><a href="media/Executive_Retention_Report.html" target="_blank" rel="noopener">Executive Retention Report (HTML)</a></li>
+    </ul>
+
+    <hr>
+    <p class="footer-note"><strong>Retention insights that translate into targeted, measurable action.</strong></p>
 
 </body>
 </html>

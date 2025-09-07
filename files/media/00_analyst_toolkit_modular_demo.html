@@ -10779,7 +10779,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="%F0%9F%A7%AA-Analyst-Toolkit-Tutorial:-Full-Data-Pipeline-with-Penguins">🧪 Analyst Toolkit Tutorial: Full Data Pipeline with Penguins<a class="anchor-link" href="#%F0%9F%A7%AA-Analyst-Toolkit-Tutorial:-Full-Data-Pipeline-with-Penguins">¶</a></h1><p>This interactive notebook demonstrates the complete analyst pipeline using a synthetic <strong>Palmer Penguins</strong> dataset generated from the <a href="https://github.com/G-Schumacher44/penguin_research_toolkit"><code>penguin_research_toolkit</code> repository</a>.</p>
+<h1 id="%F0%9F%A7%AA-Analyst-Toolkit-Tutorial:-Full-Data-Pipeline">🧪 Analyst Toolkit Tutorial: Full Data Pipeline<a class="anchor-link" href="#%F0%9F%A7%AA-Analyst-Toolkit-Tutorial:-Full-Data-Pipeline">¶</a></h1><p>This interactive notebook demonstrates the complete analyst pipeline using a synthetic <strong>Palmer Penguins</strong> dataset generated from the <a href="https://github.com/G-Schumacher44/dirty_birds_data_generator"><code>dirty birds data synthetic data generator</code> repository</a>.</p>
 <p>Each step in the pipeline is modular, YAML-configurable, and produces exports, plots, and certification-ready reports.</p>
 <p>This toolkit is packaged using <strong>TOML (<code>pyproject.toml</code>)</strong> and can be run via script or notebook.</p>
 <h3 id="%F0%9F%A7%B0-Toolkit-Architecture:-3-Way-Modular-Design">🧰 Toolkit Architecture: 3-Way Modular Design<a class="anchor-link" href="#%F0%9F%A7%B0-Toolkit-Architecture:-3-Way-Modular-Design">¶</a></h3><p>This pipeline is built around a flexible ETL framework with three usage modes:</p>
@@ -10925,24 +10925,16 @@ You can toggle inline previews and export settings via the YAML config (<code>di
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># 📊 M01: Data Diagnostics – Profile Structure &amp; Shape</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m00_utils.config_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m00_utils.load_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_csv</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m01_diagnostics.run_diag_pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_diag_pipeline</span>
 
 <span class="c1"># --- Load module-specific config ---</span>
-<span class="n">diag_config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/diag_config_template.yaml"</span><span class="p">)</span>
-<span class="n">diag_cfg</span> <span class="o">=</span> <span class="n">diag_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"diagnostics"</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">notebook_mode</span> <span class="o">=</span> <span class="n">diag_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"notebook"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">run_id</span> <span class="o">=</span> <span class="n">diag_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"run_id"</span><span class="p">,</span> <span class="s2">"demo_run"</span><span class="p">)</span>
-
-<span class="c1"># --- Load raw data from path defined in config ---</span>
-<span class="n">input_path</span> <span class="o">=</span> <span class="n">diag_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"input_path"</span><span class="p">)</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">input_path</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"🛑 No input_path specified in diagnostics config."</span><span class="p">)</span>
-<span class="n">df_raw</span> <span class="o">=</span> <span class="n">load_csv</span><span class="p">(</span><span class="n">input_path</span><span class="p">)</span>
+<span class="n">diag_config_full</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/diag_config_template.yaml"</span><span class="p">)</span>
 
 <span class="c1"># --- Run Diagnostics Module ---</span>
+<span class="c1"># We pass the df_raw loaded in the previous step.</span>
+<span class="c1"># The global run_id and notebook_mode are used.</span>
 <span class="n">df_profiled</span> <span class="o">=</span> <span class="n">run_diag_pipeline</span><span class="p">(</span>
-    <span class="n">config</span><span class="o">=</span><span class="n">diag_cfg</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">diag_config_full</span><span class="p">,</span> <span class="c1"># Pass the full config object</span>
     <span class="n">df</span><span class="o">=</span><span class="n">df_raw</span><span class="p">,</span>
     <span class="n">notebook</span><span class="o">=</span><span class="n">notebook_mode</span><span class="p">,</span>
     <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span>
@@ -11055,14 +11047,6 @@ You can toggle inline previews and export settings via the YAML config (<code>di
 <tr>
 <td>colony_id</td>
 <td>19</td>
-</tr>
-<tr>
-<td>study_name</td>
-<td>12</td>
-</tr>
-<tr>
-<td>island</td>
-<td>11</td>
 </tr>
 </tbody>
 </table>
@@ -11508,18 +11492,14 @@ You can define strict or flexible rules in the YAML config (<code>validation_con
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># 🛡️ M02: Schema &amp; Content Validation – First Audit Pass</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m00_utils.config_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m00_utils.load_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_csv</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m02_validation.run_validation_pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_validation_pipeline</span>
 
-<span class="c1"># --- Load config and unpack validation settings ---</span>
-<span class="n">val_config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/validation_config_template.yaml"</span><span class="p">)</span>
-<span class="n">val_cfg</span> <span class="o">=</span> <span class="n">val_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"validation"</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">notebook_mode</span> <span class="o">=</span> <span class="n">val_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"notebook"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">run_id</span> <span class="o">=</span> <span class="n">val_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"run_id"</span><span class="p">,</span> <span class="s2">"demo_run"</span><span class="p">)</span>
+<span class="c1"># --- Load module-specific config ---</span>
+<span class="n">val_config_full</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/validation_config_template.yaml"</span><span class="p">)</span>
 
 <span class="c1"># --- Run Validation Module ---</span>
 <span class="n">df_validated</span> <span class="o">=</span> <span class="n">run_validation_pipeline</span><span class="p">(</span>
-    <span class="n">config</span><span class="o">=</span><span class="n">val_cfg</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">val_config_full</span><span class="p">,</span>
     <span class="n">df</span><span class="o">=</span><span class="n">df_profiled</span><span class="p">,</span>
     <span class="n">notebook</span><span class="o">=</span><span class="n">notebook_mode</span><span class="p">,</span>
     <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span>
@@ -11985,18 +11965,17 @@ All rules and output paths are controlled via the YAML config (<code>normalizati
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># 🧹 M03: Data Normalization – Standardizing Key Fields</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m00_utils.config_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m03_normalization.run_normalization_pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_normalization_pipeline</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
 <span class="c1"># --- Load Config ---</span>
-<span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/normalization_config_template.yaml"</span><span class="p">)</span>
-<span class="n">norm_cfg</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"normalization"</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">run_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"run_id"</span><span class="p">)</span>
-<span class="n">notebook_mode</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"notebook"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">norm_config_full</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/normalization_config_template.yaml"</span><span class="p">)</span>
 
+<span class="c1"># --- Run Normalization Module ---</span>
+<span class="c1"># Uses df_validated from the previous step and global run_id/notebook_mode.</span>
 <span class="n">df_normalized</span> <span class="o">=</span> <span class="n">run_normalization_pipeline</span><span class="p">(</span>
-    <span class="n">config</span><span class="o">=</span><span class="n">norm_cfg</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">norm_config_full</span><span class="p">,</span>
     <span class="n">df</span><span class="o">=</span><span class="n">df_validated</span><span class="p">,</span>
     <span class="n">notebook</span><span class="o">=</span><span class="n">notebook_mode</span><span class="p">,</span>
     <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span>
@@ -13499,7 +13478,7 @@ All rules and output paths are controlled via the YAML config (<code>normalizati
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="%F0%9F%9B%A1%EF%B8%8F-Step-4:-Certification-Gatekeeper-(M04)">🛡️ Step 4: Certification Gatekeeper (M04)<a class="anchor-link" href="#%F0%9F%9B%A1%EF%B8%8F-Step-4:-Certification-Gatekeeper-(M04)">¶</a></h3><p>This module enforces <strong>strict schema and content rules</strong> and is designed to <strong>halt the pipeline</strong> if violations are found:</p>
+<h3 id="%F0%9F%9B%A1%EF%B8%8F-Step-4:-Certification-Gate-(M02)">🛡️ Step 4: Certification Gate (M02)<a class="anchor-link" href="#%F0%9F%9B%A1%EF%B8%8F-Step-4:-Certification-Gate-(M02)">¶</a></h3><p>This step re-uses the <strong>Validation Module (M02)</strong>, but with a stricter configuration to act as a quality gate. It is designed to <strong>halt the pipeline</strong> if violations are found:</p>
 <ul>
 <li>✅ All column names, data types, categorical values, and numeric ranges must pass</li>
 <li>🛑 <strong><code>fail_on_error: true</code></strong> triggers a hard stop on validation failure</li>
@@ -13522,25 +13501,22 @@ All certification rules live in the YAML config (<code>certification_config_temp
 <div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># 🛡️ M02: Final Certification (Strict Validation Gatekeeper)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># 🛡️ M02: Certification (Strict Validation Gatekeeper)</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m00_utils.config_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m02_validation.run_validation_pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_validation_pipeline</span>
 
 <span class="c1"># --- Load Certification Config ---</span>
-<span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/certification_config_template.yaml"</span><span class="p">)</span>
-<span class="n">cert_cfg</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"validation"</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">notebook_mode</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"notebook_mode"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">run_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"run_id"</span><span class="p">)</span>
+<span class="n">cert_config_full</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/certification_config_template.yaml"</span><span class="p">)</span>
 
 <span class="c1"># --- Run Final Certification Pass ---</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"🚀 Starting M04: Certification (Validation Gatekeeper)"</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"🚀 Starting Certification Gate (re-using M02)"</span><span class="p">)</span>
 
 <span class="n">df_certified</span> <span class="o">=</span> <span class="n">run_validation_pipeline</span><span class="p">(</span>
-    <span class="n">config</span><span class="o">=</span><span class="n">cert_cfg</span><span class="p">,</span>
-    <span class="n">notebook</span><span class="o">=</span><span class="n">notebook_mode</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">cert_config_full</span><span class="p">,</span>
     <span class="n">df</span><span class="o">=</span><span class="n">df_normalized</span><span class="p">,</span>
+    <span class="n">notebook</span><span class="o">=</span><span class="n">notebook_mode</span><span class="p">,</span>
     <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span>
 <span class="p">)</span>
 </pre></div>
@@ -13613,7 +13589,7 @@ All certification rules live in the YAML config (<code>certification_config_temp
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="%F0%9F%A7%B9-Step-5:-Deduplication-(M05)">🧹 Step 5: Deduplication (M05)<a class="anchor-link" href="#%F0%9F%A7%B9-Step-5:-Deduplication-(M05)">¶</a></h3><p>This module identifies and handles <strong>duplicate rows</strong> in the dataset.</p>
+<h3 id="%F0%9F%A7%B9-Step-5:-Deduplication-(M04)">🧹 Step 5: Deduplication (M04)<a class="anchor-link" href="#%F0%9F%A7%B9-Step-5:-Deduplication-(M04)">¶</a></h3><p>This module identifies and handles <strong>duplicate rows</strong> in the dataset, using the logic from <code>m04_duplicates</code>.</p>
 <p>You can choose to:</p>
 <ul>
 <li>🔍 <strong>Flag duplicates</strong> for review</li>
@@ -13640,24 +13616,19 @@ All certification rules live in the YAML config (<code>certification_config_temp
 <div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># ♻️ D04: Dedupliction and Duplicates Handling</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># ♻️ M04: Deduplication and Duplicates Handling</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m00_utils.config_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m00_utils.load_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_csv</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m04_duplicates.run_dupes_pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_duplicates_pipeline</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
-<span class="c1"># --- Load Full Config ---</span>
-<span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/dups_config_template.yaml"</span><span class="p">)</span>
-<span class="n">dup_cfg</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"duplicates"</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">notebook_mode</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"notebook"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">run_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"run_id"</span><span class="p">)</span>
-
+<span class="c1"># --- Load Config ---</span>
+<span class="n">dupes_config_full</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/dups_config_template.yaml"</span><span class="p">)</span>
 
 
 <span class="c1"># --- Run Duplicates Module ---</span>
 <span class="n">df_deduped</span> <span class="o">=</span> <span class="n">run_duplicates_pipeline</span><span class="p">(</span>
-    <span class="n">config</span><span class="o">=</span><span class="n">dup_cfg</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">dupes_config_full</span><span class="p">,</span>
     <span class="n">df</span><span class="o">=</span><span class="n">df_certified</span><span class="p">,</span>
     <span class="n">notebook</span><span class="o">=</span><span class="n">notebook_mode</span><span class="p">,</span>
     <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span>
@@ -13677,8 +13648,8 @@ All certification rules live in the YAML config (<code>certification_config_temp
 <div>
 <div style="border: 1px solid #d0d7de; background-color: #eef2f7; color: #24292e; padding: 12px; border-radius: 6px; margin-bottom: 20px;">
 <strong>Stage:</strong> M04 Deduplication ⚠️ | 
-        <strong>Rows Removed:</strong> 1 |
-        <strong>Criteria:</strong> Based on all columns
+        <strong>Rows Flagged:</strong> 1219 |
+        <strong>Criteria:</strong> Based on `tag_id`, `species`, `capture_date`
     </div><details open=""><summary><strong>📈 Summary of Changes</strong></summary><div style="margin-top: 1em;"><table border="1" class="dataframe table table-striped">
 <thead>
 <tr style="text-align: right;">
@@ -13688,20 +13659,16 @@ All certification rules live in the YAML config (<code>certification_config_temp
 </thead>
 <tbody>
 <tr>
-<td>Original Row Count</td>
+<td>Total Row Count</td>
 <td>5541</td>
 </tr>
 <tr>
-<td>Deduplicated Row Count</td>
-<td>5540</td>
-</tr>
-<tr>
-<td>Rows Removed</td>
-<td>1</td>
+<td>Duplicate Rows Flagged</td>
+<td>1219</td>
 </tr>
 </tbody>
 </table></div></details>
-<details>
+<details open="">
 <summary><strong>🔍 Duplicate Clusters Found (click to scroll)</strong></summary>
 <div style="max-height: 400px; overflow-y: auto; margin-top: 1em; padding-top: 4px;">
 <table border="1" class="dataframe table table-striped">
@@ -13726,38 +13693,344 @@ All certification rules live in the YAML config (<code>certification_config_temp
 </thead>
 <tbody>
 <tr>
-<td>NaN</td>
-<td>Gentoo</td>
-<td>48.99</td>
-<td>14.11</td>
-<td>220.9</td>
-<td>5890.0</td>
-<td>Adult</td>
+<td>ADE-0001</td>
+<td>Adelie</td>
+<td>39.55</td>
+<td>19.92</td>
+<td>186.20</td>
+<td>2500.00</td>
+<td>Chick</td>
 <td>MALE</td>
-<td>Torgersen North</td>
-<td>Torgersen</td>
-<td>2023-11-17</td>
-<td>NaN</td>
-<td>PAPRI2023</td>
+<td>Biscoe West</td>
+<td>Biscoe</td>
+<td>NaT</td>
+<td>Underweight</td>
+<td>PAPRI2022</td>
 <td>yes</td>
-<td>2023-11-09</td>
+<td>2022-07-20</td>
 </tr>
 <tr>
+<td>ADE-0001</td>
+<td>Adelie</td>
+<td>42.60</td>
+<td>21.37</td>
+<td>184.50</td>
+<td>2477.78</td>
+<td>Juvenile</td>
+<td>MALE</td>
+<td>Biscoe West</td>
+<td>Biscoe</td>
+<td>NaT</td>
+<td>Healthy</td>
+<td>PAPRI2022</td>
+<td>yes</td>
+<td>2022-07-20</td>
+</tr>
+<tr>
+<td>ADE-0001</td>
+<td>Adelie</td>
+<td>38.70</td>
+<td>20.78</td>
+<td>202.74</td>
+<td>2650.73</td>
+<td>Juvenile</td>
+<td>MALE</td>
+<td>Biscoe West</td>
+<td>Biscoe</td>
+<td>NaT</td>
+<td>Underweight</td>
+<td>PAPRI2022</td>
+<td>yes</td>
+<td>2022-07-20</td>
+</tr>
+<tr>
+<td>ADE-0013</td>
+<td>Adelie</td>
+<td>40.28</td>
+<td>18.10</td>
+<td>188.60</td>
+<td>3224.00</td>
+<td>Juvenile</td>
 <td>NaN</td>
-<td>Gentoo</td>
-<td>48.99</td>
-<td>14.11</td>
-<td>220.9</td>
-<td>5890.0</td>
+<td>NaN</td>
+<td>Cormorant</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>PAPRI2022</td>
+<td>yes</td>
+<td>2022-06-18</td>
+</tr>
+<tr>
+<td>ADE-0013</td>
+<td>Adelie</td>
+<td>41.51</td>
+<td>19.31</td>
+<td>182.31</td>
+<td>3322.26</td>
+<td>Adult</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Cormorant</td>
+<td>NaT</td>
+<td>Overweight</td>
+<td>PAPRI2022</td>
+<td>yes</td>
+<td>2022-06-18</td>
+</tr>
+<tr>
+<td>ADE-0049</td>
+<td>Adelie</td>
+<td>NaN</td>
+<td>18.46</td>
+<td>185.40</td>
+<td>3326.00</td>
+<td>Adult</td>
+<td>FEMALE</td>
+<td>Shortcut Point</td>
+<td>Shortcut</td>
+<td>NaT</td>
+<td>Healthy</td>
+<td>PAPRI2024</td>
+<td>yes</td>
+<td>2024-08-29</td>
+</tr>
+<tr>
+<td>ADE-0049</td>
+<td>Adelie</td>
+<td>NaN</td>
+<td>17.77</td>
+<td>176.49</td>
+<td>3175.64</td>
+<td>Adult</td>
+<td>FEMALE</td>
+<td>Shortcut Point</td>
+<td>Shortcut</td>
+<td>NaT</td>
+<td>Overweight</td>
+<td>PAPRI2024</td>
+<td>yes</td>
+<td>2024-08-29</td>
+</tr>
+<tr>
+<td>ADE-0054</td>
+<td>Adelie</td>
+<td>42.06</td>
+<td>17.93</td>
+<td>NaN</td>
+<td>4125.00</td>
 <td>Adult</td>
 <td>MALE</td>
-<td>Torgersen North</td>
-<td>Torgersen</td>
-<td>2023-11-17</td>
+<td>Biscoe West</td>
+<td>Biscoe</td>
+<td>NaT</td>
+<td>Overweight</td>
+<td>PAPRI2022</td>
 <td>NaN</td>
+<td>2022-10-28</td>
+</tr>
+<tr>
+<td>ADE-0054</td>
+<td>Adelie</td>
+<td>42.53</td>
+<td>18.07</td>
+<td>NaN</td>
+<td>4342.78</td>
+<td>Adult</td>
+<td>MALE</td>
+<td>Biscoe West</td>
+<td>Biscoe</td>
+<td>NaT</td>
+<td>Critical</td>
+<td>PAPRI2022</td>
+<td>NaN</td>
+<td>2022-10-28</td>
+</tr>
+<tr>
+<td>ADE-0073</td>
+<td>Adelie</td>
+<td>41.64</td>
+<td>17.10</td>
+<td>192.80</td>
+<td>2500.00</td>
+<td>Chick</td>
+<td>FEMALE</td>
+<td>Torgersen North</td>
+<td>NaN</td>
+<td>NaT</td>
+<td>Overweight</td>
 <td>PAPRI2023</td>
 <td>yes</td>
-<td>2023-11-09</td>
+<td>2023-02-24</td>
+</tr>
+<tr>
+<td>ADE-0073</td>
+<td>Adelie</td>
+<td>41.30</td>
+<td>16.87</td>
+<td>206.44</td>
+<td>2567.20</td>
+<td>Juvenile</td>
+<td>FEMALE</td>
+<td>Torgersen North</td>
+<td>NaN</td>
+<td>NaT</td>
+<td>Underweight</td>
+<td>PAPRI2023</td>
+<td>yes</td>
+<td>2023-02-24</td>
+</tr>
+<tr>
+<td>ADE-0076</td>
+<td>Adelie</td>
+<td>39.82</td>
+<td>18.13</td>
+<td>184.90</td>
+<td>3642.00</td>
+<td>Adult</td>
+<td>NaN</td>
+<td>Cormorant East</td>
+<td>Cormorant</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>PAPRI2021</td>
+<td>yes</td>
+<td>2021-06-18</td>
+</tr>
+<tr>
+<td>ADE-0076</td>
+<td>Adelie</td>
+<td>42.27</td>
+<td>18.40</td>
+<td>183.97</td>
+<td>3753.19</td>
+<td>Adult</td>
+<td>NaN</td>
+<td>Cormorant East</td>
+<td>Cormorant</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>PAPRI2021</td>
+<td>yes</td>
+<td>2021-06-18</td>
+</tr>
+<tr>
+<td>ADE-0076</td>
+<td>Adelie</td>
+<td>42.67</td>
+<td>19.15</td>
+<td>178.12</td>
+<td>3569.29</td>
+<td>Adult</td>
+<td>NaN</td>
+<td>Cormorant East</td>
+<td>Cormorant</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>PAPRI2021</td>
+<td>yes</td>
+<td>2021-06-18</td>
+</tr>
+<tr>
+<td>ADE-0119</td>
+<td>Adelie</td>
+<td>35.76</td>
+<td>17.78</td>
+<td>179.84</td>
+<td>2716.83</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Dream South</td>
+<td>Dream</td>
+<td>2022-07-08</td>
+<td>Healthy</td>
+<td>PAPRI2021</td>
+<td>yes</td>
+<td>2021-07-05</td>
+</tr>
+<tr>
+<td>ADE-0119</td>
+<td>Adelie</td>
+<td>40.13</td>
+<td>18.80</td>
+<td>201.99</td>
+<td>2983.99</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Dream South</td>
+<td>Dream</td>
+<td>2022-07-08</td>
+<td>Healthy</td>
+<td>PAPRI2021</td>
+<td>yes</td>
+<td>2021-07-05</td>
+</tr>
+<tr>
+<td>ADE-0137</td>
+<td>Adelie</td>
+<td>43.03</td>
+<td>17.11</td>
+<td>193.40</td>
+<td>NaN</td>
+<td>Adult</td>
+<td>UNKNOWN</td>
+<td>Torgersen North</td>
+<td>Torgersen</td>
+<td>NaT</td>
+<td>Healthy</td>
+<td>PAPRI2021</td>
+<td>yes</td>
+<td>2021-03-21</td>
+</tr>
+<tr>
+<td>ADE-0137</td>
+<td>Adelie</td>
+<td>46.46</td>
+<td>16.39</td>
+<td>186.41</td>
+<td>NaN</td>
+<td>Adult</td>
+<td>UNKNOWN</td>
+<td>Torgersen North</td>
+<td>Torgersen</td>
+<td>NaT</td>
+<td>Underweight</td>
+<td>PAPRI2021</td>
+<td>yes</td>
+<td>2021-03-21</td>
+</tr>
+<tr>
+<td>ADE-0155</td>
+<td>Adelie</td>
+<td>38.31</td>
+<td>17.86</td>
+<td>197.70</td>
+<td>3512.00</td>
+<td>Adult</td>
+<td>NaN</td>
+<td>Torgersen North</td>
+<td>Torgersen</td>
+<td>NaT</td>
+<td>Healthy</td>
+<td>PAPRI2023</td>
+<td>no</td>
+<td>NaT</td>
+</tr>
+<tr>
+<td>ADE-0155</td>
+<td>Adelie</td>
+<td>39.45</td>
+<td>19.48</td>
+<td>197.89</td>
+<td>3527.76</td>
+<td>Adult</td>
+<td>NaN</td>
+<td>Torgersen North</td>
+<td>Torgersen</td>
+<td>NaT</td>
+<td>Overweight</td>
+<td>PAPRI2023</td>
+<td>no</td>
+<td>NaT</td>
 </tr>
 </tbody>
 </table>
@@ -13781,7 +14054,7 @@ All certification rules live in the YAML config (<code>certification_config_temp
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="%F0%9F%93%8F-Step-6:-Detect-Outliers-(M06)">📏 Step 6: Detect Outliers (M06)<a class="anchor-link" href="#%F0%9F%93%8F-Step-6:-Detect-Outliers-(M06)">¶</a></h3><p>This module scans numeric columns for outliers using configurable logic:</p>
+<h3 id="%F0%9F%93%8F-Step-6:-Detect-Outliers-(M05)">📏 Step 6: Detect Outliers (M05)<a class="anchor-link" href="#%F0%9F%93%8F-Step-6:-Detect-Outliers-(M05)">¶</a></h3><p>This module (<code>m05_detect_outliers</code>) scans numeric columns for outliers using configurable logic:</p>
 <ul>
 <li><strong>Z-Score</strong> or <strong>IQR</strong> methods (per column or global default)</li>
 <li>Adds binary flags (e.g., <code>*_outlier</code>) to the dataset if <code>append_flags: true</code></li>
@@ -13816,22 +14089,16 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m00_utils.config_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m05_detect_outliers.run_detection_pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_outlier_detection_pipeline</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
 
+<span class="c1"># --- Load module-specific config ---</span>
+<span class="n">outlier_config_full</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/outlier_config_template.yaml"</span><span class="p">)</span>
 
-<span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/outlier_config_template.yaml"</span><span class="p">)</span>
-<span class="n">outlier_cfg</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"outlier_detection"</span><span class="p">,</span> <span class="p">{})</span>
-
-<span class="c1"># Get global settings from the top level of the config</span>
-<span class="n">notebook_mode</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"notebook"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">run_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"run_id"</span><span class="p">)</span> <span class="c1"># Provide a default run_id</span>
-
-<span class="c1"># The 'df_deduped' variable should be the output from your M03 Duplicates module</span>
+<span class="c1"># The 'df_deduped' variable should be the output from your M04 Duplicates module</span>
 <span class="k">if</span> <span class="s1">'df_deduped'</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">():</span>
     <span class="n">df_outliers_flagged</span><span class="p">,</span> <span class="n">detection_results</span> <span class="o">=</span> <span class="n">run_outlier_detection_pipeline</span><span class="p">(</span>
-        <span class="n">config</span><span class="o">=</span><span class="n">outlier_cfg</span><span class="p">,</span>
-        <span class="n">df</span><span class="o">=</span><span class="n">df_deduped</span><span class="p">,</span> 
+        <span class="n">config</span><span class="o">=</span><span class="n">outlier_config_full</span><span class="p">,</span>
+        <span class="n">df</span><span class="o">=</span><span class="n">df_deduped</span><span class="p">,</span>
         <span class="n">notebook</span><span class="o">=</span><span class="n">notebook_mode</span><span class="p">,</span>
         <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span>
     <span class="p">)</span>
@@ -13871,15 +14138,15 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>iqr</td>
 <td>1</td>
 <td>27.235000</td>
-<td>62.63500</td>
+<td>62.635000</td>
 <td>[62.64]</td>
 </tr>
 <tr>
 <td>body_mass_g</td>
 <td>zscore</td>
 <td>18</td>
-<td>710.701428</td>
-<td>6995.79582</td>
+<td>709.829815</td>
+<td>6997.460715</td>
 <td>[7000.0, 7000.0, 7000.0, 7000.0, 7000.0]</td>
 </tr>
 </tbody>
@@ -13907,6 +14174,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <th>study_name</th>
 <th>clutch_completion</th>
 <th>date_egg</th>
+<th>is_duplicate</th>
 </tr>
 </thead>
 <tbody>
@@ -13926,6 +14194,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2019</td>
 <td>NaN</td>
 <td>NaT</td>
+<td>False</td>
 </tr>
 <tr>
 <td>NaN</td>
@@ -13943,6 +14212,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2021</td>
 <td>NaN</td>
 <td>2021-08-14</td>
+<td>False</td>
 </tr>
 <tr>
 <td>GEN-0041</td>
@@ -13960,6 +14230,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2021</td>
 <td>NaN</td>
 <td>2021-11-23</td>
+<td>False</td>
 </tr>
 <tr>
 <td>NaN</td>
@@ -13977,6 +14248,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2022</td>
 <td>NaN</td>
 <td>2022-10-12</td>
+<td>False</td>
 </tr>
 <tr>
 <td>ADE-0182</td>
@@ -13994,6 +14266,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2024</td>
 <td>yes</td>
 <td>2024-01-31</td>
+<td>False</td>
 </tr>
 <tr>
 <td>NaN</td>
@@ -14011,6 +14284,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>NaN</td>
 <td>no</td>
 <td>NaT</td>
+<td>True</td>
 </tr>
 <tr>
 <td>NaN</td>
@@ -14028,6 +14302,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2021</td>
 <td>yes</td>
 <td>2021-03-25</td>
+<td>True</td>
 </tr>
 <tr>
 <td>GEN-0301</td>
@@ -14045,6 +14320,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2022</td>
 <td>no</td>
 <td>NaT</td>
+<td>False</td>
 </tr>
 <tr>
 <td>NaN</td>
@@ -14062,6 +14338,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2021</td>
 <td>yes</td>
 <td>2021-07-17</td>
+<td>False</td>
 </tr>
 <tr>
 <td>GEN-0681</td>
@@ -14079,6 +14356,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2022</td>
 <td>yes</td>
 <td>2022-11-07</td>
+<td>True</td>
 </tr>
 <tr>
 <td>GEN-0706</td>
@@ -14096,6 +14374,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2024</td>
 <td>yes</td>
 <td>2024-02-21</td>
+<td>False</td>
 </tr>
 <tr>
 <td>GEN-0743</td>
@@ -14113,6 +14392,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2020</td>
 <td>yes</td>
 <td>2020-03-17</td>
+<td>False</td>
 </tr>
 <tr>
 <td>CHN-0860</td>
@@ -14130,6 +14410,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2023</td>
 <td>yes</td>
 <td>2023-11-16</td>
+<td>False</td>
 </tr>
 <tr>
 <td>GEN-0974</td>
@@ -14147,6 +14428,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2021</td>
 <td>yes</td>
 <td>2020-12-26</td>
+<td>False</td>
 </tr>
 <tr>
 <td>GEN-0681</td>
@@ -14164,6 +14446,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2022</td>
 <td>yes</td>
 <td>2022-11-07</td>
+<td>True</td>
 </tr>
 <tr>
 <td>NaN</td>
@@ -14181,6 +14464,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2020</td>
 <td>NaN</td>
 <td>2020-03-12</td>
+<td>False</td>
 </tr>
 <tr>
 <td>NaN</td>
@@ -14198,6 +14482,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>NaN</td>
 <td>no</td>
 <td>NaT</td>
+<td>True</td>
 </tr>
 <tr>
 <td>CHN-0219</td>
@@ -14215,6 +14500,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2019</td>
 <td>yes</td>
 <td>2019-10-16</td>
+<td>False</td>
 </tr>
 <tr>
 <td>NaN</td>
@@ -14232,6 +14518,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>PAPRI2019</td>
 <td>NaN</td>
 <td>NaT</td>
+<td>False</td>
 </tr>
 </tbody>
 </table></div></details>
@@ -14252,7 +14539,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="%F0%9F%A7%BC-Step-7:-Handle-Outliers-(M07)">🧼 Step 7: Handle Outliers (M07)<a class="anchor-link" href="#%F0%9F%A7%BC-Step-7:-Handle-Outliers-(M07)">¶</a></h3><p>This module applies cleanup strategies to flagged outliers from the detection step:</p>
+<h3 id="%F0%9F%A7%BC-Step-7:-Handle-Outliers-(M06)">🧼 Step 7: Handle Outliers (M06)<a class="anchor-link" href="#%F0%9F%A7%BC-Step-7:-Handle-Outliers-(M06)">¶</a></h3><p>This module (<code>m06_outlier_handling</code>) applies cleanup strategies to flagged outliers from the detection step:</p>
 <ul>
 <li>Strategies include:<ul>
 <li><code>'clip'</code>: Caps values to threshold bounds</li>
@@ -14289,16 +14576,12 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m00_utils.config_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m06_outlier_handling.run_handling_pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_outlier_handling_pipeline</span>
 
-
-<span class="c1"># --- Load Outlier Handling Config ---</span>
-<span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/handling_config_template.yaml"</span><span class="p">)</span>
-<span class="n">handling_cfg</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"outlier_handling"</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">run_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"run_id"</span><span class="p">)</span>
-<span class="n">notebook_mode</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"notebook"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="c1"># --- Load module-specific config ---</span>
+<span class="n">handling_config_full</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/handling_config_template.yaml"</span><span class="p">)</span>
 
 <span class="c1"># Pass the entire detection_results dictionary, not its unpacked components.</span>
 <span class="n">df_handled</span> <span class="o">=</span> <span class="n">run_outlier_handling_pipeline</span><span class="p">(</span>
-    <span class="n">config</span><span class="o">=</span><span class="n">handling_cfg</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">handling_config_full</span><span class="p">,</span>
     <span class="n">df</span><span class="o">=</span><span class="n">df_outliers_flagged</span><span class="p">,</span>
     <span class="n">detection_results</span><span class="o">=</span><span class="n">detection_results</span><span class="p">,</span> <span class="c1"># Pass the whole dictionary here</span>
     <span class="n">notebook</span><span class="o">=</span><span class="n">notebook_mode</span><span class="p">,</span>
@@ -14384,7 +14667,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="%F0%9F%94%A7-Step-8:-Impute-Missing-Values-(M08)">🔧 Step 8: Impute Missing Values (M08)<a class="anchor-link" href="#%F0%9F%94%A7-Step-8:-Impute-Missing-Values-(M08)">¶</a></h3><p>This module fills missing (<code>NaN</code>) values using a column-specific strategy:</p>
+<h3 id="%F0%9F%94%A7-Step-8:-Impute-Missing-Values-(M07)">🔧 Step 8: Impute Missing Values (M07)<a class="anchor-link" href="#%F0%9F%94%A7-Step-8:-Impute-Missing-Values-(M07)">¶</a></h3><p>This module (<code>m07_imputation</code>) fills missing (<code>NaN</code>) values using a column-specific strategy:</p>
 <ul>
 <li><code>'mean'</code>, <code>'median'</code>, or <code>'mode'</code> for numeric/categorical inference</li>
 <li><code>'constant'</code> for fixed fallback values (e.g., <code>"UNKNOWN"</code> or <code>"1900-01-01"</code>)</li>
@@ -14420,13 +14703,10 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m07_imputation.run_imputation_pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_imputation_pipeline</span>
 
 <span class="c1"># Load the configuration for the imputation module</span>
-<span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/imputation_config_template.yaml"</span><span class="p">)</span> 
-<span class="n">imputation_cfg</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"imputation"</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">run_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"run_id"</span><span class="p">)</span>
-<span class="n">notebook_mode</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"notebook"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">imputation_config_full</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/imputation_config_template.yaml"</span><span class="p">)</span>
 
 <span class="n">df_imputed</span> <span class="o">=</span> <span class="n">run_imputation_pipeline</span><span class="p">(</span>
-    <span class="n">config</span><span class="o">=</span><span class="n">imputation_cfg</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">imputation_config_full</span><span class="p">,</span>
     <span class="n">notebook</span><span class="o">=</span><span class="n">notebook_mode</span><span class="p">,</span>
     <span class="n">df</span><span class="o">=</span><span class="n">df_handled</span><span class="p">,</span>  <span class="c1"># Pass the existing DataFrame here</span>
     <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span>
@@ -14445,7 +14725,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div style="border: 1px solid #d0d7de; background-color: #eef2f7; color: #24292e; padding: 12px; border-radius: 6px; margin-bottom: 20px;">
 <strong>Stage:</strong> M07 Data Imputation ✅ | 
-        <strong>Total Values Filled:</strong> 11289 |
+        <strong>Total Values Filled:</strong> 11291 |
         <strong>Columns Affected:</strong> 15
     </div>
 </div>
@@ -14474,13 +14754,13 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tr>
 <td>body_mass_g</td>
 <td>mean</td>
-<td>3841.69</td>
+<td>3842.08</td>
 <td>406</td>
 </tr>
 <tr>
 <td>bill_depth_mm</td>
 <td>median</td>
-<td>17.49</td>
+<td>17.48</td>
 <td>417</td>
 </tr>
 <tr>
@@ -14499,7 +14779,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>tag_id</td>
 <td>constant</td>
 <td>UNKNOWN</td>
-<td>2241</td>
+<td>2242</td>
 </tr>
 <tr>
 <td>species</td>
@@ -14553,7 +14833,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <td>health_status</td>
 <td>constant</td>
 <td>UNKNOWN</td>
-<td>553</td>
+<td>554</td>
 </tr>
 </tbody>
 </table></div><div style="flex: 1;"><h4>🔍 Null Value Audit</h4><table border="1" class="dataframe table table-striped">
@@ -14598,9 +14878,9 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 </tr>
 <tr>
 <td>tag_id</td>
-<td>2241</td>
+<td>2242</td>
 <td>0</td>
-<td>2241</td>
+<td>2242</td>
 </tr>
 <tr>
 <td>species</td>
@@ -14652,9 +14932,9 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 </tr>
 <tr>
 <td>health_status</td>
-<td>553</td>
+<td>554</td>
 <td>0</td>
-<td>553</td>
+<td>554</td>
 </tr>
 </tbody>
 </table></div>
@@ -14681,7 +14961,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tbody>
 <tr>
 <td>MALE</td>
-<td>4107</td>
+<td>4108</td>
 </tr>
 <tr>
 <td>FEMALE</td>
@@ -14711,8 +14991,8 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 </tr>
 <tr>
 <td>MALE</td>
-<td>1368</td>
-<td>4107</td>
+<td>1369</td>
+<td>4108</td>
 <td>2739</td>
 </tr>
 <tr>
@@ -14744,7 +15024,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tbody>
 <tr>
 <td>UNKNOWN</td>
-<td>2241</td>
+<td>2242</td>
 </tr>
 <tr>
 <td>GEN-0271</td>
@@ -14796,9 +15076,9 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tbody>
 <tr>
 <td>NaN</td>
-<td>2241</td>
+<td>2242</td>
 <td>0</td>
-<td>-2241</td>
+<td>-2242</td>
 </tr>
 <tr>
 <td>GEN-0271</td>
@@ -14871,7 +15151,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tbody>
 <tr>
 <td>Gentoo</td>
-<td>1814</td>
+<td>1815</td>
 </tr>
 <tr>
 <td>Adelie</td>
@@ -14899,8 +15179,8 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tbody>
 <tr>
 <td>Gentoo</td>
-<td>1814</td>
-<td>1814</td>
+<td>1815</td>
+<td>1815</td>
 <td>0</td>
 </tr>
 <tr>
@@ -14944,7 +15224,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tbody>
 <tr>
 <td>Adult</td>
-<td>3821</td>
+<td>3822</td>
 </tr>
 <tr>
 <td>Juvenile</td>
@@ -14972,8 +15252,8 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tbody>
 <tr>
 <td>Adult</td>
-<td>3821</td>
-<td>3821</td>
+<td>3822</td>
+<td>3822</td>
 <td>0</td>
 </tr>
 <tr>
@@ -15017,7 +15297,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tbody>
 <tr>
 <td>Torgersen North</td>
-<td>1489</td>
+<td>1490</td>
 </tr>
 <tr>
 <td>Dream South</td>
@@ -15053,8 +15333,8 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tbody>
 <tr>
 <td>Torgersen North</td>
-<td>1489</td>
-<td>1489</td>
+<td>1490</td>
+<td>1490</td>
 <td>0</td>
 </tr>
 <tr>
@@ -15110,7 +15390,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tbody>
 <tr>
 <td>Torgersen</td>
-<td>1404</td>
+<td>1405</td>
 </tr>
 <tr>
 <td>Dream</td>
@@ -15146,8 +15426,8 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tbody>
 <tr>
 <td>Torgersen</td>
-<td>1404</td>
-<td>1404</td>
+<td>1405</td>
+<td>1405</td>
 <td>0</td>
 </tr>
 <tr>
@@ -15215,7 +15495,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 </tr>
 <tr>
 <td>PAPRI2023</td>
-<td>823</td>
+<td>824</td>
 </tr>
 <tr>
 <td>PAPRI2024</td>
@@ -15261,8 +15541,8 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 </tr>
 <tr>
 <td>PAPRI2023</td>
-<td>823</td>
-<td>823</td>
+<td>824</td>
+<td>824</td>
 <td>0</td>
 </tr>
 <tr>
@@ -15306,7 +15586,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tbody>
 <tr>
 <td>yes</td>
-<td>4313</td>
+<td>4314</td>
 </tr>
 <tr>
 <td>no</td>
@@ -15330,8 +15610,8 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tbody>
 <tr>
 <td>yes</td>
-<td>4313</td>
-<td>4313</td>
+<td>4314</td>
+<td>4314</td>
 <td>0</td>
 </tr>
 <tr>
@@ -15381,7 +15661,7 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 </tr>
 <tr>
 <td>UNKNOWN</td>
-<td>583</td>
+<td>584</td>
 </tr>
 <tr>
 <td>Critical</td>
@@ -15423,9 +15703,9 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 </tr>
 <tr>
 <td>NaN</td>
-<td>553</td>
+<td>554</td>
 <td>0</td>
-<td>-553</td>
+<td>-554</td>
 </tr>
 <tr>
 <td>Critical</td>
@@ -15442,8 +15722,8 @@ If enabled, the <code>PlotViewer</code> renders <strong>boxplots, histograms, an
 <tr>
 <td>UNKNOWN</td>
 <td>30</td>
-<td>583</td>
-<td>553</td>
+<td>584</td>
+<td>554</td>
 </tr>
 </tbody>
 </table></div>
@@ -15547,7 +15827,7 @@ These are not called directly in the notebook, but are crucial to the system’s
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># 🎬 M10: Final Auditing and Certifaction </span>
@@ -15556,18 +15836,14 @@ These are not called directly in the notebook, but are crucial to the system’s
 <span class="kn">from</span><span class="w"> </span><span class="nn">analyst_toolkit.m00_utils.config_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
 
 <span class="c1"># --- Load Config ---</span>
-<span class="n">config_path</span> <span class="o">=</span> <span class="s2">"config/final_audit_config_template.yaml"</span>
-<span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="n">config_path</span><span class="p">)</span>
-
-<span class="c1"># --- Extract settings (this part is correct) ---</span>
-<span class="n">notebook_mode</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"notebook"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">run_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"run_id"</span><span class="p">)</span>
+<span class="n">final_audit_config_full</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">"config/final_audit_config_template.yaml"</span><span class="p">)</span>
 
 <span class="c1"># --- Run Final Audit ---</span>
-<span class="c1"># The run_id is handled internally by the pipeline function from the config.</span>
+<span class="c1"># The final audit pipeline expects the full config dictionary, as it may perform</span>
+<span class="c1"># validation using rules from a separate block.</span>
 <span class="n">df_final_clean</span> <span class="o">=</span> <span class="n">run_final_audit_pipeline</span><span class="p">(</span>
-    <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
-    <span class="n">df</span><span class="o">=</span><span class="n">df_imputed</span><span class="p">,</span>  <span class="c1"># This correctly passes the processed DataFrame</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">final_audit_config_full</span><span class="p">,</span>
+    <span class="n">df</span><span class="o">=</span><span class="n">df_imputed</span><span class="p">,</span>  <span class="c1"># Pass the existing DataFrame here</span>
     <span class="n">notebook</span><span class="o">=</span><span class="n">notebook_mode</span><span class="p">,</span>
     <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span>
 <span class="p">)</span>
@@ -15583,9 +15859,31 @@ These are not called directly in the notebook, but are crucial to the system’s
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div style="border: 1px solid #b7ebc9; background-color: #e6ffed; padding: 16px; border-radius: 6px; margin-bottom: 20px;">
-<strong style="font-size: 1.2em;">✅ PIPELINE CERTIFIED</strong>
+<div style="border: 1px solid #f5b1b0; background-color: #ffeded; padding: 16px; border-radius: 6px; margin-bottom: 20px;">
+<strong style="font-size: 1.2em;">❌ CERTIFICATION FAILED</strong>
 </div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<details open="" style="border: 1px solid #f5b1b0; border-radius: 6px; padding: 10px; margin-bottom: 15px;">
+<summary><strong>⚠️ Failure Details</strong></summary>
+<div style="margin-top: 1em; padding: 5px;"><h4>🚦 Failures Schema Conformity</h4><table border="1" class="dataframe table table-striped">
+<thead>
+<tr style="text-align: right;">
+<th>Issue Type</th>
+<th>Columns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unexpected</td>
+<td>is_duplicate</td>
+</tr>
+</tbody>
+</table></div>
+</details>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -15603,11 +15901,11 @@ These are not called directly in the notebook, but are crucial to the system’s
 <tbody>
 <tr>
 <td>Final Pipeline Status</td>
-<td>✅ PIPELINE CERTIFIED</td>
+<td>❌ CERTIFICATION FAILED</td>
 </tr>
 <tr>
 <td>Certification Rules Passed</td>
-<td>True</td>
+<td>False</td>
 </tr>
 <tr>
 <td>Null Value Audit Passed</td>
@@ -15652,7 +15950,7 @@ These are not called directly in the notebook, but are crucial to the system’s
 </tr>
 <tr>
 <td>Final Rows</td>
-<td>5540</td>
+<td>5541</td>
 </tr>
 <tr>
 <td>Initial Columns</td>
@@ -15660,7 +15958,7 @@ These are not called directly in the notebook, but are crucial to the system’s
 </tr>
 <tr>
 <td>Final Columns</td>
-<td>15</td>
+<td>16</td>
 </tr>
 </tbody>
 </table></div>
@@ -15705,7 +16003,7 @@ These are not called directly in the notebook, but are crucial to the system’s
 <tr>
 <td>bill_depth_mm</td>
 <td>float64</td>
-<td>862</td>
+<td>863</td>
 <td>✅ OK</td>
 <td>0</td>
 <td>0.0</td>
@@ -15713,7 +16011,7 @@ These are not called directly in the notebook, but are crucial to the system’s
 <tr>
 <td>flipper_length_mm</td>
 <td>float64</td>
-<td>1466</td>
+<td>1467</td>
 <td>✅ OK</td>
 <td>0</td>
 <td>0.0</td>
@@ -15798,6 +16096,14 @@ These are not called directly in the notebook, but are crucial to the system’s
 <td>0</td>
 <td>0.0</td>
 </tr>
+<tr>
+<td>is_duplicate</td>
+<td>bool</td>
+<td>2</td>
+<td>✅ OK</td>
+<td>0</td>
+<td>0.0</td>
+</tr>
 </tbody>
 </table></div>
 </div>
@@ -15826,55 +16132,55 @@ These are not called directly in the notebook, but are crucial to the system’s
 <tbody>
 <tr>
 <td>bill_length_mm</td>
-<td>5540.0</td>
-<td>45.165933</td>
-<td>5.442842</td>
+<td>5541.0</td>
+<td>45.166681</td>
+<td>5.442593</td>
 <td>30.63</td>
-<td>40.9775</td>
-<td>45.235</td>
+<td>40.98</td>
+<td>45.240</td>
 <td>49.07</td>
 <td>62.635000</td>
-<td>-0.151610</td>
-<td>-0.406055</td>
+<td>-0.151954</td>
+<td>-0.405922</td>
 </tr>
 <tr>
 <td>bill_depth_mm</td>
-<td>5540.0</td>
-<td>17.319850</td>
-<td>2.146182</td>
+<td>5541.0</td>
+<td>17.318895</td>
+<td>2.146392</td>
 <td>12.37</td>
-<td>15.6575</td>
-<td>17.490</td>
+<td>15.65</td>
+<td>17.485</td>
 <td>18.92</td>
 <td>23.010000</td>
-<td>-0.135465</td>
-<td>-0.724695</td>
+<td>-0.134672</td>
+<td>-0.725335</td>
 </tr>
 <tr>
 <td>flipper_length_mm</td>
-<td>5540.0</td>
-<td>201.996085</td>
-<td>13.768625</td>
+<td>5541.0</td>
+<td>201.999903</td>
+<td>13.769645</td>
 <td>162.79</td>
-<td>191.8000</td>
-<td>199.310</td>
+<td>191.80</td>
+<td>199.315</td>
 <td>213.00</td>
 <td>252.400000</td>
-<td>0.393223</td>
-<td>-0.395981</td>
+<td>0.392703</td>
+<td>-0.397019</td>
 </tr>
 <tr>
 <td>body_mass_g</td>
-<td>5540.0</td>
-<td>3841.685482</td>
-<td>844.964960</td>
+<td>5541.0</td>
+<td>3842.084375</td>
+<td>845.336672</td>
 <td>2376.56</td>
-<td>3263.7500</td>
+<td>3264.00</td>
 <td>3806.000</td>
-<td>4263.75</td>
+<td>4266.00</td>
 <td>6965.072934</td>
-<td>0.551892</td>
-<td>0.015965</td>
+<td>0.552218</td>
+<td>0.015302</td>
 </tr>
 </tbody>
 </table></div></details>
@@ -15901,6 +16207,7 @@ These are not called directly in the notebook, but are crucial to the system’s
 <th>study_name</th>
 <th>clutch_completion</th>
 <th>date_egg</th>
+<th>is_duplicate</th>
 </tr>
 </thead>
 <tbody>
@@ -15909,7 +16216,7 @@ These are not called directly in the notebook, but are crucial to the system’s
 <td>Gentoo</td>
 <td>48.99</td>
 <td>14.11</td>
-<td>220.90</td>
+<td>220.900</td>
 <td>5890.0</td>
 <td>Adult</td>
 <td>MALE</td>
@@ -15920,13 +16227,32 @@ These are not called directly in the notebook, but are crucial to the system’s
 <td>PAPRI2023</td>
 <td>yes</td>
 <td>2023-11-09</td>
+<td>True</td>
+</tr>
+<tr>
+<td>UNKNOWN</td>
+<td>Gentoo</td>
+<td>48.99</td>
+<td>14.11</td>
+<td>220.900</td>
+<td>5890.0</td>
+<td>Adult</td>
+<td>MALE</td>
+<td>Torgersen North</td>
+<td>Torgersen</td>
+<td>2023-11-17</td>
+<td>UNKNOWN</td>
+<td>PAPRI2023</td>
+<td>yes</td>
+<td>2023-11-09</td>
+<td>True</td>
 </tr>
 <tr>
 <td>ADE-0001</td>
 <td>Adelie</td>
 <td>39.55</td>
 <td>19.92</td>
-<td>186.20</td>
+<td>186.200</td>
 <td>2500.0</td>
 <td>Chick</td>
 <td>MALE</td>
@@ -15937,13 +16263,14 @@ These are not called directly in the notebook, but are crucial to the system’s
 <td>PAPRI2022</td>
 <td>yes</td>
 <td>2022-07-20</td>
+<td>True</td>
 </tr>
 <tr>
 <td>UNKNOWN</td>
 <td>Gentoo</td>
 <td>48.23</td>
 <td>13.00</td>
-<td>199.31</td>
+<td>199.315</td>
 <td>4536.0</td>
 <td>Adult</td>
 <td>FEMALE</td>
@@ -15954,13 +16281,14 @@ These are not called directly in the notebook, but are crucial to the system’s
 <td>UNKNOWN</td>
 <td>yes</td>
 <td>2024-04-12</td>
+<td>False</td>
 </tr>
 <tr>
 <td>GEN-0001</td>
 <td>Gentoo</td>
 <td>46.22</td>
 <td>13.91</td>
-<td>212.80</td>
+<td>212.800</td>
 <td>2500.0</td>
 <td>Juvenile</td>
 <td>FEMALE</td>
@@ -15971,23 +16299,7 @@ These are not called directly in the notebook, but are crucial to the system’s
 <td>PAPRI2020</td>
 <td>yes</td>
 <td>2020-04-14</td>
-</tr>
-<tr>
-<td>UNKNOWN</td>
-<td>Chinstrap</td>
-<td>49.02</td>
-<td>16.22</td>
-<td>192.20</td>
-<td>3735.0</td>
-<td>Adult</td>
-<td>MALE</td>
-<td>Biscoe West</td>
-<td>Biscoe</td>
-<td>2022-10-03</td>
-<td>Healthy</td>
-<td>PAPRI2022</td>
-<td>yes</td>
-<td>2022-10-02</td>
+<td>True</td>
 </tr>
 </tbody>
 </table></div></details>

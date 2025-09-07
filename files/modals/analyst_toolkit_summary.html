@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analyst Toolkit</title>
+  <style>
+    :root { --bg:#0c0d10; --card:#14161a; --text:#e9edf1; --muted:#a7b0bb; --brand:#69c; --line:#22262c; }
+    body { font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 24px 32px; }
+    h1, h2, h3 { color: var(--brand); margin: 1.25em 0 0.5em; }
+    h1 { margin-top: 0; font-size: 1.5rem; }
+    h2 { font-size: 1.2rem; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+    p, ul { max-width: 75ch; }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; border-radius: 8px; display: block; margin: 16px auto; border: 1px solid var(--line); }
+    .pill { display: inline-block; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; margin: 4px 6px 0 0; color: var(--muted); font-size: 0.85rem; }
+    .muted { color: var(--muted); }
+    .footer-note { text-align:center; font-size:1.1rem; color: var(--muted); letter-spacing:.2px; }
+    .kpis { border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; background: rgba(102,153,204,0.05); }
+  </style>
+</head>
+<body>
+  <h1>Analyst Toolkit</h1>
+  <p class="muted">A modular package that streamlines ETL, validation, and diagnostics for fast, consistent analytics — in Jupyter or via CLI.</p>
+
+  
+
+  <h2>System Summary</h2>
+  <p>
+    Centralizes reusable ETL, schema checks, duplicate/outlier detection, and clean exports into a configurable toolkit. Run interactively or as automated pipelines to speed setup, enforce hygiene, and standardize results across projects.
+  </p>
+
+  <h2>Tech Stack</h2>
+  <p>
+    <span class="pill">Python</span>
+    <span class="pill">Pandas</span>
+    <span class="pill">YAML</span>
+    <span class="pill">Jupyter</span>
+    <span class="pill">CLI</span>
+    <span class="pill">ChatGPT‑4o</span>
+    <span class="pill">Gemini CLI</span>
+    <span class="pill">Gemini Code Assist</span>
+  </p>
+
+  <h2>Artifacts</h2>
+  <ul>
+    <li>Config‑driven ETL modules and pipelines</li>
+    <li>Validation/profiling configs and reports</li>
+    <li>Duplicate/outlier detection utilities</li>
+    <li>Clean CSV exports and HTML notebooks</li>
+  </ul>
+
+  <h2>HTML Dashboard</h2>
+  <style>
+    .slideshow{position:relative}
+    .slideshow img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line);display:block;margin:8px auto}
+    .slide-controls{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:6px}
+    .slide-btn{all:unset;cursor:pointer;background:var(--brand);color:#0b1116;border-radius:8px;padding:6px 10px;font-weight:600}
+    .slide-btn:hover{filter:brightness(1.05)}
+    .dots{display:flex;gap:8px;align-items:center;justify-content:center}
+    .dot{width:10px;height:10px;border-radius:50%;background:#3a4150;border:1px solid var(--line);cursor:default}
+    .dot.active{background:var(--brand)}
+  </style>
+  <div class="slideshow" id="atkSlideshow" aria-label="Analyst Toolkit HTML dashboard preview">
+    <img id="atkSlideImg" src="../../img/projects/db_screen_1.png" alt="Analyst Toolkit dashboard — screen 1" />
+    <div class="slide-controls">
+      <button class="slide-btn" id="atkPrevBtn" aria-label="Previous screen">Prev</button>
+      <div class="dots" role="tablist" aria-label="Slide navigation">
+        <button class="dot active" data-i="0" aria-label="Screen 1"></button>
+        <button class="dot" data-i="1" aria-label="Screen 2"></button>
+        <button class="dot" data-i="2" aria-label="Screen 3"></button>
+      </div>
+      <button class="slide-btn" id="atkNextBtn" aria-label="Next screen">Next</button>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const img = document.getElementById('atkSlideImg');
+      if (!img) return;
+      const sources = [
+        '../../img/projects/db_screen_1.png',
+        '../../img/projects/db_screen_2.png',
+        '../../img/projects/db_screen_3.png'
+      ];
+      let i = 0;
+      const dots = Array.from(document.querySelectorAll('#atkSlideshow .dot'));
+      const setActive = (idx) => {
+        i = (idx + sources.length) % sources.length;
+        img.src = sources[i];
+        img.alt = `Analyst Toolkit dashboard — screen ${i+1}`;
+        dots.forEach((d, di) => d.classList.toggle('active', di === i));
+      };
+      const advance = () => setActive(i + 1);
+      // Manual navigation only: no timer, no image/dot click advance
+      document.getElementById('atkNextBtn').addEventListener('click', () => { advance(); });
+      document.getElementById('atkPrevBtn').addEventListener('click', () => { setActive(i - 1); });
+    })();
+  </script>
+
+  <h2>Problems & Solutions</h2>
+  <ul>
+    <li>Teams re‑build cleaning steps → config‑driven ETL and reusable modules.</li>
+    <li>Ad hoc diagnostics → standardized validation and profiling.</li>
+    <li>Fragile hand‑offs → clean exports with logs for repeatability.</li>
+  </ul>
+
+  <h2>Task and Purpose</h2>
+  <p>
+    Grew from scattered snippets into a package that enforces hygiene and repeatability — now a foundation for my analytics workflow.
+  </p>
+
+  <h2>Future State</h2>
+  <ul>
+    <li>Cloud DB integrations (BigQuery, Snowflake).</li>
+    <li>Expanded profiling (bias checks, drift).</li>
+    <li>Stakeholder‑ready report builders.</li>
+    <li>CLI wizard for new project scaffolds.</li>
+  </ul>
+
+  <h2>Deployment Utility</h2>
+  <p>A lightweight companion that packages Toolkit pipelines for quick deployment, moving workflows from dev to production.</p>
+  <ul>
+    <li><strong>Core Tools:</strong> Python, YAML</li>
+    <li><strong>Functions:</strong> Packaging, deployment, config management</li>
+    <li><strong>Artifacts:</strong> Ready‑to‑run builds</li>
+  </ul>
+  <p><strong>Links:</strong> <a href="https://github.com/G-Schumacher44/analyst_toolkit_deployment_utility" target="_blank" rel="noopener">Repository</a></p>
+
+  <h2>Starter Kit</h2>
+  <p>A pre‑packaged, deployable bundle of the Analyst Toolkit with configs and sample data for instant setup.</p>
+  <ul>
+    <li><strong>Core Tools:</strong> Python, YAML, CLI</li>
+    <li><strong>Functions:</strong> Pre‑bundled Toolkit modules + configs</li>
+    <li><strong>Artifacts:</strong> Deployable .zip package</li>
+  </ul>
+  <p><strong>Links:</strong> <a href="https://github.com/G-Schumacher44/analyst_toolkit_starter_kit" target="_blank" rel="noopener">Repository</a></p>
+
+  <h2>Links</h2>
+  <ul>
+    <li><a href="https://github.com/G-Schumacher44/analyst_toolkit" target="_blank" rel="noopener">Repository</a></li>
+    <li><a href="https://github.com/G-Schumacher44/analyst_toolkit_deployment_utility" target="_blank" rel="noopener">Deployment Utility</a></li>
+    <li><a href="https://github.com/G-Schumacher44/analyst_toolkit_starter_kit" target="_blank" rel="noopener">Starter Kit</a></li>
+    <li><a href="../media/01_analyst_toolkit_pipeline_demo.html" target="_blank" rel="noopener">Pipeline Demo (HTML)</a></li>
+    <li><a href="../media/00_analyst_toolkit_modular_demo.html" target="_blank" rel="noopener">Modular Demo (HTML)</a></li>
+  </ul>
+
+  <hr />
+  <p class="footer-note"><strong>Faster starts. Cleaner pipelines. Consistent results.</strong></p>
+</body>
+</html>

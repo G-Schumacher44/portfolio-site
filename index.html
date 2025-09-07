@@ -22,13 +22,35 @@
   <meta property="twitter:image" content="https://www.garrettschumacher.com/img/logos/gs_analytics_thumb_2.png" />
   <!-- CSS (root) -->
   <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts (for reliable local preview of Roboto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
+    /* Self-hosted Roboto */
+    /* Use variable TTFs you added under files/fonts/Roboto */
+    @font-face {
+      font-family: 'Roboto';
+      src: url('files/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+      font-weight: 100 900;
+      font-stretch: 50% 100%;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Roboto';
+      src: url('files/fonts/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+      font-weight: 100 900;
+      font-stretch: 50% 100%;
+      font-style: italic;
+      font-display: swap;
+    }
     /* Minimal opinions so it looks good even without custom CSS */
     :root { --bg:#0c0d10; --card:#14161a; --text:#e9edf1; --muted:#a7b0bb; --brand:#69c; --line:#22262c; }
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      font-family:'Roboto', system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
       background: #0e1116 url('img/logos/dark_light_logo_centered.png') repeat-y top center;
       color:var(--text);
       line-height:1.6;
@@ -45,11 +67,14 @@
       background: linear-gradient(to bottom, rgba(12, 13, 16, 0.2), rgba(12, 13, 16, 0.8));
     }
     .hero img{max-width:520px;width:90%;height:auto;display:block;margin:0 auto 20px}
-    .hero h1{margin:8px 0 4px;font-size:2rem}
+    .hero h1{margin:8px 0 4px;font-size:3rem;font-weight:700}
     .hero p{margin:0;color:var(--muted)}
     .cta{margin-top:18px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-    .btn{padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:#161a20;color:var(--text)}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:#161a20;color:var(--text);font-weight:500;box-shadow:0 1px 0 rgba(0,0,0,.25)}
+    .btn:hover{filter:brightness(1.05)}
+    .btn:focus{outline:2px solid var(--brand);outline-offset:2px}
     .btn.primary{background:var(--brand);color:#0b1116;border-color:transparent;font-weight:600}
+    .btn.primary:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.25)}
     /* Ensure all hero CTA buttons share the same filled style */
     .hero .cta .btn { background: var(--brand); color: #0b1116; border-color: transparent; font-weight: 600; }
     nav.top{position:sticky;top:0;background:#0e1116;border-bottom:1px solid var(--line);z-index:10}
@@ -121,6 +146,14 @@
     .thumb-fit { display: block; max-height: 220px; width: auto; margin: 0 auto; }
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
     .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:16px}
+    /* About tile polish */
+    #about .card{background:transparent;border:none;box-shadow:none;padding:0}
+    #about .card p{margin-top:0}
+    #about .profile-photo{border-color:#4d89c9}
+    #about .profile-photo{width:96px;height:96px}
+    #about .card-horizontal .project-gallery-item{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+    #about .project-gallery-item{border:none;box-shadow:none;overflow:visible;background:transparent;margin-bottom:0}
+    #about .project-gallery-item:hover img{transform:none}
     .card:hover {
       transform: translateY(-4px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -129,6 +162,7 @@
     /* Horizontal card layout helper */
     .card-horizontal { display: flex; gap: 16px; align-items: flex-start; }
     .card-horizontal .project-gallery-thumb { min-width: 200px; max-width: 240px; margin-bottom: 0; }
+    .card-horizontal .project-gallery-item { min-width: 200px; max-width: 240px; margin-bottom: 0; }
     .card-horizontal .card-content { flex: 1; }
     .card h3{
       margin:0 0 6px;
@@ -248,9 +282,7 @@
       /* Stack horizontal cards on mobile */
       .card-horizontal { flex-direction: column; }
       .card-horizontal .project-gallery-thumb { max-width: 100%; }
-      .hero h1 {
-        font-size: 2.4rem;
-      }
+      .hero h1 { font-size: 2.6rem; }
       .hero p {
         font-size: 1.1rem;
       }
@@ -296,17 +328,25 @@
 
     <!-- ABOUT -->
     <section id="about">
-      <h2>About Me</h2>
-      <p>
-        Throughout my career, I’ve managed operations and led teams, making decisions from the data in front of me. I discovered that the real value of data isn’t in raw numbers—it’s in the story they tell and the understanding they reveal. That realization transformed me from a consumer of data into a creator of data-driven narratives.
-      </p>
-      <p>
-        My operations background means I don’t just see tables and columns—I see the business challenges and stakeholder questions behind them. I bridge the gap between technical analysis and clear, actionable insights that empower teams. My goal is to deliver clarity that informs decisions and ignites action.
-      </p>
-      <p>
-        This philosophy is the common thread in my portfolio, from the narrative-driven modules in the <strong>SQL Stories Ecosystem</strong> to the practical guides in the <strong>Analyst Resource Hub</strong>. I build tools and tell stories that help others see their work in a new light.
-      </p>
-      <p class="meta">Based in the Midwest • Open to remote/contract roles</p>
+      <div class="card card-horizontal" style="align-items:center;">
+        <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/about_summary.html" data-modal-title="About Me" style="text-align:center;">
+          <img
+            src="img/logos/temp_headshot.png?v=2"
+            alt="Photo of Garrett Schumacher"
+            class="profile-photo"
+            width="120"
+            height="120"
+            loading="lazy"
+          />
+          <div class="meta" style="margin-top:4px;">Read full bio</div>
+        </div>
+        <div class="card-content">
+          <p>
+            An operations leader evolving into data analytics and engineering. This portfolio is a hands-on collection of projects and case studies where I’ve learned, practiced, and applied these skills to realistic business challenges, demonstrating how I bridge operations expertise with technical solutions.
+          </p>
+          <p class="meta">Open to remote | contract | internships | hybrid | in-person</p>
+        </div>
+      </div>
     </section>
 
     <!-- ANALYST RESOURCE HUB -->
@@ -314,17 +354,29 @@
       <div class="feature-box">
         <h2>Analyst Resource Hub</h2>
         <div class="grid">
-          <article class="card">
-            <h3>Reference Vault for Data Science & ML</h3>
-            <p>
-              A curated, modular knowledge base of checklists, decision cards, guidebooks, and reusable scripts across Python, SQL, and analytics workflows. Originally built in Obsidian and published for quick, skimmable reference.
+          <article class="card card-horizontal">
+            <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/resource_hub_summary.html">
+              <img 
+                src="img/logos/resource_hub_logo.png"
+                srcset="img/logos/resource_hub_logo_thumb.png 1x, img/logos/resource_hub_logo.png 2x"
+                onerror="this.onerror=null; this.removeAttribute('srcset'); this.src='img/logos/resource_hub_logo.png';"
+                alt="Analyst Resource Hub Logo"
+                class="thumb-fit"
+                loading="lazy" decoding="async">
+            </div>
+            <div class="card-content">
+              <h3>Analyst Resource Hub</h3>
+              <p>
+                A curated, modular knowledge base of checklists, decision cards, guidebooks, and reusable scripts across Python, SQL, and analytics workflows. Originally built in Obsidian and published for quick, skimmable reference.
+              </p>
+              <p class="meta">QuickRefs • Checklists • Guidebooks • Decision Cards • Templates</p>
+              <p>
+                <a class="btn" href="https://g-schumacher44.github.io/analyst_resource_hub/" target="_blank" rel="noopener">Visit the Resource Hub ↗</a>
+                &nbsp;•&nbsp;
+                <a href="https://github.com/G-Schumacher44/analyst_resource_hub" target="_blank" rel="noopener">View Repository</a>
+                
             </p>
-            <p class="meta">QuickRefs • Checklists • Guidebooks • Decision Cards • Templates</p>
-            <p>
-              <a class="btn" href="https://g-schumacher44.github.io/analyst_resource_hub/" target="_blank" rel="noopener">Visit the Resource Hub ↗</a>
-              &nbsp;•&nbsp;
-              <a href="https://github.com/G-Schumacher44/analyst_resource_hub" target="_blank" rel="noopener">View Repository</a>
-            </p>
+            </div>
           </article>
         </div>
       </div>
@@ -340,7 +392,7 @@
         </p>
         <div class="grid">
           <article class="card card-horizontal">
-            <div class="project-gallery-thumb">
+            <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/sql_stories_ecosystem_summary.html">
               <img src="img/case_study/sql_stories_logo_thumb.png" alt="SQL Stories Ecosystem Logo">
             </div>
             <div class="card-content">
@@ -365,7 +417,7 @@
       <h2>Featured Projects</h2>
       <div class="grid">
         <article class="card">
-          <div class="project-gallery-thumb">
+          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/analyst_toolkit_summary.html">
             <img src="img/projects/analyst_toolkit_thumbnail.png" alt="Analyst Toolkit">
           </div>
           <h3>Analyst Toolkit</h3>
@@ -385,7 +437,7 @@
         </article>
 
         <article class="card">
-          <div class="project-gallery-thumb">
+          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/model_eval_suite_summary.html">
             <img class="thumb-fit" src="img/projects/model_eval_suite_logo.png" alt="Model Evaluation Suite">
           </div>
           <h3>Model Evaluation Suite</h3>
@@ -403,7 +455,7 @@
         </article>
 
         <article class="card">
-          <div class="project-gallery-thumb">
+          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/dirty_birds_summary.html">
             <img src="img/projects/dirty-birds-generator-thumb.png" alt="Dirty Birds Data Generator">
           </div>
           <h3>Dirty Birds Data Generator</h3>
@@ -423,8 +475,8 @@
       <h2>Case Studies</h2>
       <div class="grid">
         <article class="card">
-          <div class="project-gallery-item">
-            <img src="img/case_study/vp_dashboard_thumb.jpeg" data-full-src="img/case_study/vp_sales_dashboards_grid_3x2.png" alt="VP of Sales Dashboard Preview">
+          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/case_vp_sales_summary.html">
+            <img src="img/case_study/vp_dashboard_thumb.jpeg" alt="VP of Sales Dashboard Preview">
           </div>
           <h3>Request from the VP of Sales</h3>
           <p>
@@ -437,8 +489,8 @@
         </article>
 
         <article class="card">
-          <div class="project-gallery-item">
-            <img src="img/case_study/story_01_dashboard_thumb.png" data-full-src="img/case_study/story_01_dashboard.png" alt="Inventory Audit Dashboard Preview">
+          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/case_inventory_audit_summary.html">
+            <img src="img/case_study/story_01_dashboard_thumb.png" alt="Inventory Audit Dashboard Preview">
           </div>
           <h3>SQL Stories: Inventory Audit</h3>
           <p>
@@ -446,7 +498,7 @@
           </p>
           <p class="meta">SQL • Python • Data Storytelling</p>
           <ul class="card-links">
-            <li><a href="https://github.com/G-Schumacher44/sql_stories/blob/main/story_01_inventory_audit/story_01_portfolio_readme.md" target="_blank" rel="noopener">View Case Study</a></li>
+            <li><a href="https://github.com/G-Schumacher44/sql_stories_portfolio_demo/tree/main" target="_blank" rel="noopener">View Case Study</a></li>
             <li><a href="https://docs.google.com/spreadsheets/d/1PuANFstg9yOWV84X1mOoblQp4ProvaSo4iYJ1ONZM7k/edit?usp=sharing" target="_blank" rel="noopener">Live Workbook (Google Sheets)</a></li>
           </ul>
         </article>
@@ -461,7 +513,7 @@
           </p>
           <p class="meta">SQL • Python • Cohort Analysis</p>
           <ul class="card-links">
-            <li><a href="https://github.com/G-Schumacher44/sql_stories/blob/main/story_02_customer_retention_snapshot/story_02_portfolio_readme.md" target="_blank" rel="noopener">View Case Study</a></li>
+            <li><a href="https://github.com/G-Schumacher44/sql_stories_portfolio_demo/tree/main" target="_blank" rel="noopener">View Case Study</a></li>
             <li><a href="files/media/Executive_Retention_Report.html" target="_blank" rel="noopener noreferrer">Jupyter Notebook (HTML, static)</a></li>
           </ul>
         </article>
@@ -475,7 +527,7 @@
         <article class="card">
           <h3>Google Data Analytics Certification</h3>
           <p>
-            Professional certificate demonstrating proficiency in data cleaning, analysis, visualization, and R programming.
+            Professional certificate demonstrating proficiency in data cleaning, analysis, visualization, SQL and R programming.
           </p>
           <ul class="card-links">
             <li><a href="pdf/Google_Data_Analytics_Cert..pdf" target="_blank" rel="noopener">View Certificate</a></li>
@@ -545,17 +597,9 @@
       </section>
       <section id="seeking">
         <div class="seeking-card">
-          <img
-            src="img/logos/temp_headshot.png?v=2"
-            alt="Photo of Garrett Schumacher"
-            class="profile-photo"
-            width="120"
-            height="120"
-            loading="lazy"
-          />
-          <h3>Where I’m Headed</h3>
-          <p>I aim to build a career at the intersection of operations and analytics—using data to drive decisions, improve processes, and create measurable value. I’m looking for opportunities that support growth, collaboration, and impact.</p>
-          <p><em>Thank you for taking the time to explore my work. I’m excited to keep learning, contributing, and growing as I take the next steps in my analytics career.</em></p>
+          <h3>Thanks for Viewing</h3>
+          <p>Thank you for exploring my work. I’m open to discussing entry‑level roles, apprenticeships, or contract opportunities where I can contribute, learn, and grow.</p>
+          <p><em>I’m actively continuing my education in data analytics and engineering, and I’m excited to keep building, collaborating, and improving every day.</em></p>
         </div>
       </section>
     </div>
@@ -608,7 +652,8 @@
         item.addEventListener('click', (e) => {
           const galleryItem = e.currentTarget;
           const card = e.currentTarget.closest('.card');
-          const title = card.querySelector('h3')?.textContent?.trim() || 'Project Preview';
+          const explicitTitle = galleryItem.dataset.modalTitle;
+          const title = explicitTitle || card?.querySelector('h3')?.textContent?.trim() || 'Project Preview';
           const modalType = galleryItem.dataset.modalType || 'image';
 
           modalTitle.textContent = title;
@@ -631,10 +676,8 @@
           
           // Apply specific size classes for different modal types
           modal.classList.remove('modal-small', 'modal-report');
-          if (title === 'SQL Stories: Customer Retention') {
+          if (title === 'SQL Stories: Customer Retention' || title === 'Request from the VP of Sales') {
             modal.classList.add('modal-report');
-          } else if (title === 'Dirty Birds Data Generator') {
-            modal.classList.add('modal-small');
           }
 
           if (!modal.open) modal.showModal();

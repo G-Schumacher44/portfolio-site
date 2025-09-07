@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Model Evaluation Suite</title>
+  <style>
+    :root { --bg:#0c0d10; --card:#14161a; --text:#e9edf1; --muted:#a7b0bb; --brand:#69c; --line:#22262c; }
+    body { font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 24px 32px; }
+    h1, h2, h3 { color: var(--brand); margin: 1.25em 0 0.5em; }
+    h1 { margin-top: 0; font-size: 1.5rem; }
+    h2 { font-size: 1.2rem; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+    p, ul { max-width: 75ch; }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; border-radius: 8px; display: block; margin: 16px auto; border: 1px solid var(--line); }
+    .pill { display: inline-block; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; margin: 4px 6px 0 0; color: var(--muted); font-size: 0.85rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .muted { color: var(--muted); }
+    .footer-note { text-align:center; font-size:1.1rem; color: var(--muted); letter-spacing:.2px; }
+  </style>
+</head>
+<body>
+  <h1>Model Evaluation Suite</h1>
+  <p class="muted">Standardizes ML benchmarking with YAML‑driven configs, automated evaluation, and export‑ready reports — ensuring consistent, reproducible, and transparent validation in Jupyter or CLI.</p>
+
+  
+
+  <h2>System Summary</h2>
+  <p>
+    Configure once via YAML, then evaluate consistently across models and datasets — generating audit‑ready outputs (ROC/PR, calibration, lift, permutation importance, SHAP) with a repeatable structure in both notebooks and CLI.
+  </p>
+
+  <h2>Tech Stack</h2>
+  <p>
+    <span class="pill">Python</span>
+    <span class="pill">scikit‑learn</span>
+    <span class="pill">Pandas</span>
+    <span class="pill">YAML</span>
+    <span class="pill">Pydantic</span>
+    <span class="pill">MLflow</span>
+    <span class="pill">MkDocs</span>
+    <span class="pill">ChatGPT‑4o</span>
+    <span class="pill">Gemini CLI</span>
+    <span class="pill">Gemini 2.5 Pro</span>
+    <span class="pill">Gemini Code Assist</span>
+  </p>
+
+  <h2>Problems & Solutions</h2>
+  <ul>
+    <li>Inconsistent evaluation across teams → <strong>standardized pipelines via YAML</strong>.</li>
+    <li>Slow, ad‑hoc diagnostics → <strong>automated metrics, plots, and explainers</strong>.</li>
+    <li>Opaque results → <strong>explainability tools</strong> (permutation importance, SHAP).</li>
+    <li>Hard to share → <strong>exportable HTML reports and static charts</strong>.</li>
+  </ul>
+
+  <h2>Task and Purpose</h2>
+  <p>
+    Built to unify my model validation workflow into a <strong>reproducible, consistent system</strong>. It began as Module 9 of the Analyst Toolkit and has since evolved into a <strong>standalone API</strong>. The project is currently in <strong>beta</strong>; feedback and contributions are welcome as capabilities expand.
+  </p>
+
+  <h2>Future State</h2>
+  <ul>
+    <li><strong>Multi‑target & multi‑model support</strong> — side‑by‑side comparisons and multi‑output tasks.</li>
+    <li><strong>Fairness & bias diagnostics</strong> — parity/impact checks and explainability enhancements.</li>
+    <li><strong>Cloud ML pipeline integration</strong> — hooks for Vertex AI, SageMaker, and managed platforms.</li>
+    <li><strong>Interactive dashboard mode</strong> — live, explorable evaluation for technical and business stakeholders.</li>
+  </ul>
+
+  <h2>Charts Viewer</h2>
+  <style>
+    .mes-slideshow{position:relative}
+    .mes-slideshow img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line);display:block;margin:8px auto}
+    .mes-controls{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:6px}
+    .mes-btn{all:unset;cursor:pointer;background:var(--brand);color:#0b1116;border-radius:8px;padding:6px 10px;font-weight:600}
+    .mes-btn:hover{filter:brightness(1.05)}
+    .mes-dots{display:flex;gap:8px;align-items:center;justify-content:center}
+    .mes-dot{width:10px;height:10px;border-radius:50%;background:#3a4150;border:1px solid var(--line);}
+    .mes-dot.active{background:var(--brand)}
+  </style>
+  <div class="mes-slideshow" id="mesSlideshow" aria-label="Model Evaluation Suite charts viewer">
+    <img id="mesSlideImg" src="../plots/xgb_demo_01/calibration_curve_xgb_demo_01.png" alt="Calibration curve" />
+    <div class="mes-controls">
+      <button class="mes-btn" id="mesPrevBtn" aria-label="Previous chart">Prev</button>
+      <div class="mes-dots" role="tablist" aria-label="Chart navigation">
+        <button class="mes-dot active" data-i="0" aria-label="Calibration"></button>
+        <button class="mes-dot" data-i="1" aria-label="SHAP beeswarm"></button>
+        <button class="mes-dot" data-i="2" aria-label="SHAP bar"></button>
+      </div>
+      <button class="mes-btn" id="mesNextBtn" aria-label="Next chart">Next</button>
+    </div>
+  </div>
+  <script>
+    (function(){
+      const img = document.getElementById('mesSlideImg');
+      if (!img) return;
+      const sources = [
+        '../plots/xgb_demo_01/calibration_curve_xgb_demo_01.png',
+        '../plots/xgb_demo_01/shap_beeswarm_xgb_demo_01.png',
+        '../plots/xgb_demo_01/shap_bar_xgb_demo_01.png'
+      ];
+      let i = 0;
+      const dots = Array.from(document.querySelectorAll('#mesSlideshow .mes-dot'));
+      const setActive = (idx) => {
+        i = (idx + sources.length) % sources.length;
+        img.src = sources[i];
+        const labels = ['Calibration curve','SHAP beeswarm','SHAP bar'];
+        img.alt = `MES chart — ${labels[i]}`;
+        dots.forEach((d, di) => d.classList.toggle('active', di === i));
+      };
+      const advance = () => setActive(i + 1);
+      document.getElementById('mesNextBtn').addEventListener('click', () => { advance(); });
+      document.getElementById('mesPrevBtn').addEventListener('click', () => { setActive(i - 1); });
+      dots.forEach(d => d.addEventListener('click', (e) => { const idx = parseInt(e.currentTarget.dataset.i, 10); setActive(idx); }));
+    })();
+  </script>
+
+  <h2>Report Viewer</h2>
+  <p class="muted">Select a sample export to preview inside the modal.</p>
+  <label for="mesReportSelect" class="muted" style="display:block;margin:6px 0 8px;">Report:</label>
+  <select id="mesReportSelect" style="background:#14161a;color:#e9edf1;border:1px solid var(--line);border-radius:8px;padding:6px 10px;">
+    <option value="../html_export_reports/static_report_xgb_demo_01.html">XGB Classifier — Static Report</option>
+    <option value="../html_export_reports/static_report_xgbreg_demo_01.html">XGB Regressor — Static Report</option>
+  </select>
+  <a id="mesOpenLink" href="../html_export_reports/static_report_xgb_demo_01.html" target="_blank" rel="noopener" style="margin-left:8px;">Open in new tab ↗</a>
+  <iframe id="mesReportFrame" src="../html_export_reports/static_report_xgb_demo_01.html" title="Sample Evaluation Report"
+          style="width:100%; height:520px; border:1px solid var(--line); border-radius:8px; background: #ffffff;"
+          loading="lazy"></iframe>
+  <script>
+    (function(){
+      const sel = document.getElementById('mesReportSelect');
+      const frame = document.getElementById('mesReportFrame');
+      const openLink = document.getElementById('mesOpenLink');
+      if (!sel || !frame || !openLink) return;
+      sel.addEventListener('change', () => { frame.src = sel.value; openLink.href = sel.value; });
+    })();
+  </script>
+
+  <h2>Artifacts</h2>
+  <ul>
+    <li><strong>Exports:</strong> HTML reports, static charts, serialized artifacts</li>
+  </ul>
+
+  <h2>Links</h2>
+  <ul>
+    <li><a href="https://github.com/G-Schumacher44/model_evaluation_suite" target="_blank" rel="noopener">Repository</a></li>
+  </ul>
+
+
+  <hr />
+  <p class="footer-note"><strong>Reproducible evaluation. Explainable results. Stakeholder‑ready reports.</strong></p>
+</body>
+</html>
