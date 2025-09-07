@@ -16,7 +16,7 @@
 ## 📌 Overview
 This repository contains the source code and assets for my **Analytics & Engineering Portfolio**, hosted at:
 
-**🔗 [Visit the live site](https://g-schumacher44.github.io/portfolio-site/)**
+**🔗 [Visit the live site](https://www.garrettschumacher.com/)**
 
 The portfolio showcases:
 - **Data Analysis** — Exploratory analysis, visualization, and reporting.
@@ -24,5 +24,4 @@ The portfolio showcases:
 - **Technical Writing** — Guides, documentation, and knowledge-sharing resources.
 
 ---
-
 
