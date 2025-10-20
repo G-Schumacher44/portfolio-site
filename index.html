@@ -219,8 +219,7 @@
     }
     /* Horizontal card layout helper */
     .card-horizontal { display: flex; gap: 16px; align-items: flex-start; }
-    .card-horizontal .project-gallery-thumb { min-width: 200px; max-width: 240px; margin-bottom: 0; }
-    .card-horizontal .project-gallery-item { min-width: 200px; max-width: 240px; margin-bottom: 0; }
+    .card-horizontal .card-thumb { min-width: 200px; max-width: 240px; margin-bottom: 0; }
     .card-horizontal .card-content { flex: 1; }
     .card h3{
       margin:0 0 6px;
@@ -264,6 +263,18 @@
     .card-highlight a {
       color: var(--brand);
       font-weight: 600;
+    }
+    .card-bullets {
+      margin: 0 0 18px 0;
+      padding-left: 18px;
+    }
+    .card-bullets li {
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .card-bullets strong {
+      color: var(--text);
     }
     .card-note {
       font-style: italic;
@@ -363,7 +374,7 @@
       }
       /* Stack horizontal cards on mobile */
       .card-horizontal { flex-direction: column; }
-      .card-horizontal .project-gallery-thumb { max-width: 100%; }
+      .card-horizontal .card-thumb { max-width: 100%; }
       .hero h1 { font-size: 2.6rem; }
       .hero p {
         font-size: 1.1rem;
@@ -515,25 +526,22 @@
         </p>
         <div class="grid">
           <article class="card card-horizontal">
-            <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/sql_stories_ecosystem_summary.html" data-caption="Open Overview">
+            <div class="project-gallery-item card-thumb" data-modal-type="html" data-modal-src="files/modals/sql_stories_ecosystem_summary.html" data-caption="Open Overview">
               <img src="img/case_study/sql_stories_logo_thumb.png" alt="SQL Stories Ecosystem Logo">
               <span class="meta meta-inline">Python • SQL • SQLite • Jupyter</span>
             </div>
             <div class="card-content">
               <h3>SQL Stories Ecosystem</h3>
-              <p>
-                One ecosystem, three parts: the data generation engine, a public learning lab, and a curated showcase — all built on a shared foundation.
-              </p>
               <div class="card-highlight">
-                <strong>NEW! Google Cloud Storage Extension:</strong> Ship SQL Stories datasets straight into partitioned Parquet with lineage-rich drops for lake hydration. <a href="https://github.com/G-Schumacher44/ecom-datalake-exten" target="_blank" rel="noopener">View here</a>
+                <strong>NEW! Google Cloud Storage Extension:</strong> Ship generator output into partitioned Parquet with lineage-rich metadata ready for lake hydration. <a href="https://github.com/G-Schumacher44/ecom-datalake-exten" target="_blank" rel="noopener">View here</a>
               </div>
               <div class="card-highlight muted">
                 <strong>In Development:</strong> a Google Cloud automation workspace tying Storage, Pub/Sub, Dataflow, and BigQuery together with Python orchestration, SQL modeling, and Terraform-driven IaC inside VS Code.
               </div>
               <ul class="card-links">
                 <li><strong>Ecom Sales Data Generator (Engine):</strong> <a href="https://github.com/G-Schumacher44/ecom_sales_data_generator" target="_blank" rel="noopener">View Repository</a> • <a href="data/ecom_retailer_v3.db" download>Download Database</a></li>
-                <li><strong>SQL Stories: Skills Builder (Learning Lab):</strong> <a href="https://github.com/G-Schumacher44/sql_stories_skills_builder" target="_blank" rel="noopener">View Repository</a> • <a href="files/media/scenario_04_cart_behavior_analysis.html" target="_blank" rel="noopener">Sample Scenario Brief</a></li>
                 <li><strong>Ecom Data Lake Extension (Hydration):</strong> <a href="https://github.com/G-Schumacher44/ecom-datalake-exten" target="_blank" rel="noopener">View Repository</a> • <a href="files/media/ecom_datalake_extension.html" target="_blank" rel="noopener">Lake Delivery Playbook</a></li>
+                <li><strong>SQL Stories: Skills Builder (Learning Lab):</strong> <a href="https://github.com/G-Schumacher44/sql_stories_skills_builder" target="_blank" rel="noopener">View Repository</a> • <a href="files/media/scenario_04_cart_behavior_analysis.html" target="_blank" rel="noopener">Sample Scenario Brief</a></li>
                 <li><strong>SQL Stories: Portfolio Demo (Showcase):</strong> <a href="https://github.com/G-Schumacher44/sql_stories_portfolio_demo" target="_blank" rel="noopener">View Repository</a> • <a href="files/media/storycrafting.html" target="_blank" rel="noopener">Craft Your Own SQL Story</a></li>
               </ul>
             </div>
