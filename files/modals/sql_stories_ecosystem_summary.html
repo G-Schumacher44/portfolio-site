@@ -41,7 +41,9 @@
     <span class="pill">Python</span>
     <span class="pill">SQL</span>
     <span class="pill">SQLite</span>
+    <span class="pill">Parquet</span>
     <span class="pill">Jupyter</span>
+    <span class="pill">Click CLI</span>
     <span class="pill">Markdown</span>
     <span class="pill">ChatGPT‑4o</span>
     <span class="pill">Gemini CLI</span>
@@ -79,6 +81,16 @@
   </ul>
   <p><strong>Links:</strong> <a href="https://github.com/G-Schumacher44/ecom_sales_data_generator" target="_blank" rel="noopener">Repository</a> | <a href="../../data/ecom_retailer_v3.db" download>Download SQLite DB</a></p>
 
+  <h2>Data Lake Extension</h2>
+  <p>The <strong>lake hydration layer</strong> that turns generator output into partitioned Parquet drops with lineage metadata, manifests, and cloud delivery.</p>
+  <ul>
+    <li>Wraps the generator with a <code>click</code>-based CLI (<code>ecomlake</code>) for run → export → upload tasks</li>
+    <li>Adds <code>event_id</code>, <code>batch_id</code>, <code>ingestion_ts</code>, and <code>source_file</code> tracking to every file</li>
+    <li>Publishes Hive-partitioned directories directly to Google Cloud Storage with dry-run safeguards</li>
+    <li>Powers scenario briefs with multi-day backfills and QA-ready manifests</li>
+  </ul>
+  <p><strong>Links:</strong> <a href="https://github.com/G-Schumacher44/ecom-datalake-exten" target="_blank" rel="noopener">Repository</a> | <a href="../media/ecom_datalake_extension.html" target="_blank" rel="noopener">Lake Delivery Overview</a></p>
+
   <h2>Skills Builder</h2>
   <p>A <strong>public learning lab</strong> combining scenario briefs, guided SQL queries, and practice notebooks.</p>
   <ul>
@@ -97,12 +109,13 @@
   </ul>
   <p><strong>Links:</strong> <a href="https://github.com/G-Schumacher44/sql_stories_portfolio_demo" target="_blank" rel="noopener">Repository</a> | <a href="../media/storycrafting.html" target="_blank" rel="noopener">Craft a Story</a></p>
 
-  <h2>Future State</h2>
+  <h2>In Development</h2>
+  <p>An engineering workspace (<code>gcs-automation-project</code>) that prototypes end-to-end Google Cloud Storage automation so SQL Stories assets flow into production-style infrastructure.</p>
   <ul>
-    <li>Additional stories (A/B testing, funnel, returns)</li>
-    <li>BigQuery integration and larger scales</li>
-    <li>Expanded messiness injection and QA patterns</li>
+    <li>Explores ingestion pipelines, Dataflow orchestration, Pub/Sub eventing, and downstream modelling in BigQuery.</li>
+    <li>Stack: Google Cloud Storage, Pub/Sub, Dataflow, BigQuery, optional Cloud Composer, plus Python automation, SQL validation, Terraform IaC, and VS Code tooling.</li>
   </ul>
+  <p><strong>Links:</strong> <a href="https://github.com/G-Schumacher44/gcs-automation-project" target="_blank" rel="noopener">Repository</a></p>
 
   <hr />
   <p class="footer-note"><strong>Designed for hands‑on practice and stakeholder‑ready storytelling.</strong></p>
