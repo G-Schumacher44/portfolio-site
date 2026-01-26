@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CLI Usage Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0b0e;
+      --card: #141a22;
+      --text: #f1f5f9;
+      --muted: #a5b0bf;
+      --brand: #66e3c4;
+      --brand-2: #4fa8ff;
+      --line: #1f2733;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Space Grotesk", "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(900px 500px at 10% 10%, rgba(79,168,255,0.15), transparent 60%),
+        radial-gradient(700px 450px at 90% 20%, rgba(102,227,196,0.12), transparent 50%),
+        var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 28px 24px 36px;
+      line-height: 1.6;
+    }
+    a { color: var(--brand-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1 { margin: 0 0 8px; font-size: 2rem; }
+    h2 { font-size: 1.2rem; margin: 24px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+    h3 { font-size: 1rem; margin: 18px 0 8px; }
+    .wrap { max-width: 1040px; margin: 0 auto; }
+    .muted { color: var(--muted); }
+    .mono { font-family: "IBM Plex Mono", "Courier New", monospace; }
+    .tagline {
+      font-family: "IBM Plex Mono", "Courier New", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      color: var(--brand);
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(102,227,196,0.08);
+      border: 1px solid rgba(102,227,196,0.3);
+      border-radius: 999px;
+      padding: 4px 12px;
+      margin: 6px 8px 0 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .grid { display: grid; gap: 16px; }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover { transform: translateY(-2px); border-color: rgba(79,168,255,0.35); }
+    .nav { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+    .nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(79,168,255,0.15);
+      border: 1px solid rgba(79,168,255,0.35);
+      border-radius: 12px;
+      padding: 8px 12px;
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .nav a:hover { transform: translateY(-1px); border-color: rgba(102,227,196,0.5); }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--muted);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th { color: var(--text); font-weight: 600; }
+    td { color: var(--muted); }
+    .code-chip {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 8px;
+      background: rgba(79,168,255,0.15);
+      border: 1px solid rgba(79,168,255,0.35);
+      color: var(--text);
+      font-family: "IBM Plex Mono", "Courier New", monospace;
+      font-size: 0.8rem;
+    }
+    @media (max-width: 720px) {
+      h1 { font-size: 1.6rem; }
+      table { font-size: 0.85rem; }
+      th, td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="tagline">Click CLI</div>
+    <h1>CLI Usage Guide</h1>
+    <p class="muted">Primary interface for pipeline execution, validation, profiling, and infrastructure management.</p>
+    <div>
+      <span class="pill">Click-based CLI</span>
+      <span class="pill">Local + GCS runs</span>
+      <span class="pill">Airflow controls</span>
+    </div>
+    <div class="nav">
+      <a href="./dbt_observability.html">dbt Observability</a>
+      <a href="./architecture.html">Architecture &amp; Ops</a>
+      <a href="./data_contract.html">Data Contract</a>
+      <a href="./data_dictionary.html">Data Dictionary</a>
+      <a href="./metrics_snapshot.html">Metrics Snapshot</a>
+    </div>
+
+    <section>
+      <h2>Quick Start</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Recommended CLI</h3>
+          <p class="muted">Use the Click-based <span class="code-chip">ecomlake</span> command. Legacy entrypoints emit warnings.</p>
+          <pre class="mono">ecomlake bronze profile --date-range YYYY-MM-DD..YYYY-MM-DD</pre>
+        </div>
+        <div class="card">
+          <h3>Help Menu</h3>
+          <p class="muted">Explore available groups, commands, and flags.</p>
+          <pre class="mono">ecomlake --help
+ecomlake pipeline --help
+ecomlake airflow --help</pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Core CLI Commands</h2>
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Command</th>
+              <th>Purpose</th>
+              <th>Key Output</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono">ecomlake bronze profile</td>
+              <td>Profile Bronze Parquet samples</td>
+              <td>Quality report, schema map JSON, data contract updates</td>
+            </tr>
+            <tr>
+              <td class="mono">ecomlake bucket report</td>
+              <td>Generate bucket size report</td>
+              <td>Markdown report with table-level storage metrics</td>
+            </tr>
+            <tr>
+              <td class="mono">ecomlake sample pull</td>
+              <td>Pull sample partitions from GCS</td>
+              <td>Local Bronze samples for profiling</td>
+            </tr>
+            <tr>
+              <td class="mono">ecomlake airflow bootstrap</td>
+              <td>Initialize Airflow environment</td>
+              <td>Airflow directories and Docker containers</td>
+            </tr>
+            <tr>
+              <td class="mono">ecomlake pipeline dev-gcs</td>
+              <td>Run dev pipeline (GCS native)</td>
+              <td>Full Bronze to Enriched execution</td>
+            </tr>
+            <tr>
+              <td class="mono">ecomlake pipeline sim-prod-gcs</td>
+              <td>Run prod simulation (GCS native)</td>
+              <td>Production simulation against GCS</td>
+            </tr>
+            <tr>
+              <td class="mono">ecomlake silver run</td>
+              <td>Run Base Silver (dbt-duckdb)</td>
+              <td>Base Silver tables + manifests</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Command Groups</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Environment Control (Airflow)</h3>
+          <pre class="mono">ecomlake airflow up
+ecomlake airflow down
+ecomlake airflow restart
+ecomlake airflow logs
+ecomlake airflow shell</pre>
+        </div>
+        <div class="card">
+          <h3>Pipeline Execution (Airflow)</h3>
+          <pre class="mono">ecomlake pipeline run-sample --date YYYY-MM-DD
+ecomlake pipeline run-sample-strict --date YYYY-MM-DD
+ecomlake pipeline run-sample-bq --date YYYY-MM-DD
+ecomlake pipeline backfill-easy --start YYYY-MM-DD --end YYYY-MM-DD</pre>
+        </div>
+        <div class="card">
+          <h3>Local Development (No Docker)</h3>
+          <pre class="mono">ecomlake local dims --date YYYY-MM-DD
+ecomlake local silver --date YYYY-MM-DD
+ecomlake local enriched --date YYYY-MM-DD</pre>
+        </div>
+        <div class="card">
+          <h3>GCS Pipeline Execution (Native)</h3>
+          <pre class="mono">ecomlake pipeline dev-gcs YYYY-MM-DD
+ecomlake pipeline sim-prod-gcs YYYY-MM-DD
+ecomlake pipeline dev-docker YYYY-MM-DD</pre>
+        </div>
+        <div class="card">
+          <h3>Development &amp; Testing</h3>
+          <pre class="mono">ecomlake dev test
+ecomlake dev lint
+ecomlake dev format
+ecomlake dev type-check</pre>
+        </div>
+        <div class="card">
+          <h3>dbt Utilities</h3>
+          <pre class="mono">ecomlake dbt deps
+ecomlake dbt build
+ecomlake dbt test</pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Notes</h2>
+      <ul class="muted">
+        <li>Legacy Makefile targets and direct module entrypoints are deprecated.</li>
+        <li>Strict modes fail fast when validation issues appear.</li>
+        <li>Use sample pulls before running full backfills.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>
