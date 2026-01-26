@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pipeline Manifest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0b0e;
+      --card: #141a22;
+      --text: #f1f5f9;
+      --muted: #a5b0bf;
+      --brand: #66e3c4;
+      --brand-2: #4fa8ff;
+      --line: #1f2733;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Space Grotesk", "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(900px 500px at 10% 10%, rgba(79,168,255,0.15), transparent 60%),
+        radial-gradient(700px 450px at 90% 20%, rgba(102,227,196,0.12), transparent 50%),
+        var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 28px 24px 36px;
+      line-height: 1.6;
+    }
+    a { color: var(--brand-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1 { margin: 0 0 8px; font-size: 2rem; }
+    h2 { font-size: 1.2rem; margin: 24px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+    .wrap { max-width: 1080px; margin: 0 auto; }
+    .muted { color: var(--muted); }
+    .mono { font-family: "IBM Plex Mono", "Courier New", monospace; }
+    .tagline {
+      font-family: "IBM Plex Mono", "Courier New", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      color: var(--brand);
+    }
+    .nav { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; }
+    .nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(79,168,255,0.15);
+      border: 1px solid rgba(79,168,255,0.35);
+      border-radius: 12px;
+      padding: 8px 12px;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 18px;
+      overflow-x: auto;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover { transform: translateY(-2px); border-color: rgba(79,168,255,0.35); }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--muted);
+    }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(102,227,196,0.08);
+      border: 1px solid rgba(102,227,196,0.3);
+      border-radius: 999px;
+      padding: 4px 12px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(79,168,255,0.15);
+      border: 1px solid rgba(79,168,255,0.35);
+      border-radius: 12px;
+      padding: 8px 12px;
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .cta:hover { transform: translateY(-1px); border-color: rgba(102,227,196,0.5); }
+    .divider { height: 1px; background: var(--line); margin: 24px 0; }
+    @media (max-width: 700px) {
+      h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="tagline">Pipeline Inventory</div>
+    <h1>Manifest</h1>
+    <p class="muted">Snapshot of pipeline specs, objects, and metadata.</p>
+    <div class="nav">
+      <a href="./metrics_snapshot.html">Metrics Snapshot</a>
+      <a href="./data_contract.html">Data Contract</a>
+      <a href="./data_dictionary.html">Data Dictionary</a>
+      <a href="./bronze_schema_map.html">Bronze Schema Map</a>
+    </div>
+
+    <section>
+      <h2>Quick Facts</h2>
+      <div class="pill-row">
+        <span class="pill"><strong id="manifestVersion">Version: n/a</strong></span>
+        <span class="pill"><strong id="manifestEntities">Entities: n/a</strong></span>
+        <span class="pill"><strong id="manifestSources">Sources: n/a</strong></span>
+        <span class="pill"><strong id="manifestUpdated">Updated: n/a</strong></span>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <pre class="mono" id="manifestPreview">Loading _MANIFEST.json...</pre>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+    <a href="./_MANIFEST.json" class="mono" target="_blank" rel="noopener">Open raw _MANIFEST.json</a>
+    <div class="cta-row">
+      <a class="cta" href="./dbt_observability.html">dbt observability</a>
+      <a class="cta" href="./architecture.html">Architecture &amp; Ops</a>
+      <a class="cta" href="./metrics_snapshot.html">Metrics snapshot</a>
+      <a class="cta" href="./data_contract.html">Data contract</a>
+      <a class="cta" href="./data_dictionary.html">Data dictionary</a>
+    </div>
+  </div>
+
+  <script>
+    const safeText = (value) => (value === null || value === undefined) ? 'n/a' : value;
+
+    const loadManifest = async () => {
+      try {
+        const response = await fetch('./_MANIFEST.json');
+        if (!response.ok) throw new Error('Manifest unavailable');
+        const data = await response.json();
+
+        const entities = Array.isArray(data?.entities) ? data.entities.length : null;
+        const sources = Array.isArray(data?.sources) ? data.sources.length : null;
+        const version = data?.metadata?.version || data?.version || null;
+        const updated = data?.metadata?.written_at || data?.metadata?.timestamp || null;
+
+        document.getElementById('manifestVersion').textContent = `Version: ${safeText(version)}`;
+        document.getElementById('manifestEntities').textContent = `Entities: ${safeText(entities)}`;
+        document.getElementById('manifestSources').textContent = `Sources: ${safeText(sources)}`;
+        document.getElementById('manifestUpdated').textContent = `Updated: ${safeText(updated)}`;
+
+        const preview = JSON.stringify(data, null, 2);
+        document.getElementById('manifestPreview').textContent = preview;
+      } catch (error) {
+        document.getElementById('manifestPreview').textContent = 'Unable to load _MANIFEST.json';
+      }
+    };
+
+    loadManifest();
+  </script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+direction: right
+
+# Bronze Input Layer
+bronze_input: {
+  label: "📥 Bronze Input"
+  style: {
+    fill: "#3d5a80"
+    stroke: "#6699cc"
+    stroke-width: 3
+    font-color: "#e9edf1"
+  }
+
+  b1: "Raw Parquet\nPartitioned by ingest_dt" {
+    style: {
+      fill: "#4a5568"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+
+  b2: "Lineage Metadata\n_MANIFEST.json" {
+    style: {
+      fill: "#4a5568"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+}
+
+# Dimension Snapshots
+dims: {
+  label: "🔄 Dimension Snapshots"
+  style: {
+    fill: "#3d5a80"
+    stroke: "#6699cc"
+    stroke-width: 3
+    font-color: "#e9edf1"
+  }
+
+  d1: "Dims Fresh?" {
+    shape: diamond
+    style: {
+      fill: "#4a5568"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+
+  d2: "Snapshot Customers" {
+    style: {
+      fill: "#4a5568"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+
+  d3: "Snapshot Products" {
+    style: {
+      fill: "#4a5568"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+
+  d4: "_latest.json pointer" {
+    style: {
+      fill: "#4a5568"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+}
+
+# Base Silver Layer
+base_silver: {
+  label: "⚙️ Base Silver (dbt-duckdb)"
+  style: {
+    fill: "#4a6fa5"
+    stroke: "#6699cc"
+    stroke-width: 3
+    font-color: "#e9edf1"
+  }
+
+  bs1: "Type Casting & Cleaning" {
+    style: {
+      fill: "#5a7db8"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+
+  bs2: "Deduplication" {
+    style: {
+      fill: "#5a7db8"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+
+  bs3: "PK/FK Validation" {
+    style: {
+      fill: "#5a7db8"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+
+  bs4: "Quarantine Rejects" {
+    style: {
+      fill: "#5a7db8"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+}
+
+# Enriched Silver Layer
+enriched_silver: {
+  label: "✨ Enriched Silver (Polars)"
+  style: {
+    fill: "#5a84bf"
+    stroke: "#6699cc"
+    stroke-width: 3
+    font-color: "#e9edf1"
+  }
+
+  es1: "Cart Attribution" {
+    style: {
+      fill: "#6a94cf"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+
+  es2: "Customer LTV" {
+    style: {
+      fill: "#6a94cf"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+
+  es3: "Product Performance" {
+    style: {
+      fill: "#6a94cf"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+
+  es4: "Daily Metrics" {
+    style: {
+      fill: "#6a94cf"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+
+  es5: "10 transforms total" {
+    style: {
+      fill: "#6a94cf"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+}
+
+# GCS Publish Pipeline
+gcs: {
+  label: "☁️ GCS Publish"
+  style: {
+    fill: "#4a6fa5"
+    stroke: "#6699cc"
+    stroke-width: 3
+    font-color: "#e9edf1"
+  }
+
+  gcs1: "Staging Prefix\n_staging/run_id/" {
+    style: {
+      fill: "#5a7db8"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+
+  gcs2: "Atomic Publish\ngcloud storage rsync" {
+    style: {
+      fill: "#5a7db8"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+
+  gcs3: "Manifest + Pointer" {
+    style: {
+      fill: "#5a7db8"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+}
+
+# BigQuery Load
+bq: {
+  label: "📊 BigQuery Load"
+  style: {
+    fill: "#4a6fa5"
+    stroke: "#6699cc"
+    stroke-width: 3
+    font-color: "#e9edf1"
+  }
+
+  bq1: "Parquet Import\nWRITE_TRUNCATE" {
+    style: {
+      fill: "#5a7db8"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+
+  bq2: "Partition-level\nIdempotency" {
+    style: {
+      fill: "#5a7db8"
+      stroke: "#6699cc"
+      font-color: "#e9edf1"
+    }
+  }
+}
+
+# Gold Marts
+gold_marts: {
+  label: "🏆 Gold Marts (dbt-bigquery)"
+  style: {
+    fill: "#6699cc"
+    stroke: "#98c1d9"
+    stroke-width: 3
+    font-color: "#0c0d10"
+  }
+
+  gm1: "Fact: Orders" {
+    style: {
+      fill: "#7daad9"
+      stroke: "#98c1d9"
+      font-color: "#0c0d10"
+    }
+  }
+
+  gm2: "Fact: Customers" {
+    style: {
+      fill: "#7daad9"
+      stroke: "#98c1d9"
+      font-color: "#0c0d10"
+    }
+  }
+
+  gm3: "8 fact tables" {
+    style: {
+      fill: "#7daad9"
+      stroke: "#98c1d9"
+      font-color: "#0c0d10"
+    }
+  }
+}
+
+# Quarantine Tables (separate)
+qt: "Quarantine Tables" {
+  style: {
+    fill: "#2d3748"
+    stroke: "#6699cc"
+    stroke-width: 2
+    stroke-dash: 5
+    font-color: "#e9edf1"
+  }
+}
+
+# Connections
+bronze_input -> dims: {
+  style.stroke: "#6699cc"
+  style.stroke-width: 2
+}
+
+dims.d1 -> dims.d2: "Stale" {
+  style.stroke: "#6699cc"
+}
+
+dims.d1 -> dims.d3: "Stale" {
+  style.stroke: "#6699cc"
+}
+
+dims.d2 -> dims.d4: {
+  style.stroke: "#6699cc"
+}
+
+dims.d3 -> dims.d4: {
+  style.stroke: "#6699cc"
+}
+
+dims.d1 -> base_silver: "Fresh" {
+  style.stroke: "#6699cc"
+  style.stroke-width: 2
+}
+
+dims.d4 -> base_silver: {
+  style.stroke: "#6699cc"
+  style.stroke-width: 2
+}
+
+base_silver -> enriched_silver.es1: {
+  style.stroke: "#6699cc"
+}
+
+base_silver -> enriched_silver.es2: {
+  style.stroke: "#6699cc"
+}
+
+base_silver -> enriched_silver.es3: {
+  style.stroke: "#6699cc"
+}
+
+base_silver -> enriched_silver.es4: {
+  style.stroke: "#6699cc"
+}
+
+base_silver -> enriched_silver.es5: {
+  style.stroke: "#6699cc"
+}
+
+enriched_silver.es5 -> gcs.gcs1: {
+  style.stroke: "#6699cc"
+}
+
+gcs.gcs1 -> gcs.gcs2: {
+  style.stroke: "#6699cc"
+}
+
+gcs.gcs2 -> gcs.gcs3: {
+  style.stroke: "#6699cc"
+}
+
+gcs.gcs3 -> bq.bq1: {
+  style.stroke: "#6699cc"
+}
+
+bq.bq1 -> bq.bq2: {
+  style.stroke: "#6699cc"
+}
+
+bq.bq2 -> gold_marts.gm1: {
+  style.stroke: "#6699cc"
+}
+
+bq.bq2 -> gold_marts.gm2: {
+  style.stroke: "#6699cc"
+}
+
+bq.bq2 -> gold_marts.gm3: {
+  style.stroke: "#6699cc"
+}
+
+base_silver.bs4 -> qt: "Rejected Rows" {
+  style.stroke: "#6699cc"
+  style.stroke-dash: 5
+  style.opacity: 0.6
+}
