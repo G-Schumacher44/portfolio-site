@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Contract</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0b0e;
+      --card: #141a22;
+      --text: #f1f5f9;
+      --muted: #a5b0bf;
+      --brand: #66e3c4;
+      --brand-2: #4fa8ff;
+      --line: #1f2733;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Space Grotesk", "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(900px 500px at 10% 10%, rgba(79,168,255,0.15), transparent 60%),
+        radial-gradient(700px 450px at 90% 20%, rgba(102,227,196,0.12), transparent 50%),
+        var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 28px 24px 36px;
+      line-height: 1.6;
+    }
+    a { color: var(--brand-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1 { margin: 0 0 8px; font-size: 2rem; }
+    h2 { font-size: 1.2rem; margin: 24px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+    h3 { font-size: 1rem; margin: 18px 0 8px; }
+    .wrap { max-width: 980px; margin: 0 auto; }
+    .muted { color: var(--muted); }
+    .mono { font-family: "IBM Plex Mono", "Courier New", monospace; }
+    .grid { display: grid; gap: 16px; }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover { transform: translateY(-2px); border-color: rgba(79,168,255,0.35); }
+    .tagline {
+      font-family: "IBM Plex Mono", "Courier New", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      color: var(--brand);
+    }
+    ul { padding-left: 18px; }
+    .mapping-list { list-style: none; padding: 0; margin: 0; }
+    .mapping-list li { margin: 6px 0; color: var(--muted); }
+    .divider { height: 1px; background: var(--line); margin: 24px 0; }
+    .nav { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; }
+    .nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(79,168,255,0.15);
+      border: 1px solid rgba(79,168,255,0.35);
+      border-radius: 12px;
+      padding: 8px 12px;
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .nav a:hover { transform: translateY(-1px); border-color: rgba(102,227,196,0.5); }
+    @media (max-width: 700px) {
+      h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="tagline">Contract Spec</div>
+    <h1>Data Contract (Bronze → Base Silver, Enriched Silver)</h1>
+    <p class="muted">Single source of truth for required fields, data types, and nullability.</p>
+    <div class="nav">
+      <a href="./metrics_snapshot.html">Metrics Snapshot</a>
+      <a href="./data_dictionary.html">Data Dictionary</a>
+      <a href="./bronze_schema_map.html">Bronze Schema Map</a>
+      <a href="./manifest.html">Manifest</a>
+    </div>
+
+    <section>
+      <h2>Purpose</h2>
+      <p>Define the expected schema, required fields, and change policy for silver tables.</p>
+    </section>
+
+    <section>
+      <h2>Scope</h2>
+      <p>Base Silver tables map 1:1 with bronze tables. No split/merge.</p>
+      <p>Enriched Silver introduces business-aligned tables derived from Base Silver.</p>
+      <p class="muted">See <span class="mono">BRONZE_SCHEMA_MAP.json</span> for current bronze schemas.</p>
+    </section>
+
+    <section>
+      <h2>Schema Versioning</h2>
+      <ul>
+        <li>Current version: v1</li>
+        <li>Additive changes (new nullable columns) → minor version bump.</li>
+        <li>Breaking changes (type changes, removed columns, renamed columns) → major version bump.</li>
+        <li>All schema changes must be documented in this file.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Lineage Columns (Base Silver Only)</h2>
+      <p>All Base Silver tables must include these columns (not null):</p>
+      <ul>
+        <li>batch_id (string)</li>
+        <li>ingestion_ts (timestamp)</li>
+        <li>event_id (string)</li>
+        <li>source_file (string)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Observed Bronze Types vs Base Silver Targets</h2>
+      <p class="muted">Bronze source fields are string-heavy. Base Silver must explicitly cast to target types below.</p>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>cart_items</h3>
+          <ul class="mapping-list mono">
+            <li>cart_item_id: int64 → int64</li>
+            <li>cart_id: string → string</li>
+            <li>product_id: int64 → int64</li>
+            <li>product_name: string → string</li>
+            <li>category: string → string</li>
+            <li>added_at: string → timestamp</li>
+            <li>quantity: int64 → int64</li>
+            <li>unit_price: float64 → float64</li>
+            <li>batch_id: string → string</li>
+            <li>ingestion_ts: string → timestamp</li>
+            <li>event_id: string → string</li>
+            <li>source_file: string → string</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>customers</h3>
+          <ul class="mapping-list mono">
+            <li>customer_id: string → string</li>
+            <li>first_name: string → string</li>
+            <li>last_name: string → string</li>
+            <li>email: string → string</li>
+            <li>phone_number: string → string</li>
+            <li>signup_date: string → date</li>
+            <li>gender: string → string</li>
+            <li>age: float64 → float64</li>
+            <li>is_guest: boolean → bool</li>
+            <li>customer_status: string → string</li>
+            <li>signup_channel: string → string</li>
+            <li>loyalty_tier: string → string</li>
+            <li>initial_loyalty_tier: string → string</li>
+            <li>email_verified: boolean → bool</li>
+            <li>marketing_opt_in: boolean → bool</li>
+            <li>mailing_address: string → string</li>
+            <li>billing_address: string → string</li>
+            <li>loyalty_enrollment_date: string → date</li>
+            <li>clv_bucket: string → string</li>
+            <li>batch_id: string → string</li>
+            <li>ingestion_ts: string → timestamp</li>
+            <li>event_id: string → string</li>
+            <li>source_file: string → string</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>order_items</h3>
+          <ul class="mapping-list mono">
+            <li>order_id: string → string</li>
+            <li>product_id: int64 → int64</li>
+            <li>product_name: string → string</li>
+            <li>category: string → string</li>
+            <li>quantity: int64 → int64</li>
+            <li>unit_price: float64 → float64</li>
+            <li>discount_amount: float64 → float64</li>
+            <li>cost_price: float64 → float64</li>
+            <li>batch_id: string → string</li>
+            <li>ingestion_ts: string → timestamp</li>
+            <li>event_id: string → string</li>
+            <li>source_file: string → string</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>orders</h3>
+          <ul class="mapping-list mono">
+            <li>order_id: string → string</li>
+            <li>total_items: int64 → int64</li>
+            <li>order_date: string → timestamp</li>
+            <li>customer_id: string → string</li>
+            <li>email: string → string</li>
+            <li>order_channel: string → string</li>
+            <li>is_expedited: boolean → bool</li>
+            <li>customer_tier: string → string</li>
+            <li>gross_total: float64 → float64</li>
+            <li>net_total: float64 → float64</li>
+            <li>total_discount_amount: float64 → float64</li>
+            <li>payment_method: string → string</li>
+            <li>shipping_speed: string → string</li>
+            <li>shipping_cost: float64 → float64</li>
+            <li>agent_id: string → string</li>
+            <li>actual_shipping_cost: float64 → float64</li>
+            <li>payment_processing_fee: float64 → float64</li>
+            <li>shipping_address: string → string</li>
+            <li>billing_address: string → string</li>
+            <li>clv_bucket: string → string</li>
+            <li>is_reactivated: boolean → bool</li>
+            <li>batch_id: string → string</li>
+            <li>ingestion_ts: string → timestamp</li>
+            <li>event_id: string → string</li>
+            <li>source_file: string → string</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>product_catalog</h3>
+          <ul class="mapping-list mono">
+            <li>product_id: int64 → int64</li>
+            <li>product_name: string → string</li>
+            <li>category: string → string</li>
+            <li>unit_price: float64 → float64</li>
+            <li>cost_price: float64 → float64</li>
+            <li>inventory_quantity: int64 → int64</li>
+            <li>batch_id: string → string</li>
+            <li>ingestion_ts: string → timestamp</li>
+            <li>event_id: string → string</li>
+            <li>source_file: string → string</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>return_items</h3>
+          <ul class="mapping-list mono">
+            <li>return_item_id: int64 → int64</li>
+            <li>return_id: string → string</li>
+            <li>order_id: string → string</li>
+            <li>product_id: int64 → int64</li>
+            <li>product_name: string → string</li>
+            <li>category: string → string</li>
+            <li>quantity_returned: int64 → int64</li>
+            <li>unit_price: float64 → float64</li>
+            <li>cost_price: float64 → float64</li>
+            <li>refunded_amount: float64 → float64</li>
+            <li>batch_id: string → string</li>
+            <li>ingestion_ts: string → timestamp</li>
+            <li>event_id: string → string</li>
+            <li>source_file: string → string</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>returns</h3>
+          <ul class="mapping-list mono">
+            <li>return_id: string → string</li>
+            <li>order_id: string → string</li>
+            <li>customer_id: string → string</li>
+            <li>email: string → string</li>
+            <li>return_date: string → timestamp</li>
+            <li>reason: string → string</li>
+            <li>return_type: string → string</li>
+            <li>refunded_amount: float64 → float64</li>
+            <li>return_channel: string → string</li>
+            <li>agent_id: string → string</li>
+            <li>refund_method: string → string</li>
+            <li>batch_id: string → string</li>
+            <li>ingestion_ts: string → timestamp</li>
+            <li>event_id: string → string</li>
+            <li>source_file: string → string</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>shopping_carts</h3>
+          <ul class="mapping-list mono">
+            <li>cart_id: string → string</li>
+            <li>customer_id: string → string</li>
+            <li>created_at: string → timestamp</li>
+            <li>updated_at: string → timestamp</li>
+            <li>cart_total: float64 → float64</li>
+            <li>status: string → string</li>
+            <li>batch_id: string → string</li>
+            <li>ingestion_ts: string → timestamp</li>
+            <li>event_id: string → string</li>
+            <li>source_file: string → string</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Base Silver Tables (Required Fields)</h2>
+      <p class="muted">Columns not listed below are optional and preserved as-is.</p>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>orders</h3>
+          <ul class="mapping-list mono">
+            <li>order_id (string, not null)</li>
+            <li>customer_id (string, not null)</li>
+            <li>order_date (timestamp, not null)</li>
+            <li>net_total (float64, not null)</li>
+            <li>gross_total (float64, not null)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>order_items</h3>
+          <ul class="mapping-list mono">
+            <li>order_id (string, not null)</li>
+            <li>product_id (int64, not null)</li>
+            <li>quantity (int64, not null)</li>
+            <li>unit_price (float64, not null)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>customers</h3>
+          <ul class="mapping-list mono">
+            <li>customer_id (string, not null)</li>
+            <li>email (string, not null)</li>
+            <li>signup_date (date, not null)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>product_catalog</h3>
+          <ul class="mapping-list mono">
+            <li>product_id (int64, not null)</li>
+            <li>product_name (string, not null)</li>
+            <li>unit_price (float64, not null)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>shopping_carts</h3>
+          <ul class="mapping-list mono">
+            <li>cart_id (string, not null)</li>
+            <li>customer_id (string, not null)</li>
+            <li>created_at (timestamp, not null)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>cart_items</h3>
+          <ul class="mapping-list mono">
+            <li>cart_item_id (int64, not null)</li>
+            <li>cart_id (string, not null)</li>
+            <li>product_id (int64, not null)</li>
+            <li>quantity (int64, not null)</li>
+            <li>unit_price (float64, not null)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>returns</h3>
+          <ul class="mapping-list mono">
+            <li>return_id (string, not null)</li>
+            <li>order_id (string, not null)</li>
+            <li>customer_id (string, not null)</li>
+            <li>return_date (timestamp, not null)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>return_items</h3>
+          <ul class="mapping-list mono">
+            <li>return_item_id (int64, not null)</li>
+            <li>return_id (string, not null)</li>
+            <li>order_id (string, not null)</li>
+            <li>product_id (int64, not null)</li>
+            <li>quantity_returned (int64, not null)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Enriched Silver Tables (Required Fields)</h2>
+      <p class="muted">Enriched Silver tables must include stable business keys and event timestamps.</p>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>int_attributed_purchases</h3>
+          <ul class="mapping-list mono">
+            <li>order_id (string, not null)</li>
+            <li>customer_id (string, not null)</li>
+            <li>order_date (timestamp, not null)</li>
+            <li>cart_id (string, nullable)</li>
+            <li>is_recovered (bool, not null)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>int_inventory_risk</h3>
+          <ul class="mapping-list mono">
+            <li>product_id (int64, not null)</li>
+            <li>attention_score (float64, not null)</li>
+            <li>risk_tier (string, not null)</li>
+            <li>locked_capital (float64, not null)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>int_customer_retention_signals</h3>
+          <ul class="mapping-list mono">
+            <li>customer_id (string, not null)</li>
+            <li>days_since_first_buy (int64, not null)</li>
+            <li>days_since_last_buy (int64, not null)</li>
+            <li>is_in_danger_zone (bool, not null)</li>
+            <li>needs_bronze_nudge (bool, not null)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>int_sales_velocity</h3>
+          <ul class="mapping-list mono">
+            <li>product_id (int64, not null)</li>
+            <li>order_date (timestamp, not null)</li>
+            <li>velocity_avg (float64, not null)</li>
+            <li>trend_signal (string, not null)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>int_regional_financials</h3>
+          <ul class="mapping-list mono">
+            <li>order_id (string, not null)</li>
+            <li>region (string, not null)</li>
+            <li>gross_total (float64, not null)</li>
+            <li>net_total (float64, not null)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Change Policy</h2>
+      <ul>
+        <li>Upstream changes must be communicated before deployment.</li>
+        <li>Silver transforms will reject partitions with missing required columns.</li>
+        <li>If a breaking change is detected, publish a new schema version and update downstream consumers.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Contract Enforcement</h2>
+      <ul>
+        <li>Base Silver validation uses Pydantic schemas and dbt tests.</li>
+        <li>Enriched Silver validation uses unit tests for Polars transforms and dbt tests for output constraints.</li>
+        <li>Contract violations block downstream publish steps.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Ownership</h2>
+      <ul>
+        <li>Drafted by: Data Engineering</li>
+        <li>Reviewers: Business Intelligence, Data Science, Platform Engineering</li>
+      </ul>
+    </section>
+
+    <div class="divider"></div>
+    <p class="muted mono">Last updated (UTC): 2026-01-24T20:59:59Z</p>
+    <p class="muted mono">Content hash (SHA-256): f261d206358c5de79133699eda713e32ce85be624dabda70a96f8baaf4e5471f</p>
+
+    <section>
+      <div class="nav" style="margin-top: 18px;">
+        <a href="./dbt_observability.html">dbt observability</a>
+        <a href="./architecture.html">Architecture &amp; Ops</a>
+        <a href="./metrics_snapshot.html">Metrics snapshot</a>
+        <a href="./data_contract.html">Data contract</a>
+        <a href="./data_dictionary.html">Data dictionary</a>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

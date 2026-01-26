@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dbt Test Registry - 147 Quality Gates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0b0e;
+      --card: #141a22;
+      --text: #f1f5f9;
+      --muted: #a5b0bf;
+      --brand: #66e3c4;
+      --brand-2: #4fa8ff;
+      --line: #1f2733;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Space Grotesk", "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(79,168,255,0.15), transparent 60%),
+        radial-gradient(800px 500px at 90% 20%, rgba(102,227,196,0.12), transparent 50%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 24px;
+    }
+    .wrap { max-width: 1400px; margin: 0 auto; }
+    h1 { margin: 0 0 8px; font-size: 1.8rem; }
+    .subtitle { color: var(--muted); margin-bottom: 24px; }
+    .stats {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .stat-box {
+      background: linear-gradient(160deg, rgba(20,26,34,0.9), rgba(12,16,22,0.9));
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 20px;
+      text-align: center;
+      min-width: 140px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .stat-box:hover { transform: translateY(-2px); border-color: rgba(102,227,196,0.35); }
+    .stat-box strong {
+      display: block;
+      font-size: 2rem;
+      color: var(--brand);
+      margin-bottom: 4px;
+    }
+    .stat-box span {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    input[type="search"] {
+      flex: 1;
+      min-width: 250px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+    input[type="search"]:focus {
+      outline: none;
+      border-color: var(--brand);
+    }
+    select {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    select:focus {
+      outline: none;
+      border-color: var(--brand);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    thead {
+      background: linear-gradient(135deg, rgba(20,26,34,0.95), rgba(15,20,30,0.9));
+    }
+    th {
+      text-align: left;
+      padding: 14px 16px;
+      font-weight: 600;
+      color: var(--brand);
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+    }
+    tbody tr:hover {
+      background: rgba(102,227,196,0.04);
+    }
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+    .test-type {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .type-generic { background: rgba(102,227,196,0.15); color: var(--brand); border: 1px solid rgba(102,227,196,0.3); }
+    .type-singular { background: rgba(79,168,255,0.15); color: var(--brand-2); border: 1px solid rgba(79,168,255,0.3); }
+    .type-relationship { background: rgba(255,196,0,0.15); color: #ffd166; border: 1px solid rgba(255,196,0,0.3); }
+    .mono {
+      font-family: "IBM Plex Mono", "Courier New", monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .status-success { background: rgba(102,227,196,0.15); color: var(--brand); border: 1px solid rgba(102,227,196,0.3); }
+    .status-warn { background: rgba(255,196,0,0.15); color: #ffd166; border: 1px solid rgba(255,196,0,0.3); }
+    .status-fail { background: rgba(255,92,92,0.15); color: #ff8f8f; border: 1px solid rgba(255,92,92,0.35); }
+    .status-unknown { background: rgba(165,176,191,0.15); color: var(--muted); border: 1px solid rgba(165,176,191,0.3); }
+    .model-name {
+      color: var(--brand-2);
+      font-weight: 500;
+    }
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+    .error {
+      background: rgba(255,92,92,0.12);
+      border: 1px solid rgba(255,92,92,0.35);
+      color: #ff8f8f;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(79,168,255,0.15);
+      border: 1px solid rgba(79,168,255,0.35);
+      border-radius: 12px;
+      padding: 8px 12px;
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .cta:hover { transform: translateY(-1px); border-color: rgba(102,227,196,0.5); }
+    @media (max-width: 900px) {
+      table { font-size: 0.85rem; }
+      th, td { padding: 10px 12px; }
+      .stat-box { min-width: 100px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>dbt Test Registry</h1>
+    <p class="subtitle">Comprehensive quality gate catalog from the ecom datalake pipelines manifest · <a href="./dbt_observability.html">Open dbt observability suite</a></p>
+
+    <div class="stats" id="stats">
+      <div class="stat-box">
+        <strong id="totalTests">—</strong>
+        <span>Total Tests</span>
+      </div>
+      <div class="stat-box">
+        <strong id="genericTests">—</strong>
+        <span>Generic Tests</span>
+      </div>
+      <div class="stat-box">
+        <strong id="singularTests">—</strong>
+        <span>Singular Tests</span>
+      </div>
+      <div class="stat-box">
+        <strong id="relationshipTests">—</strong>
+        <span>Relationships</span>
+      </div>
+      <div class="stat-box">
+        <strong id="passingTests">—</strong>
+        <span>Passing</span>
+      </div>
+      <div class="stat-box">
+        <strong id="failingTests">—</strong>
+        <span>Failing</span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <input type="search" id="searchInput" placeholder="Search tests by name, model, or column...">
+      <select id="typeFilter">
+        <option value="all">All Test Types</option>
+        <option value="generic">Generic Tests</option>
+        <option value="singular">Singular Tests</option>
+        <option value="relationships">Relationship Tests</option>
+      </select>
+      <select id="statusFilter">
+        <option value="all">All Statuses</option>
+        <option value="success">Passing</option>
+        <option value="warn">Warn</option>
+        <option value="fail">Failing</option>
+        <option value="unknown">Unknown</option>
+      </select>
+      <select id="severityFilter">
+        <option value="all">All Severities</option>
+        <option value="warn">Warn</option>
+        <option value="error">Error</option>
+      </select>
+    </div>
+
+    <div id="tableContainer">
+      <div class="loading">Loading test registry from manifest.json...</div>
+    </div>
+
+    <section>
+      <div class="cta-row">
+        <a class="cta" href="./dbt_observability.html">dbt observability</a>
+        <a class="cta" href="./architecture.html">Architecture &amp; Ops</a>
+        <a class="cta" href="./metrics_snapshot.html">Metrics snapshot</a>
+        <a class="cta" href="./data_contract.html">Data contract</a>
+        <a class="cta" href="./data_dictionary.html">Data dictionary</a>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    let allTests = [];
+    let filteredTests = [];
+    let runResultsById = {};
+
+    const getTestType = (test) => {
+      const name = test.name?.toLowerCase() || '';
+      if (name.includes('relationships')) return 'relationship';
+      if (test.test_metadata?.name === 'relationships') return 'relationship';
+      if (test.path?.includes('tests/generic') || test.test_metadata) return 'generic';
+      return 'singular';
+    };
+
+    const getModelName = (test) => {
+      if (test.attached_node) {
+        const parts = test.attached_node.split('.');
+        return parts[parts.length - 1];
+      }
+      if (test.depends_on?.nodes?.length > 0) {
+        const node = test.depends_on.nodes[0];
+        const parts = node.split('.');
+        return parts[parts.length - 1];
+      }
+      return 'N/A';
+    };
+
+    const getColumnName = (test) => {
+      if (test.column_name) return test.column_name;
+      if (test.test_metadata?.kwargs?.column_name) return test.test_metadata.kwargs.column_name;
+      return '—';
+    };
+
+    const getTestName = (test) => {
+      if (test.test_metadata?.name) {
+        const baseName = test.test_metadata.name;
+        const column = getColumnName(test);
+        return column !== '—' ? `${baseName}(${column})` : baseName;
+      }
+      return test.name || 'Unnamed Test';
+    };
+
+    const getSeverity = (test) => test.config?.severity || 'warn';
+
+    const getStatus = (test) => {
+      const result = runResultsById[test.unique_id];
+      return result?.status || 'unknown';
+    };
+
+    const getStatusClass = (status) => {
+      if (status === 'success') return 'status-success';
+      if (status === 'warn') return 'status-warn';
+      if (status === 'fail' || status === 'error') return 'status-fail';
+      return 'status-unknown';
+    };
+
+    const renderTable = (tests) => {
+      if (tests.length === 0) {
+        document.getElementById('tableContainer').innerHTML = '<div class="loading">No tests match your filters.</div>';
+        return;
+      }
+
+      const rows = tests.map(test => {
+        const type = getTestType(test);
+        const typeClass = type === 'relationship' ? 'type-relationship' : type === 'singular' ? 'type-singular' : 'type-generic';
+        const severity = getSeverity(test);
+        const status = getStatus(test);
+        return `
+          <tr>
+            <td class="model-name">${getModelName(test)}</td>
+            <td>${getTestName(test)}</td>
+            <td>${getColumnName(test)}</td>
+            <td class="mono">${severity}</td>
+            <td><span class="test-type ${typeClass}">${type}</span></td>
+            <td><span class="status-pill ${getStatusClass(status)}">${status}</span></td>
+          </tr>
+        `;
+      }).join('');
+
+      document.getElementById('tableContainer').innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Test Name</th>
+              <th>Column</th>
+              <th>Severity</th>
+              <th>Type</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `;
+    };
+
+    const updateStats = () => {
+      const generic = allTests.filter(t => getTestType(t) === 'generic').length;
+      const singular = allTests.filter(t => getTestType(t) === 'singular').length;
+      const relationship = allTests.filter(t => getTestType(t) === 'relationship').length;
+      const passing = allTests.filter(t => getStatus(t) === 'success').length;
+      const failing = allTests.filter(t => ['fail', 'error'].includes(getStatus(t))).length;
+
+      document.getElementById('totalTests').textContent = allTests.length;
+      document.getElementById('genericTests').textContent = generic;
+      document.getElementById('singularTests').textContent = singular;
+      document.getElementById('relationshipTests').textContent = relationship;
+      document.getElementById('passingTests').textContent = passing;
+      document.getElementById('failingTests').textContent = failing;
+    };
+
+    const filterTests = () => {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const typeFilter = document.getElementById('typeFilter').value;
+      const statusFilter = document.getElementById('statusFilter').value;
+      const severityFilter = document.getElementById('severityFilter').value;
+
+      filteredTests = allTests.filter(test => {
+        const matchesSearch = !searchTerm ||
+          getTestName(test).toLowerCase().includes(searchTerm) ||
+          getModelName(test).toLowerCase().includes(searchTerm) ||
+          getColumnName(test).toLowerCase().includes(searchTerm);
+
+        const testType = getTestType(test);
+        const matchesType = typeFilter === 'all' ||
+          (typeFilter === 'relationships' && testType === 'relationship') ||
+          (typeFilter === 'generic' && testType === 'generic') ||
+          (typeFilter === 'singular' && testType === 'singular');
+
+        const testStatus = getStatus(test);
+        const matchesStatus = statusFilter === 'all' || testStatus === statusFilter;
+
+        const testSeverity = getSeverity(test);
+        const matchesSeverity = severityFilter === 'all' || testSeverity === severityFilter;
+
+        return matchesSearch && matchesType && matchesStatus && matchesSeverity;
+      });
+
+      renderTable(filteredTests);
+    };
+
+    const loadTests = async () => {
+      try {
+        const [manifestResponse, resultsResponse] = await Promise.all([
+          fetch('dbt_duckdb_docs/manifest.json'),
+          fetch('dbt_duckdb_docs/run_results.json')
+        ]);
+
+        if (!manifestResponse.ok) throw new Error('Failed to load manifest.json');
+
+        const manifest = await manifestResponse.json();
+        if (resultsResponse.ok) {
+          const runResults = await resultsResponse.json();
+          runResultsById = (runResults.results || []).reduce((acc, result) => {
+            acc[result.unique_id] = result;
+            return acc;
+          }, {});
+        }
+
+        allTests = Object.entries(manifest.nodes || {})
+          .filter(([key, node]) => node.resource_type === 'test')
+          .map(([key, node]) => ({ ...node, unique_id: key }))
+          .sort((a, b) => {
+            const modelA = getModelName(a);
+            const modelB = getModelName(b);
+            return modelA.localeCompare(modelB);
+          });
+
+        if (allTests.length === 0) {
+          throw new Error('No tests found in manifest');
+        }
+
+        updateStats();
+        filteredTests = [...allTests];
+        renderTable(filteredTests);
+
+        document.getElementById('searchInput').addEventListener('input', filterTests);
+        document.getElementById('typeFilter').addEventListener('change', filterTests);
+        document.getElementById('statusFilter').addEventListener('change', filterTests);
+        document.getElementById('severityFilter').addEventListener('change', filterTests);
+
+      } catch (error) {
+        console.error('Error loading tests:', error);
+        document.getElementById('tableContainer').innerHTML = `
+          <div class="error">
+            <strong>Error loading test registry:</strong> ${error.message}
+            <br><br>
+            Make sure manifest.json exists in the dbt_duckdb_docs folder.
+          </div>
+        `;
+      }
+    };
+
+    loadTests();
+  </script>
+</body>
+</html>

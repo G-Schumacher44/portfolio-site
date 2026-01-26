@@ -342,6 +342,59 @@
       margin-bottom: 12px;
     }
     .banner{margin:24px auto;display:block;max-width:900px;width:92%;height:auto;opacity:.95}
+
+    /* Micro Banner */
+    .micro-banner {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: block;
+      background: linear-gradient(135deg, rgba(105, 153, 204, 0.15), rgba(105, 153, 204, 0.08));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(105, 153, 204, 0.3);
+      padding: 10px 16px;
+      text-align: center;
+      color: var(--text);
+      cursor: pointer;
+      transition: transform 0.3s ease, background 0.2s ease;
+      transform: translateY(0);
+    }
+    .micro-banner.hidden {
+      transform: translateY(-100%);
+    }
+    .micro-banner:hover {
+      background: linear-gradient(135deg, rgba(105, 153, 204, 0.22), rgba(105, 153, 204, 0.12));
+    }
+    .micro-banner-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .micro-banner-label {
+      background: var(--brand);
+      color: #0b1116;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .micro-banner-text {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .micro-banner-arrow {
+      font-size: 1.1rem;
+      color: var(--brand);
+      font-weight: 600;
+    }
+
     footer{border-top:1px solid var(--line);padding:22px 16px;text-align:center;color:var(--muted)}
 
     /* Modal / Lightbox */
@@ -367,6 +420,15 @@
         position: static; /* Unstick on mobile */
       }
     }
+    @media (max-width: 768px) {
+      .micro-banner-content {
+        font-size: 0.9rem;
+        gap: 8px;
+      }
+      .micro-banner-text {
+        font-size: 0.85rem;
+      }
+    }
     @media (max-width: 640px) {
       header.hero {
         padding: 40px 12px 0;
@@ -389,6 +451,15 @@
   </style>
 </head>
 <body>
+
+  <!-- MICRO BANNER: NEW PROJECT ANNOUNCEMENT -->
+  <div class="micro-banner" data-modal-type="html" data-modal-src="files/modals/ecom_pipelines_summary.html" role="button" tabindex="0" aria-label="View Ecom Datalake Pipelines project details">
+    <div class="micro-banner-content">
+      <span class="micro-banner-label">NEW</span>
+      <span class="micro-banner-text">Medallion Lakehouse Pipeline — dbt, DuckDB, BigQuery</span>
+      <span class="micro-banner-arrow">→</span>
+    </div>
+  </div>
 
   <!-- HERO -->
   <header class="hero">
@@ -535,8 +606,8 @@
               <div class="card-highlight">
                 <strong>NEW! Google Cloud Storage Extension:</strong> Ship generator output into partitioned Parquet with lineage-rich metadata ready for lake hydration. <a href="https://github.com/G-Schumacher44/ecom-datalake-exten" target="_blank" rel="noopener">View here</a>
               </div>
-              <div class="card-highlight muted">
-                <strong>In Development:</strong> a Google Cloud automation workspace tying Storage, Pub/Sub, Dataflow, and BigQuery together with Python orchestration, SQL modeling, and Terraform-driven IaC inside VS Code.
+              <div class="card-highlight">
+                <strong>Transformation Layer:</strong> The <a href="#" data-modal-type="html" data-modal-src="files/modals/ecom_pipelines_summary.html">ecom-datalake-pipelines</a> project extends this ecosystem with production-grade Bronze → Silver → Gold transformations using dbt, DuckDB, and BigQuery. <a href="https://github.com/G-Schumacher44/ecom_datalake_pipelines" target="_blank" rel="noopener">View repository</a>
               </div>
               <ul class="card-links">
                 <li><strong>Ecom Sales Data Generator (Engine):</strong> <a href="https://github.com/G-Schumacher44/ecom_sales_data_generator" target="_blank" rel="noopener">View Repository</a> • <a href="data/ecom_retailer_v3.db" download>Download Database</a></li>
@@ -595,17 +666,19 @@
         </article>
 
         <article class="card">
-          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/dirty_birds_summary.html" data-caption="Open Overview">
-            <img src="img/projects/dirty-birds-generator-thumb.png" alt="Dirty Birds Data Generator">
+          <div class="project-gallery-item" data-modal-type="html" data-modal-src="files/modals/ecom_pipelines_summary.html" data-caption="Open Overview">
+            <img src="img/projects/pipelines_banner.png" alt="Ecom Datalake Pipelines - Medallion Architecture">
           </div>
-          <h3>Dirty Birds Data Generator</h3>
+          <h3>Ecom Datalake Pipelines</h3>
           <p>
-            This project simulates penguin tagging data for ecological analysis, QA, and model prototyping. Inspired by the Palmer Penguins dataset, it adds custom randomness, messiness injection, and resight logic to better reflect longitudinal field studies.
+            Production-grade medallion lakehouse pipeline showcasing Bronze → Silver → Gold transformations for e-commerce analytics with data contracts, quality gates, and observability.
           </p>
-          <p class="meta">Python • YAML • Data Generation</p>
+          <p class="meta">dbt • DuckDB • BigQuery • Polars • Airflow</p>
           <ul class="card-links">
-            <li><a href="https://github.com/G-Schumacher44/dirty_birds_data_generator" target="_blank" rel="noopener">View Repository</a></li>
-            <li><a href="data/synthetic_penguins_v3.5.csv" download>Download Dataset</a></li>
+            <li><a href="https://github.com/G-Schumacher44/ecom_datalake_pipelines" target="_blank" rel="noopener">View Repository</a></li>
+            <li><a href="https://github.com/G-Schumacher44/ecom_datalake_pipelines/blob/main/RESOURCE_HUB.md" target="_blank" rel="noopener">Technical Documentation</a></li>
+            <li><a href="https://github.com/G-Schumacher44/ecom_datalake_pipelines/blob/main/docs/data/BRONZE_PROFILE_REPORT.md" target="_blank" rel="noopener">Bronze Data Profile</a></li>
+            <li><a href="files/pipeline_project/dbt_observability.html" target="_blank" rel="noopener">dbt Observability Suite</a></li>
           </ul>
         </article>
       </div>
@@ -639,7 +712,6 @@
           <p class="meta">SQL • Python • Data Storytelling</p>
           <ul class="card-links">
             <li><a href="https://github.com/G-Schumacher44/sql_stories_portfolio_demo/tree/main" target="_blank" rel="noopener">View Case Study</a></li>
-            <li><a href="https://docs.google.com/spreadsheets/d/1PuANFstg9yOWV84X1mOoblQp4ProvaSo4iYJ1ONZM7k/edit?usp=sharing" target="_blank" rel="noopener">Live Workbook (Google Sheets)</a></li>
           </ul>
         </article>
 
@@ -656,6 +728,51 @@
             <li><a href="https://github.com/G-Schumacher44/sql_stories_portfolio_demo/tree/main" target="_blank" rel="noopener">View Case Study</a></li>
             <li><a href="files/media/Executive_Retention_Report.html" target="_blank" rel="noopener noreferrer">Jupyter Notebook (HTML, static)</a></li>
           </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- DATA GENERATORS -->
+    <section id="data-generators">
+      <h2>Data Generators</h2>
+      <p style="max-width: 75ch; margin-bottom: 24px;">
+        Synthetic data generators for testing, learning, and portfolio development. These tools create realistic datasets with controlled complexity and messiness profiles for hands-on practice with SQL, Python, and analytics workflows.
+      </p>
+      <div class="grid">
+        <article class="card card-horizontal">
+          <div class="project-gallery-item card-thumb" data-modal-type="html" data-modal-src="files/modals/ecom_generator_summary.html" data-caption="Open Overview">
+            <img src="img/projects/ecom_generator_thumb.png" alt="Ecom Sales Data Generator">
+            <span class="meta meta-inline">Python • SQL • SQLite</span>
+          </div>
+          <div class="card-content">
+            <h3>Ecom Sales Data Generator</h3>
+            <p>
+              Generates realistic, relational e-commerce datasets with configurable volumes, seasonality, and messiness levels. The engine behind the SQL Stories ecosystem.
+            </p>
+            <p class="meta">Python • Pandas • SQLite • YAML</p>
+            <ul class="card-links">
+              <li><a href="https://github.com/G-Schumacher44/ecom_sales_data_generator" target="_blank" rel="noopener">View Repository</a></li>
+              <li><a href="data/ecom_retailer_v3.db" download>Download Database</a></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card card-horizontal">
+          <div class="project-gallery-item card-thumb" data-modal-type="html" data-modal-src="files/modals/dirty_birds_summary.html" data-caption="Open Overview">
+            <img src="img/projects/dirty-birds-generator-thumb.png" alt="Dirty Birds Data Generator">
+            <span class="meta meta-inline">Python • Pandas • CSV</span>
+          </div>
+          <div class="card-content">
+            <h3>Dirty Birds Data Generator</h3>
+            <p>
+              Simulates penguin tagging data for ecological analysis, QA, and model prototyping. Inspired by Palmer Penguins, it adds custom randomness, messiness injection, and resight logic to reflect longitudinal field studies.
+            </p>
+            <p class="meta">Python • Pandas • YAML • CSV</p>
+            <ul class="card-links">
+              <li><a href="https://github.com/G-Schumacher44/dirty_birds_data_generator" target="_blank" rel="noopener">View Repository</a></li>
+              <li><a href="data/synthetic_penguins_v3.5.csv" download>Download Dataset</a></li>
+            </ul>
+          </div>
         </article>
       </div>
     </section>
@@ -877,6 +994,57 @@
 
       closeModalBtn.addEventListener('click', closeModal);
       modal.addEventListener('click', (event) => { if (event.target === modal) closeModal(); });
+
+      // Micro Banner: Modal trigger
+      const microBanner = document.querySelector('.micro-banner');
+      if (microBanner) {
+        microBanner.addEventListener('click', (e) => {
+          const modalType = microBanner.dataset.modalType || 'html';
+          const modalSrc = microBanner.dataset.modalSrc;
+          const title = microBanner.getAttribute('aria-label') || 'Project Preview';
+
+          modalTitle.textContent = 'Ecom Datalake Pipelines';
+
+          if (modalType === 'html' && modalSrc) {
+            modalBody.classList.add('show-iframe');
+            modalFrame.src = modalSrc;
+          }
+
+          modal.classList.remove('modal-small', 'modal-report');
+          modal.classList.add('modal-report');
+
+          if (!modal.open) modal.showModal();
+        });
+
+        // Keyboard accessibility
+        microBanner.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            microBanner.click();
+          }
+        });
+
+        // Auto-hide on scroll down, show on scroll up
+        let lastScrollTop = 0;
+        let scrollTimeout;
+
+        window.addEventListener('scroll', () => {
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+              // Scrolling down & past 100px - hide banner
+              microBanner.classList.add('hidden');
+            } else {
+              // Scrolling up - show banner
+              microBanner.classList.remove('hidden');
+            }
+
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+          }, 50); // Debounce for performance
+        }, { passive: true });
+      }
     });
   </script>
 </body>
