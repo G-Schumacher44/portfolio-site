@@ -91,6 +91,39 @@
       border-radius: 12px;
       padding: 12px;
     }
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 8, 12, 0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 24px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-content { position: relative; }
+    .lightbox img {
+      max-width: min(1200px, 95vw);
+      max-height: 85vh;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+      display: block;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .lightbox-trigger { cursor: zoom-in; }
     details {
       background: var(--card);
       border: 1px solid var(--line);
@@ -283,11 +316,11 @@
       </div>
       <div class="grid" style="margin-top: 16px;">
         <figure class="card">
-          <img src="./airflow_ui_01.png" alt="Airflow DAG orchestration overview" style="width:100%;border-radius:12px;border:1px solid var(--line);display:block;" />
+          <img class="lightbox-trigger" src="./airflow_ui_01.png" alt="Airflow DAG orchestration overview" role="button" tabindex="0" aria-haspopup="dialog" style="width:100%;border-radius:12px;border:1px solid var(--line);display:block;" />
           <figcaption class="mono" style="margin-top:8px;">Core pipeline DAG with Bronze → Silver → Gold dependencies.</figcaption>
         </figure>
         <figure class="card">
-          <img src="./airflow_ui_02.png" alt="Airflow task graph with quality gates" style="width:100%;border-radius:12px;border:1px solid var(--line);display:block;" />
+          <img class="lightbox-trigger" src="./airflow_ui_02.png" alt="Airflow task graph with quality gates" role="button" tabindex="0" aria-haspopup="dialog" style="width:100%;border-radius:12px;border:1px solid var(--line);display:block;" />
           <figcaption class="mono" style="margin-top:8px;">Quality gates embedded in task graph for early failure detection.</figcaption>
         </figure>
       </div>
@@ -368,6 +401,12 @@
       </div>
     </section>
   </div>
+  <div class="lightbox" id="image-lightbox" aria-hidden="true">
+    <div class="lightbox-content" role="dialog" aria-modal="true" aria-label="Expanded image">
+      <button class="lightbox-close" type="button" aria-label="Close image">Close</button>
+      <img src="" alt="" />
+    </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <script>
     mermaid.initialize({
@@ -379,6 +418,49 @@
         primaryTextColor: '#f1f5f9',
         lineColor: '#4fa8ff',
         fontFamily: 'Space Grotesk, Segoe UI, Arial, sans-serif'
+      }
+    });
+  </script>
+  <script>
+    const lightbox = document.getElementById('image-lightbox');
+    const lightboxImg = lightbox.querySelector('img');
+    const closeBtn = lightbox.querySelector('.lightbox-close');
+    const triggers = document.querySelectorAll('.lightbox-trigger');
+
+    const openLightbox = (src, alt) => {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      closeBtn.focus();
+    };
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImg.src = '';
+    };
+
+    triggers.forEach((img) => {
+      img.addEventListener('click', () => openLightbox(img.src, img.alt));
+      img.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openLightbox(img.src, img.alt);
+        }
+      });
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && lightbox.classList.contains('open')) {
+        closeLightbox();
       }
     });
   </script>
