@@ -5,7 +5,7 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-D1Q0RESQ6H"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);} 
+    function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-D1Q0RESQ6H');
   </script>
@@ -13,111 +13,359 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SQL Stories Ecosystem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    :root { --bg:#0c0d10; --card:#14161a; --text:#e9edf1; --muted:#a7b0bb; --brand:#69c; --line:#22262c; }
-    body { font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 24px 32px; }
-    h1, h2, h3 { color: var(--brand); margin: 1.25em 0 0.5em; }
-    h1 { margin-top: 0; font-size: 1.5rem; }
-    h2 { font-size: 1.2rem; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
-    p, ul { max-width: 75ch; }
-    a { color: var(--brand); text-decoration: none; }
+    :root {
+      --bg: #0a0b0e;
+      --bg-accent: #0f141e;
+      --card: #141a22;
+      --text: #f1f5f9;
+      --muted: #a5b0bf;
+      --brand: #66e3c4;
+      --brand-2: #4fa8ff;
+      --line: #1f2733;
+      --glow: rgba(102, 227, 196, 0.2);
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Space Grotesk", "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(79,168,255,0.15), transparent 60%),
+        radial-gradient(800px 500px at 90% 20%, rgba(102,227,196,0.12), transparent 50%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 28px 32px 36px;
+    }
+    h1, h2, h3 { margin: 1.25em 0 0.5em; }
+    h1 { margin-top: 0; font-size: 2rem; letter-spacing: 0.2px; }
+    h2 { font-size: 1.25rem; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+    h3 { font-size: 1.05rem; margin-top: 0; }
+    p, ul { max-width: 78ch; }
+    a { color: var(--brand-2); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    .pill { display: inline-block; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; margin: 4px 6px 0 0; color: var(--muted); font-size: 0.85rem; }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    .hero {
+      background: linear-gradient(135deg, rgba(20,26,34,0.95), rgba(15,20,30,0.9));
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      margin-bottom: 24px;
+    }
+    .hero-sub { color: var(--muted); margin-top: 6px; font-size: 1.05rem; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(102,227,196,0.08);
+      border: 1px solid rgba(102,227,196,0.3);
+      border-radius: 999px;
+      padding: 4px 12px;
+      margin: 6px 8px 0 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .pill strong { color: var(--text); font-weight: 600; }
     .muted { color: var(--muted); }
-    .footer-note { text-align:center; font-size:1.1rem; color: var(--muted); letter-spacing:.2px; }
+    .grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(79,168,255,0.35);
+      box-shadow: 0 18px 36px rgba(0,0,0,0.3);
+    }
+    .card h3 { margin-top: 0; color: var(--brand); }
+    .card p { margin: 8px 0; font-size: 0.95rem; }
+    .card ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .card ul li { margin: 6px 0; }
+    .tagline {
+      font-family: "IBM Plex Mono", "Courier New", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(79,168,255,0.15);
+      border: 1px solid rgba(79,168,255,0.35);
+      border-radius: 10px;
+      padding: 6px 12px;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(79,168,255,0.18);
+      text-decoration: none;
+    }
+    .cta-primary {
+      background: linear-gradient(120deg, rgba(102,227,196,0.25), rgba(79,168,255,0.2));
+      border-color: rgba(102,227,196,0.5);
+    }
+    .cta svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+    .project-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: rgba(102,227,196,0.12);
+      color: var(--brand);
+      border: 1px solid rgba(102,227,196,0.3);
+      margin-bottom: 8px;
+    }
+    .footer-note {
+      text-align: center;
+      font-size: 1.05rem;
+      color: var(--muted);
+      letter-spacing: 0.2px;
+      margin-top: 32px;
+    }
+    .divider {
+      height: 1px;
+      background: var(--line);
+      margin: 32px 0;
+    }
+    .overview-section {
+      background: rgba(102,153,204,0.04);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .overview-section h2 { border: none; margin-top: 0; }
+    @media (max-width: 700px) {
+      body { padding: 20px; }
+      h1 { font-size: 1.6rem; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <h1>SQL Stories Ecosystem</h1>
-  <p class="muted">An end‑to‑end sandbox for generating realistic data, practicing analysis, and turning findings into narrative‑driven case studies.</p>
+  <div class="wrap">
+    <section class="hero">
+      <div class="tagline">End-to-End Data Storytelling Ecosystem</div>
+      <h1>SQL Stories Ecosystem</h1>
+      <p class="hero-sub">An integrated sandbox for generating realistic data, practicing analysis, and crafting narrative-driven case studies — from raw data to stakeholder-ready insights.</p>
+      <div style="margin-top: 12px;">
+        <span class="pill"><strong>6+</strong> repositories</span>
+        <span class="pill"><strong>Python</strong> · <strong>SQL</strong> · <strong>dbt</strong></span>
+        <span class="pill"><strong>Parquet</strong> · <strong>BigQuery</strong></span>
+        <span class="pill"><strong>147</strong> dbt tests</span>
+      </div>
+    </section>
 
-  <h2>Overview</h2>
-  <p>
-    The ecosystem grew from a simple challenge — take one dataset and tell five stories. It now spans a data generation engine, a public learning lab, and a curated showcase, connecting data creation to analysis and storytelling.
-  </p>
+    <section class="overview-section">
+      <h2>What the System Enables</h2>
+      <p>
+        Learning SQL from toy datasets feels disconnected from practice — <strong>too clean, too small, too shallow</strong>. Real business environments bring data that is messy, interdependent, and shaped by operational trade-offs.
+      </p>
+      <p>The <strong>SQL Stories Ecosystem</strong> solves this by acting as a <strong>sandbox for real-world scenarios</strong>:</p>
+      <ul style="color: var(--muted); padding-left: 20px;">
+        <li><strong style="color: var(--text);">Synthetic but realistic datasets</strong> — simulate revenue, returns, inventory, churn, and product lifecycles to mirror e-commerce challenges.</li>
+        <li><strong style="color: var(--text);">Business-driven case studies</strong> — every project is framed as a stakeholder request (VP of Sales report, inventory audit, retention deep dive).</li>
+        <li><strong style="color: var(--text);">Hands-on SQL and database design</strong> — practice building tables, engineered views, and diagnostics that replicate what analysts deliver in production.</li>
+        <li><strong style="color: var(--text);">Production-grade pipelines</strong> — test policy changes, system tweaks, and data governance rules in a controlled environment before production.</li>
+      </ul>
+    </section>
 
-  <h2>Tech Stack</h2>
-  <p>
-    <span class="pill">Python</span>
-    <span class="pill">SQL</span>
-    <span class="pill">SQLite</span>
-    <span class="pill">Parquet</span>
-    <span class="pill">Jupyter</span>
-    <span class="pill">Click CLI</span>
-    <span class="pill">Markdown</span>
-    <span class="pill">ChatGPT‑4o</span>
-    <span class="pill">Gemini CLI</span>
-    <span class="pill">Gemini 2.5 Pro</span>
-    <span class="pill">Gemini Code Assist</span>
-  </p>
+    <h2>Core Projects</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="project-badge">⚡ Featured</div>
+        <h3>Ecom Datalake Pipelines</h3>
+        <p>Production-grade Bronze → Silver → Gold medallion pipeline with contract-driven dbt models, quality gates, and partition-level audit trails.</p>
+        <ul>
+          <li>147 dbt tests across 16 validated tables</li>
+          <li>3-stage validation with quarantine handling</li>
+          <li>7x faster local enrichment vs warehouse models</li>
+          <li>Audit JSON per partition for SLA dashboards</li>
+        </ul>
+        <div class="cta-row">
+          <a class="cta cta-primary" href="https://github.com/G-Schumacher44/ecom_datalake_pipelines" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            Repository
+          </a>
+          <a class="cta" href="../modals/ecom_pipelines_summary.html" target="_blank" rel="noopener">Project Details</a>
+        </div>
+      </div>
 
-  <h2>Artifacts</h2>
-  <ul>
-    <li>Synthetic databases and CSV exports</li>
-    <li>Executable notebooks and scenario briefs</li>
-    <li>Case studies and dashboards</li>
-    <li>Reusable SQL views and QA scripts</li>
-  </ul>
+      <div class="card">
+        <div class="project-badge">Data Generation</div>
+        <h3>Ecom Sales Data Generator</h3>
+        <p>Config-driven engine producing synthetic e-commerce data with controlled messiness (missing values, duplicates, noise).</p>
+        <ul>
+          <li>Creates realistic practice environments for SQL</li>
+          <li>Exports clean SQLite DBs for immediate use</li>
+          <li>Supports reproducibility via YAML configs</li>
+        </ul>
+        <div class="cta-row">
+          <a class="cta cta-primary" href="https://github.com/G-Schumacher44/ecom_sales_data_generator" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            Repository
+          </a>
+          <a class="cta" href="../../data/ecom_retailer_v3.db" download>Download SQLite DB</a>
+        </div>
+      </div>
 
-  <h2>What the System Enables</h2>
-  <p>
-    Learning SQL from toy datasets feels disconnected from practice — <strong>too clean, too small, too shallow</strong>. Real business environments bring data that is messy, interdependent, and shaped by operational trade‑offs.
-  </p>
-  <p>The <strong>SQL Stories Ecosystem</strong> solves this by acting as a <strong>sandbox for real‑world scenarios</strong>:</p>
-  <ul>
-    <li><strong>Synthetic but realistic datasets</strong> — simulate revenue, returns, inventory, churn, and product lifecycles to mirror e‑commerce challenges.</li>
-    <li><strong>Business‑driven case studies</strong> — every project is framed as a stakeholder request (e.g., a VP of Sales report, an inventory audit, a retention deep dive).</li>
-    <li><strong>Hands‑on SQL and database design</strong> — practice building tables, engineered views, and diagnostics that replicate what analysts deliver in production.</li>
-    <li><strong>Operational sandboxing</strong> — test out how <strong>policy changes, system tweaks, or data governance rules</strong> ripple through a retailer’s ecosystem, without risk.</li>
-    <li><strong>Reusable learning lab</strong> — create and validate pipelines in a controlled environment, much like how real teams use staging databases before production.</li>
-  </ul>
+      <div class="card">
+        <div class="project-badge">Lake Hydration</div>
+        <h3>Ecom Datalake Extension</h3>
+        <p>Lake hydration layer turning generator output into partitioned Parquet with lineage metadata, manifests, and GCS delivery.</p>
+        <ul>
+          <li>Click-based CLI (<code>ecomlake</code>) for orchestration</li>
+          <li>Tracks event_id, batch_id, ingestion_ts per file</li>
+          <li>Publishes Hive-partitioned to Google Cloud Storage</li>
+          <li>Powers scenario briefs with multi-day backfills</li>
+        </ul>
+        <div class="cta-row">
+          <a class="cta cta-primary" href="https://github.com/G-Schumacher44/ecom-datalake-exten" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            Repository
+          </a>
+          <a class="cta" href="../media/ecom_datalake_extension.html" target="_blank" rel="noopener">Lake Overview</a>
+        </div>
+      </div>
 
-  <h2>Data Generator</h2>
-  <p>A <strong>config‑driven engine</strong> that produces synthetic e‑commerce data with <strong>controlled messiness</strong> (missing values, duplicates, noise).</p>
-  <ul>
-    <li>Creates realistic practice environments for SQL and data quality exercises</li>
-    <li>Exports clean SQLite DBs for immediate use in analysis and demos</li>
-    <li>Supports reproducibility with YAML‑based scenario configs</li>
-  </ul>
-  <p><strong>Links:</strong> <a href="https://github.com/G-Schumacher44/ecom_sales_data_generator" target="_blank" rel="noopener">Repository</a> | <a href="../../data/ecom_retailer_v3.db" download>Download SQLite DB</a></p>
+      <div class="card">
+        <div class="project-badge">Learning Lab</div>
+        <h3>SQL Stories Skills Builder</h3>
+        <p>Public learning lab combining scenario briefs, guided SQL queries, and practice notebooks for hands-on SQL mastery.</p>
+        <ul>
+          <li>Scenarios mimic real stakeholder requests</li>
+          <li>Hands-on SQL practice with curated queries</li>
+          <li>Bridges theory and "on the job" problem-solving</li>
+        </ul>
+        <div class="cta-row">
+          <a class="cta cta-primary" href="https://github.com/G-Schumacher44/sql_stories_skills_builder" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            Repository
+          </a>
+          <a class="cta" href="../media/scenario_04_cart_behavior_analysis.html" target="_blank" rel="noopener">Sample Scenario</a>
+        </div>
+      </div>
 
-  <h2>Data Lake Extension</h2>
-  <p>The <strong>lake hydration layer</strong> that turns generator output into partitioned Parquet drops with lineage metadata, manifests, and cloud delivery.</p>
-  <ul>
-    <li>Wraps the generator with a <code>click</code>-based CLI (<code>ecomlake</code>) for run → export → upload tasks</li>
-    <li>Adds <code>event_id</code>, <code>batch_id</code>, <code>ingestion_ts</code>, and <code>source_file</code> tracking to every file</li>
-    <li>Publishes Hive-partitioned directories directly to Google Cloud Storage with dry-run safeguards</li>
-    <li>Powers scenario briefs with multi-day backfills and QA-ready manifests</li>
-  </ul>
-  <p><strong>Links:</strong> <a href="https://github.com/G-Schumacher44/ecom-datalake-exten" target="_blank" rel="noopener">Repository</a> | <a href="../media/ecom_datalake_extension.html" target="_blank" rel="noopener">Lake Delivery Overview</a></p>
+      <div class="card">
+        <div class="project-badge">Case Studies</div>
+        <h3>SQL Stories Portfolio Demo</h3>
+        <p>Curated collection of case studies turning raw SQL analysis into stakeholder-ready stories with dashboards and reports.</p>
+        <ul>
+          <li>Insights flow into dashboards and executive reports</li>
+          <li>Covers returns analysis, retention, profitability</li>
+          <li>Shows how analysis drives business decisions</li>
+        </ul>
+        <div class="cta-row">
+          <a class="cta cta-primary" href="https://github.com/G-Schumacher44/sql_stories_portfolio_demo" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            Repository
+          </a>
+          <a class="cta" href="../media/storycrafting.html" target="_blank" rel="noopener">Craft a Story</a>
+        </div>
+      </div>
 
-  <h2>Skills Builder</h2>
-  <p>A <strong>public learning lab</strong> combining scenario briefs, guided SQL queries, and practice notebooks.</p>
-  <ul>
-    <li>Each scenario mimics a real stakeholder request (e.g., VP of Sales, Inventory Audit)</li>
-    <li>Provides <strong>hands‑on SQL practice</strong> with curated queries and datasets</li>
-    <li>Helps bridge the gap between theory and “on the job” problem‑solving</li>
-  </ul>
-  <p><strong>Links:</strong> <a href="https://github.com/G-Schumacher44/sql_stories_skills_builder" target="_blank" rel="noopener">Repository</a> | <a href="../media/scenario_04_cart_behavior_analysis.html" target="_blank" rel="noopener">Sample Scenario Brief</a></p>
+      <div class="card">
+        <div class="project-badge">Executive Brief</div>
+        <h3>VP Request Case Study</h3>
+        <p>Complete business case study from stakeholder brief to delivered insights — demonstrates end-to-end analytical storytelling.</p>
+        <ul>
+          <li>VP-level stakeholder request simulation</li>
+          <li>SQL analysis with business context</li>
+          <li>Executive-ready deliverables</li>
+        </ul>
+        <div class="cta-row">
+          <a class="cta cta-primary" href="https://github.com/G-Schumacher44/VP-Request" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            Repository
+          </a>
+        </div>
+      </div>
+    </div>
 
-  <h2>Case Study Showcase</h2>
-  <p>A <strong>curated collection of case studies</strong> that turn raw SQL analysis into <strong>stakeholder‑ready stories</strong>.</p>
-  <ul>
-    <li>Demonstrates how insights flow into dashboards and executive reports</li>
-    <li>Covers themes like <strong>returns analysis, retention, and profitability</strong></li>
-    <li>Shows how technical analysis connects directly to <strong>business decision‑making</strong></li>
-  </ul>
-  <p><strong>Links:</strong> <a href="https://github.com/G-Schumacher44/sql_stories_portfolio_demo" target="_blank" rel="noopener">Repository</a> | <a href="../media/storycrafting.html" target="_blank" rel="noopener">Craft a Story</a></p>
+    <div class="divider"></div>
 
-  <h2>In Development</h2>
-  <p>An engineering workspace (<code>gcs-automation-project</code>) that prototypes end-to-end Google Cloud Storage automation so SQL Stories assets flow into production-style infrastructure.</p>
-  <ul>
-    <li>Explores ingestion pipelines, Dataflow orchestration, Pub/Sub eventing, and downstream modelling in BigQuery.</li>
-    <li>Stack: Google Cloud Storage, Pub/Sub, Dataflow, BigQuery, optional Cloud Composer, plus Python automation, SQL validation, Terraform IaC, and VS Code tooling.</li>
-  </ul>
-  <p><strong>Links:</strong> <a href="https://github.com/G-Schumacher44/gcs-automation-project" target="_blank" rel="noopener">Repository</a></p>
+    <section>
+      <h2>Tech Stack</h2>
+      <div style="margin-top: 12px;">
+        <span class="pill">Python 3.12+</span>
+        <span class="pill">SQL</span>
+        <span class="pill">dbt 1.8+</span>
+        <span class="pill">DuckDB</span>
+        <span class="pill">Polars</span>
+        <span class="pill">BigQuery</span>
+        <span class="pill">Airflow</span>
+        <span class="pill">SQLite</span>
+        <span class="pill">Parquet</span>
+        <span class="pill">Google Cloud Storage</span>
+        <span class="pill">Jupyter</span>
+        <span class="pill">Click CLI</span>
+        <span class="pill">Pytest</span>
+      </div>
+    </section>
 
-  <hr />
-  <p class="footer-note"><strong>Designed for hands‑on practice and stakeholder‑ready storytelling.</strong></p>
+    <section style="margin-top: 28px;">
+      <h2>Artifacts Produced</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Data Assets</h3>
+          <ul>
+            <li>Synthetic SQLite databases and CSV exports</li>
+            <li>Partitioned Parquet lake drops with lineage</li>
+            <li>Bronze → Silver → Gold medallion tables</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Documentation</h3>
+          <ul>
+            <li>Executable notebooks and scenario briefs</li>
+            <li>Case studies and executive dashboards</li>
+            <li>Data contracts, dictionaries, audit trails</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+    <p class="footer-note"><strong>Designed for hands-on practice and stakeholder-ready storytelling.</strong></p>
+  </div>
 </body>
 </html>
