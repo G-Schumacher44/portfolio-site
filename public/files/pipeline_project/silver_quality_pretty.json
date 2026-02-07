@@ -1,0 +1,129 @@
+{
+    "metadata": {
+        "written_at": "2026-01-25T21:26:28.672056+00:00",
+        "environment": "local",
+        "metric_type": "silver_quality"
+    },
+    "transformation_metadata": {
+        "run_id": "20260125_212628",
+        "timestamp": "2026-01-25T21:26:28.671440+00:00",
+        "dbt_project_version": "0.1.0",
+        "contract_issues": [
+            {
+                "check": "missing_bronze_partitions",
+                "table": "returns",
+                "message": "Missing 1 ingest_dt partitions for returns: 2020-01-01"
+            },
+            {
+                "check": "missing_bronze_partitions",
+                "table": "return_items",
+                "message": "Missing 1 ingest_dt partitions for return_items: 2020-01-01"
+            }
+        ]
+    },
+    "table_metrics": [
+        {
+            "table": "orders",
+            "row_counts": {
+                "bronze_input": 3353,
+                "silver_output": 3353,
+                "quarantine_output": 0,
+                "total_processed": 3353,
+                "row_loss": 0,
+                "row_loss_pct": 0.0
+            },
+            "pass_rate": {
+                "rate": 1.0,
+                "sla_threshold": 0.95,
+                "status": "PASS"
+            },
+            "quarantine_breakdown": []
+        },
+        {
+            "table": "order_items",
+            "row_counts": {
+                "bronze_input": 16079,
+                "silver_output": 16079,
+                "quarantine_output": 0,
+                "total_processed": 16079,
+                "row_loss": 0,
+                "row_loss_pct": 0.0
+            },
+            "pass_rate": {
+                "rate": 1.0,
+                "sla_threshold": 0.95,
+                "status": "PASS"
+            },
+            "quarantine_breakdown": []
+        },
+        {
+            "table": "shopping_carts",
+            "row_counts": {
+                "bronze_input": 26069,
+                "silver_output": 26069,
+                "quarantine_output": 0,
+                "total_processed": 26069,
+                "row_loss": 0,
+                "row_loss_pct": 0.0
+            },
+            "pass_rate": {
+                "rate": 1.0,
+                "sla_threshold": 0.95,
+                "status": "PASS"
+            },
+            "quarantine_breakdown": []
+        },
+        {
+            "table": "cart_items",
+            "row_counts": {
+                "bronze_input": 102973,
+                "silver_output": 102973,
+                "quarantine_output": 0,
+                "total_processed": 102973,
+                "row_loss": 0,
+                "row_loss_pct": 0.0
+            },
+            "pass_rate": {
+                "rate": 1.0,
+                "sla_threshold": 0.95,
+                "status": "PASS"
+            },
+            "quarantine_breakdown": []
+        },
+        {
+            "table": "returns",
+            "row_counts": {
+                "bronze_input": 39,
+                "silver_output": 39,
+                "quarantine_output": 0,
+                "total_processed": 39,
+                "row_loss": 0,
+                "row_loss_pct": 0.0
+            },
+            "pass_rate": {
+                "rate": 1.0,
+                "sla_threshold": 0.95,
+                "status": "PASS"
+            },
+            "quarantine_breakdown": []
+        },
+        {
+            "table": "return_items",
+            "row_counts": {
+                "bronze_input": 163,
+                "silver_output": 163,
+                "quarantine_output": 0,
+                "total_processed": 163,
+                "row_loss": 0,
+                "row_loss_pct": 0.0
+            },
+            "pass_rate": {
+                "rate": 1.0,
+                "sla_threshold": 0.95,
+                "status": "PASS"
+            },
+            "quarantine_breakdown": []
+        }
+    ],
+    "overall_status": "WARN"
+}

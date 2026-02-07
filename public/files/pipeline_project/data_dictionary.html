@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Dictionary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0b0e;
+      --card: #141a22;
+      --text: #f1f5f9;
+      --muted: #a5b0bf;
+      --brand: #66e3c4;
+      --brand-2: #4fa8ff;
+      --line: #1f2733;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Space Grotesk", "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(900px 500px at 10% 10%, rgba(79,168,255,0.15), transparent 60%),
+        radial-gradient(700px 450px at 90% 20%, rgba(102,227,196,0.12), transparent 50%),
+        var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 28px 24px 36px;
+      line-height: 1.6;
+    }
+    a { color: var(--brand-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1 { margin: 0 0 8px; font-size: 2rem; }
+    h2 { font-size: 1.2rem; margin: 24px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+    .wrap { max-width: 1080px; margin: 0 auto; }
+    .muted { color: var(--muted); }
+    .mono { font-family: "IBM Plex Mono", "Courier New", monospace; }
+    .tagline {
+      font-family: "IBM Plex Mono", "Courier New", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      color: var(--brand);
+    }
+    .nav { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; }
+    .nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(79,168,255,0.15);
+      border: 1px solid rgba(79,168,255,0.35);
+      border-radius: 12px;
+      padding: 8px 12px;
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .nav a:hover { transform: translateY(-1px); border-color: rgba(102,227,196,0.5); }
+    .table-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 18px;
+      overflow-x: auto;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .table-card:hover { transform: translateY(-2px); border-color: rgba(79,168,255,0.35); }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+    th { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    td { color: var(--text); }
+    td.muted { color: var(--muted); }
+    .divider { height: 1px; background: var(--line); margin: 24px 0; }
+    @media (max-width: 700px) {
+      h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="tagline">Schema Reference</div>
+    <h1>Data Dictionary</h1>
+    <p class="muted">Derived from the Bronze profile report and Data Contract.</p>
+    <div class="nav">
+      <a href="./metrics_snapshot.html">Metrics Snapshot</a>
+      <a href="./data_contract.html">Data Contract</a>
+      <a href="./bronze_schema_map.html">Bronze Schema Map</a>
+      <a href="./manifest.html">Manifest</a>
+    </div>
+
+    <section>
+      <h2>cart_items</h2>
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Bronze Type</th>
+              <th>Base Silver Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>cart_item_id</td><td>int64</td><td>int64</td><td>Yes</td><td>Unique cart item identifier.</td></tr>
+            <tr><td>cart_id</td><td>string</td><td>string</td><td>Yes</td><td>Unique cart identifier.</td></tr>
+            <tr><td>product_id</td><td>int64</td><td>int64</td><td>Yes</td><td>Unique product identifier.</td></tr>
+            <tr><td>product_name</td><td>string</td><td>string</td><td>No</td><td>Product display name.</td></tr>
+            <tr><td>category</td><td>string</td><td>string</td><td>No</td><td>Product category.</td></tr>
+            <tr><td>added_at</td><td>string</td><td>timestamp</td><td>No</td><td>Timestamp when the item was added.</td></tr>
+            <tr><td>quantity</td><td>int64</td><td>int64</td><td>Yes</td><td>Quantity of items in the line.</td></tr>
+            <tr><td>unit_price</td><td>float64</td><td>float64</td><td>Yes</td><td>Unit sale price.</td></tr>
+            <tr><td>batch_id</td><td>string</td><td>string</td><td>No</td><td>Batch identifier for ingestion run.</td></tr>
+            <tr><td>ingestion_ts</td><td>string</td><td>timestamp</td><td>No</td><td>Ingestion timestamp for the record.</td></tr>
+            <tr><td>event_id</td><td>string</td><td>string</td><td>No</td><td>Unique event identifier for lineage.</td></tr>
+            <tr><td>source_file</td><td>string</td><td>string</td><td>No</td><td>Source file path in storage.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>customers</h2>
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Bronze Type</th>
+              <th>Base Silver Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>customer_id</td><td>string</td><td>string</td><td>Yes</td><td>Unique customer identifier.</td></tr>
+            <tr><td>first_name</td><td>string</td><td>string</td><td>No</td><td></td></tr>
+            <tr><td>last_name</td><td>string</td><td>string</td><td>No</td><td></td></tr>
+            <tr><td>email</td><td>string</td><td>string</td><td>Yes</td><td>Customer email address.</td></tr>
+            <tr><td>phone_number</td><td>string</td><td>string</td><td>No</td><td>Customer phone number.</td></tr>
+            <tr><td>signup_date</td><td>string</td><td>date</td><td>Yes</td><td>Date when the customer signed up.</td></tr>
+            <tr><td>gender</td><td>string</td><td>string</td><td>No</td><td>Customer gender.</td></tr>
+            <tr><td>age</td><td>float64</td><td>float64</td><td>No</td><td>Customer age.</td></tr>
+            <tr><td>is_guest</td><td>boolean</td><td>bool</td><td>No</td><td>Whether the customer is a guest checkout.</td></tr>
+            <tr><td>customer_status</td><td>string</td><td>string</td><td>No</td><td>Customer lifecycle status.</td></tr>
+            <tr><td>signup_channel</td><td>string</td><td>string</td><td>No</td><td>Acquisition channel for the customer.</td></tr>
+            <tr><td>loyalty_tier</td><td>string</td><td>string</td><td>No</td><td>Customer loyalty tier.</td></tr>
+            <tr><td>initial_loyalty_tier</td><td>string</td><td>string</td><td>No</td><td>Initial loyalty tier at signup.</td></tr>
+            <tr><td>email_verified</td><td>boolean</td><td>bool</td><td>No</td><td>Whether the email is verified.</td></tr>
+            <tr><td>marketing_opt_in</td><td>boolean</td><td>bool</td><td>No</td><td>Whether the customer opted into marketing.</td></tr>
+            <tr><td>mailing_address</td><td>string</td><td>string</td><td>No</td><td></td></tr>
+            <tr><td>billing_address</td><td>string</td><td>string</td><td>No</td><td>Billing address text.</td></tr>
+            <tr><td>loyalty_enrollment_date</td><td>string</td><td>date</td><td>No</td><td>Date customer enrolled in loyalty program.</td></tr>
+            <tr><td>clv_bucket</td><td>string</td><td>string</td><td>No</td><td>Customer lifetime value bucket.</td></tr>
+            <tr><td>batch_id</td><td>string</td><td>string</td><td>No</td><td>Batch identifier for ingestion run.</td></tr>
+            <tr><td>ingestion_ts</td><td>string</td><td>timestamp</td><td>No</td><td>Ingestion timestamp for the record.</td></tr>
+            <tr><td>event_id</td><td>string</td><td>string</td><td>No</td><td>Unique event identifier for lineage.</td></tr>
+            <tr><td>source_file</td><td>string</td><td>string</td><td>No</td><td>Source file path in storage.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>order_items</h2>
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Bronze Type</th>
+              <th>Base Silver Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>order_id</td><td>string</td><td>string</td><td>Yes</td><td>Unique order identifier.</td></tr>
+            <tr><td>product_id</td><td>int64</td><td>int64</td><td>Yes</td><td>Unique product identifier.</td></tr>
+            <tr><td>product_name</td><td>string</td><td>string</td><td>No</td><td>Product display name.</td></tr>
+            <tr><td>category</td><td>string</td><td>string</td><td>No</td><td>Product category.</td></tr>
+            <tr><td>quantity</td><td>int64</td><td>int64</td><td>Yes</td><td>Quantity of items in the line.</td></tr>
+            <tr><td>unit_price</td><td>float64</td><td>float64</td><td>Yes</td><td>Unit sale price.</td></tr>
+            <tr><td>discount_amount</td><td>float64</td><td>float64</td><td>No</td><td>Discount amount applied.</td></tr>
+            <tr><td>cost_price</td><td>float64</td><td>float64</td><td>No</td><td>Unit cost for the item.</td></tr>
+            <tr><td>batch_id</td><td>string</td><td>string</td><td>No</td><td>Batch identifier for ingestion run.</td></tr>
+            <tr><td>ingestion_ts</td><td>string</td><td>timestamp</td><td>No</td><td>Ingestion timestamp for the record.</td></tr>
+            <tr><td>event_id</td><td>string</td><td>string</td><td>No</td><td>Unique event identifier for lineage.</td></tr>
+            <tr><td>source_file</td><td>string</td><td>string</td><td>No</td><td>Source file path in storage.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>orders</h2>
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Bronze Type</th>
+              <th>Base Silver Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>order_id</td><td>string</td><td>string</td><td>Yes</td><td>Unique order identifier.</td></tr>
+            <tr><td>total_items</td><td>int64</td><td>int64</td><td>No</td><td>Count of items in the order.</td></tr>
+            <tr><td>order_date</td><td>string</td><td>timestamp</td><td>Yes</td><td>Timestamp when the order was placed.</td></tr>
+            <tr><td>customer_id</td><td>string</td><td>string</td><td>Yes</td><td>Unique customer identifier.</td></tr>
+            <tr><td>email</td><td>string</td><td>string</td><td>No</td><td>Customer email address.</td></tr>
+            <tr><td>order_channel</td><td>string</td><td>string</td><td>No</td><td>Channel used to place the order (e.g., Web, Phone).</td></tr>
+            <tr><td>is_expedited</td><td>boolean</td><td>bool</td><td>No</td><td>Whether expedited shipping was selected.</td></tr>
+            <tr><td>customer_tier</td><td>string</td><td>string</td><td>No</td><td></td></tr>
+            <tr><td>gross_total</td><td>float64</td><td>float64</td><td>Yes</td><td>Gross order total before discounts/fees.</td></tr>
+            <tr><td>net_total</td><td>float64</td><td>float64</td><td>Yes</td><td>Net order total after discounts.</td></tr>
+            <tr><td>total_discount_amount</td><td>float64</td><td>float64</td><td>No</td><td>Total discount applied to the order.</td></tr>
+            <tr><td>payment_method</td><td>string</td><td>string</td><td>No</td><td>Payment method used for the order.</td></tr>
+            <tr><td>shipping_speed</td><td>string</td><td>string</td><td>No</td><td>Selected shipping speed.</td></tr>
+            <tr><td>shipping_cost</td><td>float64</td><td>float64</td><td>No</td><td>Shipping cost charged to customer.</td></tr>
+            <tr><td>agent_id</td><td>string</td><td>string</td><td>No</td><td>Sales or support agent identifier.</td></tr>
+            <tr><td>actual_shipping_cost</td><td>float64</td><td>float64</td><td>No</td><td>Actual shipping cost incurred.</td></tr>
+            <tr><td>payment_processing_fee</td><td>float64</td><td>float64</td><td>No</td><td>Fee charged by payment processor.</td></tr>
+            <tr><td>shipping_address</td><td>string</td><td>string</td><td>No</td><td>Shipping address text.</td></tr>
+            <tr><td>billing_address</td><td>string</td><td>string</td><td>No</td><td>Billing address text.</td></tr>
+            <tr><td>clv_bucket</td><td>string</td><td>string</td><td>No</td><td>Customer lifetime value bucket.</td></tr>
+            <tr><td>is_reactivated</td><td>boolean</td><td>bool</td><td>No</td><td>Whether the customer was reactivated.</td></tr>
+            <tr><td>batch_id</td><td>string</td><td>string</td><td>No</td><td>Batch identifier for ingestion run.</td></tr>
+            <tr><td>ingestion_ts</td><td>string</td><td>timestamp</td><td>No</td><td>Ingestion timestamp for the record.</td></tr>
+            <tr><td>event_id</td><td>string</td><td>string</td><td>No</td><td>Unique event identifier for lineage.</td></tr>
+            <tr><td>source_file</td><td>string</td><td>string</td><td>No</td><td>Source file path in storage.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>product_catalog</h2>
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Bronze Type</th>
+              <th>Base Silver Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>product_id</td><td>int64</td><td>int64</td><td>Yes</td><td>Unique product identifier.</td></tr>
+            <tr><td>product_name</td><td>string</td><td>string</td><td>Yes</td><td>Product display name.</td></tr>
+            <tr><td>category</td><td>string</td><td>string</td><td>No</td><td>Product category.</td></tr>
+            <tr><td>unit_price</td><td>float64</td><td>float64</td><td>Yes</td><td>Unit sale price.</td></tr>
+            <tr><td>cost_price</td><td>float64</td><td>float64</td><td>No</td><td>Unit cost for the item.</td></tr>
+            <tr><td>inventory_quantity</td><td>int64</td><td>int64</td><td>No</td><td>Current inventory quantity.</td></tr>
+            <tr><td>batch_id</td><td>string</td><td>string</td><td>No</td><td>Batch identifier for ingestion run.</td></tr>
+            <tr><td>ingestion_ts</td><td>string</td><td>timestamp</td><td>No</td><td>Ingestion timestamp for the record.</td></tr>
+            <tr><td>event_id</td><td>string</td><td>string</td><td>No</td><td>Unique event identifier for lineage.</td></tr>
+            <tr><td>source_file</td><td>string</td><td>string</td><td>No</td><td>Source file path in storage.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>return_items</h2>
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Bronze Type</th>
+              <th>Base Silver Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>return_item_id</td><td>int64</td><td>int64</td><td>Yes</td><td></td></tr>
+            <tr><td>return_id</td><td>string</td><td>string</td><td>Yes</td><td>Unique return identifier.</td></tr>
+            <tr><td>order_id</td><td>string</td><td>string</td><td>Yes</td><td>Unique order identifier.</td></tr>
+            <tr><td>product_id</td><td>int64</td><td>int64</td><td>Yes</td><td>Unique product identifier.</td></tr>
+            <tr><td>product_name</td><td>string</td><td>string</td><td>No</td><td>Product display name.</td></tr>
+            <tr><td>category</td><td>string</td><td>string</td><td>No</td><td>Product category.</td></tr>
+            <tr><td>quantity_returned</td><td>int64</td><td>int64</td><td>Yes</td><td>Quantity of items returned.</td></tr>
+            <tr><td>unit_price</td><td>float64</td><td>float64</td><td>No</td><td>Unit sale price.</td></tr>
+            <tr><td>cost_price</td><td>float64</td><td>float64</td><td>No</td><td>Unit cost for the item.</td></tr>
+            <tr><td>refunded_amount</td><td>float64</td><td>float64</td><td>No</td><td>Amount refunded to the customer.</td></tr>
+            <tr><td>batch_id</td><td>string</td><td>string</td><td>No</td><td>Batch identifier for ingestion run.</td></tr>
+            <tr><td>ingestion_ts</td><td>string</td><td>timestamp</td><td>No</td><td>Ingestion timestamp for the record.</td></tr>
+            <tr><td>event_id</td><td>string</td><td>string</td><td>No</td><td>Unique event identifier for lineage.</td></tr>
+            <tr><td>source_file</td><td>string</td><td>string</td><td>No</td><td>Source file path in storage.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>returns</h2>
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Bronze Type</th>
+              <th>Base Silver Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>return_id</td><td>string</td><td>string</td><td>Yes</td><td>Unique return identifier.</td></tr>
+            <tr><td>order_id</td><td>string</td><td>string</td><td>Yes</td><td>Unique order identifier.</td></tr>
+            <tr><td>customer_id</td><td>string</td><td>string</td><td>Yes</td><td>Unique customer identifier.</td></tr>
+            <tr><td>email</td><td>string</td><td>string</td><td>No</td><td>Customer email address.</td></tr>
+            <tr><td>return_date</td><td>string</td><td>timestamp</td><td>Yes</td><td>Timestamp when the return was initiated.</td></tr>
+            <tr><td>reason</td><td>string</td><td>string</td><td>No</td><td>Return reason.</td></tr>
+            <tr><td>return_type</td><td>string</td><td>string</td><td>No</td><td>Type of return (e.g., refund, exchange).</td></tr>
+            <tr><td>refunded_amount</td><td>float64</td><td>float64</td><td>No</td><td>Amount refunded to the customer.</td></tr>
+            <tr><td>return_channel</td><td>string</td><td>string</td><td>No</td><td>Channel used to process return.</td></tr>
+            <tr><td>agent_id</td><td>string</td><td>string</td><td>No</td><td>Sales or support agent identifier.</td></tr>
+            <tr><td>refund_method</td><td>string</td><td>string</td><td>No</td><td>Refund method used.</td></tr>
+            <tr><td>batch_id</td><td>string</td><td>string</td><td>No</td><td>Batch identifier for ingestion run.</td></tr>
+            <tr><td>ingestion_ts</td><td>string</td><td>timestamp</td><td>No</td><td>Ingestion timestamp for the record.</td></tr>
+            <tr><td>event_id</td><td>string</td><td>string</td><td>No</td><td>Unique event identifier for lineage.</td></tr>
+            <tr><td>source_file</td><td>string</td><td>string</td><td>No</td><td>Source file path in storage.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>shopping_carts</h2>
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Bronze Type</th>
+              <th>Base Silver Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>cart_id</td><td>string</td><td>string</td><td>Yes</td><td>Unique cart identifier.</td></tr>
+            <tr><td>customer_id</td><td>string</td><td>string</td><td>Yes</td><td>Unique customer identifier.</td></tr>
+            <tr><td>created_at</td><td>string</td><td>timestamp</td><td>Yes</td><td>Timestamp when the record was created.</td></tr>
+            <tr><td>updated_at</td><td>string</td><td>timestamp</td><td>No</td><td>Timestamp when the record was last updated.</td></tr>
+            <tr><td>cart_total</td><td>float64</td><td>float64</td><td>No</td><td>Total value of items in the cart.</td></tr>
+            <tr><td>status</td><td>string</td><td>string</td><td>No</td><td>Record status or state.</td></tr>
+            <tr><td>batch_id</td><td>string</td><td>string</td><td>No</td><td>Batch identifier for ingestion run.</td></tr>
+            <tr><td>ingestion_ts</td><td>string</td><td>timestamp</td><td>No</td><td>Ingestion timestamp for the record.</td></tr>
+            <tr><td>event_id</td><td>string</td><td>string</td><td>No</td><td>Unique event identifier for lineage.</td></tr>
+            <tr><td>source_file</td><td>string</td><td>string</td><td>No</td><td>Source file path in storage.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+    <p class="muted mono">Last updated (UTC): 2026-01-24T20:59:59Z</p>
+    <p class="muted mono">Content hash (SHA-256): e430d2fbfd9f3dfa141a4825e6e94e70250b0d3eb46ae6d6a650d0a42c20258a</p>
+
+    <section>
+      <div class="nav" style="margin-top: 18px;">
+        <a href="./dbt_observability.html">dbt observability</a>
+        <a href="./architecture.html">Architecture &amp; Ops</a>
+        <a href="./metrics_snapshot.html">Metrics snapshot</a>
+        <a href="./data_contract.html">Data contract</a>
+        <a href="./data_dictionary.html">Data dictionary</a>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

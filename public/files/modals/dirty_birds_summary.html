@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D1Q0RESQ6H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} 
+    gtag('js', new Date());
+    gtag('config', 'G-D1Q0RESQ6H');
+  </script>
+  <meta name="robots" content="noindex,follow" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dirty Birds Data Generator</title>
+  <style>
+    :root { --bg:#0c0d10; --card:#14161a; --text:#e9edf1; --muted:#a7b0bb; --brand:#69c; --line:#22262c; }
+    body { font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 24px 32px; }
+    h1, h2, h3 { color: var(--brand); margin: 1.25em 0 0.5em; }
+    h1 { margin-top: 0; font-size: 1.5rem; }
+    h2 { font-size: 1.2rem; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+    p, ul { max-width: 75ch; }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; border-radius: 8px; display: block; margin: 16px auto; border: 1px solid var(--line); }
+    .pill { display: inline-block; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; margin: 4px 6px 0 0; color: var(--muted); font-size: 0.85rem; }
+    .muted { color: var(--muted); }
+    .footer-note { text-align:center; font-size:1.1rem; color: var(--muted); letter-spacing:.2px; }
+  </style>
+</head>
+<body>
+  <h1>Dirty Birds Data Generator</h1>
+  <p class="muted">Synthetic penguin sight–resight datasets for EDA, QA, and modeling — with realistic messiness profiles.</p>
+
+  
+
+  <h2>System Summary</h2>
+  <p>
+    Inspired by Palmer Penguins, Dirty Birds generates configurable sight–resight datasets with randomness and controlled data quality challenges. It’s a practical sandbox for teaching, QA, and prototype modeling.
+  </p>
+
+  <h2>Tech Stack</h2>
+  <p>
+    <span class="pill">Python</span>
+    <span class="pill">Pandas</span>
+    <span class="pill">YAML</span>
+    <span class="pill">CSV Artifacts</span>
+    <span class="pill">ChatGPT‑4o</span>
+    <span class="pill">Gemini Code Assist</span>
+  </p>
+
+  <h2>Data Generation</h2>
+  <ul>
+    <li>Randomization and noise injection</li>
+    <li>Sight–resight event modeling</li>
+    <li>Messiness profiles (missing values, duplicates)</li>
+  </ul>
+
+  <h2>Artifacts</h2>
+  <ul>
+    <li>Synthetic CSVs for EDA and modeling</li>
+    <li>Documentation via Jupyter notebooks</li>
+  </ul>
+
+  <h2>Sample Data Preview</h2>
+  <style>
+    .table-wrap{max-width:100%;overflow:auto;border:1px solid var(--line);border-radius:8px;background:#101419}
+    table.preview{border-collapse:collapse;width:100%;font-size:.9rem}
+    table.preview thead th{position:sticky;top:0;background:#161a20;color:var(--text);border-bottom:1px solid var(--line);padding:8px;white-space:nowrap}
+    table.preview tbody td{border-top:1px solid #232831;padding:6px 8px;color:var(--muted);white-space:nowrap}
+    table.preview tbody tr:nth-child(odd){background:#0f1319}
+  </style>
+  <div class="table-wrap" aria-live="polite">
+    <table class="preview" id="dbHeadTable" aria-label="Dirty Birds sample data preview">
+      <thead></thead>
+      <tbody><tr><td style="padding:10px;color:var(--muted)">Loading preview…</td></tr></tbody>
+    </table>
+  </div>
+  <script>
+    (function(){
+      const table = document.getElementById('dbHeadTable');
+      if (!table) return;
+      const thead = table.querySelector('thead');
+      const tbody = table.querySelector('tbody');
+      const url = '../../data/synthetic_penguins_v3.5.csv';
+
+      function parseCSVLine(line){
+        const out = [];
+        let cur = '';
+        let inQuotes = false;
+        for (let i=0;i<line.length;i++){
+          const ch = line[i];
+          if (ch === '"'){
+            if (inQuotes && line[i+1] === '"'){ cur += '"'; i++; }
+            else { inQuotes = !inQuotes; }
+          } else if (ch === ',' && !inQuotes){
+            out.push(cur); cur = '';
+          } else {
+            cur += ch;
+          }
+        }
+        out.push(cur);
+        return out;
+      }
+
+      fetch(url).then(r => r.text()).then(txt => {
+        const lines = txt.split(/\r?\n/).filter(l=>l.trim().length>0);
+        if (lines.length === 0){ tbody.innerHTML = '<tr><td style="padding:10px;color:var(--muted)">No data found.</td></tr>'; return; }
+        const head = parseCSVLine(lines[0]);
+        const rows = lines.slice(1, 21).map(parseCSVLine);
+
+        // Build header
+        thead.innerHTML = '<tr>' + head.map(h=>`<th>${h.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</th>`).join('') + '</tr>';
+        // Build body
+        tbody.innerHTML = rows.map(r => '<tr>' + head.map((_, idx)=>{
+          const v = (r[idx] ?? '').toString();
+          const esc = v.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+          return `<td title="${esc}">${esc}</td>`;
+        }).join('') + '</tr>').join('');
+      }).catch(() => {
+        tbody.innerHTML = '<tr><td style="padding:10px;color:var(--muted)">Could not load preview. Use the download link above.</td></tr>';
+      });
+    })();
+  </script>
+
+  <h2>What Does This Help Solve?</h2>
+  <p>
+    Ecological datasets are often <strong>messy, limited, or unavailable</strong> — making it difficult for analysts and students to practice with realistic data.
+  </p>
+  <p>The <strong>Dirty Birds Data Generator</strong> addresses this by:</p>
+  <ul>
+    <li>Producing <strong>synthetic tagging datasets</strong> at scale</li>
+    <li>Modeling <strong>sight–resight behavior</strong> to mimic longitudinal field studies</li>
+    <li>Supporting <strong>teaching, QA, and prototyping</strong> across tools and workflows</li>
+  </ul>
+
+  <h2>History</h2>
+  <p>
+    The project began as a playful riff on <strong>Palmer Penguins</strong>. While learning SQL, I was repeatedly exposed to versions of that dataset and wanted something more scalable. What started as a simple experiment to generate larger data has evolved into a <strong>flexible simulator</strong> for practicing SQL, testing pipelines, and experimenting with data science tools — all while emphasizing <strong>simulation and reproducibility</strong>.
+  </p>
+
+  <h2>Future State</h2>
+  <ul>
+    <li>Additional species templates.</li>
+    <li>Richer messiness (sensor errors, missing bands).</li>
+    <li>Multi‑year study simulations.</li>
+  </ul>
+
+  <h2>Links</h2>
+  <ul>
+    <li><a href="https://github.com/G-Schumacher44/dirty_birds_data_generator" target="_blank" rel="noopener">Repository</a></li>
+    <li><a href="../../data/synthetic_penguins_v3.5.csv" download>Download Dataset</a></li>
+  </ul>
+
+  
+
+  <hr />
+  <p class="footer-note"><strong>Realistic synthetic data for practical analysis and QA.</strong></p>
+</body>
+</html>

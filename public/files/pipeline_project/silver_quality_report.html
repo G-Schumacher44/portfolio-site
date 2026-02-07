@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Silver Quality Report</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0b0e;
+      --card: #141a22;
+      --text: #f1f5f9;
+      --muted: #a5b0bf;
+      --brand: #66e3c4;
+      --brand-2: #4fa8ff;
+      --line: #1f2733;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Space Grotesk", "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(900px 500px at 10% 10%, rgba(79,168,255,0.15), transparent 60%),
+        radial-gradient(700px 450px at 90% 20%, rgba(102,227,196,0.12), transparent 50%),
+        var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 28px 24px 36px;
+      line-height: 1.6;
+    }
+    h1 { margin: 0 0 8px; font-size: 2rem; }
+    h2 { font-size: 1.2rem; margin: 24px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+    .wrap { max-width: 1000px; margin: 0 auto; }
+    .muted { color: var(--muted); }
+    .mono { font-family: "IBM Plex Mono", "Courier New", monospace; }
+    .stats {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      margin-top: 16px;
+    }
+    .stat-box {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px 16px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .stat-box:hover { transform: translateY(-2px); border-color: rgba(102,227,196,0.35); }
+    .stat-box strong { font-size: 1.5rem; color: var(--brand); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover { transform: translateY(-2px); border-color: rgba(79,168,255,0.35); }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(79,168,255,0.15);
+      border: 1px solid rgba(79,168,255,0.35);
+      border-radius: 12px;
+      padding: 8px 12px;
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .cta:hover { transform: translateY(-1px); border-color: rgba(102,227,196,0.5); }
+    pre { margin: 0; white-space: pre-wrap; word-break: break-word; color: var(--muted); }
+    .divider { height: 1px; background: var(--line); margin: 24px 0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Silver Quality Report</h1>
+    <p class="muted">Row loss, pass rates, and contract issues for Base Silver validations.</p>
+
+    <div class="stats">
+      <div class="stat-box">
+        <div class="mono">Overall Status</div>
+        <strong id="overallStatus">—</strong>
+      </div>
+      <div class="stat-box">
+        <div class="mono">Tables</div>
+        <strong id="tableCount">—</strong>
+      </div>
+      <div class="stat-box">
+        <div class="mono">Rows Processed</div>
+        <strong id="rowsProcessed">—</strong>
+      </div>
+      <div class="stat-box">
+        <div class="mono">Contract Issues</div>
+        <strong id="contractIssues">—</strong>
+      </div>
+    </div>
+
+    <h2>Raw JSON</h2>
+    <div class="card">
+      <pre class="mono" id="jsonPreview">Loading silver_quality_pretty.json...</pre>
+    </div>
+
+    <div class="divider"></div>
+    <a href="./silver_quality_pretty.json" class="mono" target="_blank" rel="noopener">Open raw silver_quality_pretty.json</a>
+    <div class="cta-row">
+      <a class="cta" href="./dbt_observability.html">dbt observability</a>
+      <a class="cta" href="./architecture.html">Architecture &amp; Ops</a>
+      <a class="cta" href="./metrics_snapshot.html">Metrics snapshot</a>
+      <a class="cta" href="./data_contract.html">Data contract</a>
+      <a class="cta" href="./data_dictionary.html">Data dictionary</a>
+    </div>
+  </div>
+
+  <script>
+    const humanNumber = (value) => {
+      if (value === null || value === undefined) return 'n/a';
+      return Intl.NumberFormat('en-US').format(value);
+    };
+
+    const loadReport = async () => {
+      try {
+        const response = await fetch('./silver_quality_pretty.json');
+        if (!response.ok) throw new Error('Failed to load silver_quality_pretty.json');
+        const data = await response.json();
+
+        const tables = data.table_metrics || [];
+        const totalRows = tables.reduce((sum, t) => sum + (t.row_counts?.total_processed || 0), 0);
+        const contractIssues = data.transformation_metadata?.contract_issues?.length || 0;
+
+        document.getElementById('overallStatus').textContent = data.overall_status || 'n/a';
+        document.getElementById('tableCount').textContent = humanNumber(tables.length);
+        document.getElementById('rowsProcessed').textContent = humanNumber(totalRows);
+        document.getElementById('contractIssues').textContent = humanNumber(contractIssues);
+
+        document.getElementById('jsonPreview').textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        document.getElementById('jsonPreview').textContent = 'Unable to load silver_quality_pretty.json';
+      }
+    };
+
+    loadReport();
+  </script>
+</body>
+</html>
