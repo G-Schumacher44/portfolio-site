@@ -38,6 +38,9 @@ export interface CaseStudyData {
   techStack: string;
   modalSrc: string;
   links: { label: string; href: string; external?: boolean }[];
+  terminalLine?: string;
+  heroStat?: string;
+  heroLabel?: string;
 }
 
 export interface ProjectData {
@@ -67,6 +70,10 @@ export interface PipelineStage {
   subtitle: string;
   description: string;
   stats: string[];
+  terminalCommand: string;
+  terminalOutput: string[];
+  artifacts?: { label: string; value: string }[];
+  liveDataSrc?: string;
   codeSnippet?: string;
   codeLanguage?: string;
   details: string;

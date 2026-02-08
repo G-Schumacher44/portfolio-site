@@ -1,12 +1,11 @@
 import MicroBanner from './MicroBanner';
 import Navbar from './Navbar';
 import Hero from '../hero/Hero';
+import TerminalAnimation from '../hero/TerminalAnimation';
 import StatsBar from '../stats/StatsBar';
-import AboutSection from '../about/AboutSection';
+import SQLStoriesCTA from '../sql-stories/SQLStoriesCTA';
 import ServicesSection from '../services/ServicesSection';
-import CaseStudiesSection from '../case-studies/CaseStudiesSection';
 import HowItWorksSection from '../how-it-works/HowItWorksSection';
-import PipelineJourney from '../pipeline-journey/PipelineJourney';
 import ProjectsSection from '../projects/ProjectsSection';
 import ResourceHubSection from '../resource-hub/ResourceHubSection';
 import SkillsSection from '../skills/SkillsSection';
@@ -16,16 +15,24 @@ import Footer from './Footer';
 export default function App() {
   return (
     <>
+      {/* Fixed background layers — persist as user scrolls */}
+      <TerminalAnimation />
+      <div className="pointer-events-none fixed inset-0 z-0 flex items-center justify-center">
+        <img
+          src="/img/logos/transparent_logo_centered.svg"
+          alt=""
+          className="h-[600px] w-[600px] object-contain opacity-35"
+        />
+      </div>
+
       <MicroBanner />
       <Hero />
       <Navbar />
       <main>
         <StatsBar />
-        <AboutSection />
+        <SQLStoriesCTA />
         <ServicesSection />
-        <CaseStudiesSection />
         <HowItWorksSection />
-        <PipelineJourney />
         <ProjectsSection />
         <ResourceHubSection />
         <SkillsSection />

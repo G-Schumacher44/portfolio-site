@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { about } from '../../data/sections';
 import Section from '../layout/Section';
 import GlassPanel from '../shared/GlassPanel';
-import Modal from '../shared/Modal';
+import DocumentViewer from '../shared/DocumentViewer';
 import SectionTitle from '../shared/SectionTitle';
 
 export default function AboutSection() {
@@ -40,7 +40,7 @@ export default function AboutSection() {
         </div>
       </GlassPanel>
 
-      <Modal
+      <DocumentViewer
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         title="About Me"

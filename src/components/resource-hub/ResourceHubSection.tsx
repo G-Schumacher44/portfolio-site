@@ -4,7 +4,7 @@ import { resourceHub } from '../../data/sections';
 import Section from '../layout/Section';
 import SectionTitle from '../shared/SectionTitle';
 import GlassPanel from '../shared/GlassPanel';
-import Modal from '../shared/Modal';
+import DocumentViewer from '../shared/DocumentViewer';
 
 export default function ResourceHubSection() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -41,7 +41,7 @@ export default function ResourceHubSection() {
         </div>
       </GlassPanel>
 
-      <Modal
+      <DocumentViewer
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         title="Analyst Resource Hub"

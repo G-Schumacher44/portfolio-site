@@ -2,7 +2,7 @@ import type { CaseStudyData } from '../types';
 
 export const caseStudies: CaseStudyData[] = [
   {
-    title: 'Retail Returns Diagnostic for VP of Sales',
+    title: 'Year-End Sales Diagnostic',
     image: '/img/case_study/vp_dashboard_thumb.jpeg',
     imageAlt: 'VP of Sales Dashboard Preview',
     problem:
@@ -13,6 +13,9 @@ export const caseStudies: CaseStudyData[] = [
       'Pinpointed $10.6M in refund exposure, flagged the highest-risk channel (29% refund rate), and provided a prioritized action plan to reduce returns below 20%.',
     techStack: 'SQL \u2022 Looker Studio \u2022 Executive Reporting',
     modalSrc: 'files/modals/case_vp_sales_summary.html',
+    terminalLine: '$ SELECT SUM(refund_amount) FROM returns WHERE flagged = true;',
+    heroStat: '$10.6M',
+    heroLabel: 'Exposure Flagged',
     links: [
       { label: 'View Case Study', href: 'https://github.com/G-Schumacher44/VP-Request', external: true },
       { label: 'Live Dashboard', href: 'https://lookerstudio.google.com/reporting/e5f1454c-c8e4-481f-9ac8-375a3bdd289c', external: true },
@@ -30,6 +33,9 @@ export const caseStudies: CaseStudyData[] = [
       'Identified 562 under-utilized SKUs, quantified $3.8M in recoverable capital, and projected $0.8M\u2013$1.1M in annual carrying cost savings.',
     techStack: 'SQL \u2022 Python \u2022 Data Storytelling',
     modalSrc: 'files/modals/case_inventory_audit_summary.html',
+    terminalLine: '$ SELECT COUNT(*) FROM inventory WHERE attention_score > 0.8;',
+    heroStat: '562',
+    heroLabel: 'SKUs Under-Utilized',
     links: [
       { label: 'View Case Study', href: 'https://github.com/G-Schumacher44/sql_stories_portfolio_demo/tree/main', external: true },
     ],
@@ -46,6 +52,9 @@ export const caseStudies: CaseStudyData[] = [
       'Revealed an 11-point retention drop in the first 90 days, identified 0% repeat rate in the Bronze loyalty tier, and showed Phone channel drives 58% of high-CLV customers.',
     techStack: 'SQL \u2022 Python \u2022 Cohort Analysis',
     modalSrc: 'files/retention_summary_modal.html',
+    terminalLine: '$ SELECT cohort, retention_rate FROM cohort_analysis LIMIT 1;',
+    heroStat: '11pt',
+    heroLabel: '90-Day Retention Drop',
     links: [
       { label: 'View Case Study', href: 'https://github.com/G-Schumacher44/sql_stories_portfolio_demo/tree/main', external: true },
       { label: 'Executive Report', href: 'files/media/Executive_Retention_Report.html', external: true },

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ExternalLink } from 'lucide-react';
 import type { CaseStudyData } from '../../types';
 import GlassPanel from '../shared/GlassPanel';
-import Modal from '../shared/Modal';
+import DocumentViewer from '../shared/DocumentViewer';
 
 interface CaseStudyCardProps {
   study: CaseStudyData;
@@ -99,7 +99,7 @@ export default function CaseStudyCard({ study }: CaseStudyCardProps) {
         </div>
       </GlassPanel>
 
-      <Modal
+      <DocumentViewer
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         title={study.title}

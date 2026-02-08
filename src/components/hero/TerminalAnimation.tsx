@@ -6,10 +6,12 @@ export default function TerminalAnimation() {
   const [displayedLines, setDisplayedLines] = useState<string[]>([]);
   const [currentLine, setCurrentLine] = useState(0);
   const [currentChar, setCurrentChar] = useState(0);
+  const [scriptIndex, setScriptIndex] = useState(0);
   const containerRef = useRef<HTMLPreElement>(null);
   const reduced = useReducedMotion();
 
-  const lines = hero.terminalLines;
+  const scripts = hero.terminalScripts;
+  const lines = scripts[scriptIndex];
 
   useEffect(() => {
     if (reduced) {
@@ -18,12 +20,13 @@ export default function TerminalAnimation() {
     }
 
     if (currentLine >= lines.length) {
-      // Loop after a pause
+      // Pause then switch to next script
       const timeout = setTimeout(() => {
         setDisplayedLines([]);
         setCurrentLine(0);
         setCurrentChar(0);
-      }, 4000);
+        setScriptIndex((i) => (i + 1) % scripts.length);
+      }, 12000);
       return () => clearTimeout(timeout);
     }
 
@@ -49,7 +52,7 @@ export default function TerminalAnimation() {
       setCurrentChar(0);
     }, lines[currentLine].startsWith('$') ? 800 : 150);
     return () => clearTimeout(timeout);
-  }, [currentLine, currentChar, lines, reduced]);
+  }, [currentLine, currentChar, lines, scripts, reduced]);
 
   // Auto-scroll to bottom
   useEffect(() => {
@@ -60,7 +63,7 @@ export default function TerminalAnimation() {
 
   return (
     <div
-      className="absolute inset-0 overflow-hidden"
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
       style={{
         perspective: '800px',
       }}
@@ -69,7 +72,7 @@ export default function TerminalAnimation() {
         ref={containerRef}
         className="
           h-full overflow-hidden whitespace-pre-wrap
-          font-mono text-sm leading-relaxed text-brand/20
+          font-mono text-sm leading-relaxed text-teal-500/20
         "
         style={{
           transform: 'rotateX(3deg)',
@@ -77,10 +80,10 @@ export default function TerminalAnimation() {
         }}
       >
         {displayedLines.map((line, i) => (
-          <div key={i} className={line.startsWith('$') ? 'text-brand/25' : ''}>
+          <div key={i} className={line.startsWith('$') ? 'text-teal-400/30' : line.startsWith('--') ? 'text-gray-500/15' : ''}>
             {line}
             {i === currentLine && !reduced && (
-              <span className="inline-block w-2 animate-[blink_1s_infinite] bg-brand/40">
+              <span className="inline-block w-2 animate-[blink_1s_infinite] bg-teal-400/30">
                 &nbsp;
               </span>
             )}

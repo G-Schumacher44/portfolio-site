@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ExternalLink } from 'lucide-react';
 import type { ProjectData } from '../../types';
 import GlassPanel from '../shared/GlassPanel';
-import Modal from '../shared/Modal';
+import DocumentViewer from '../shared/DocumentViewer';
 
 interface ProjectCardProps {
   project: ProjectData;
@@ -47,7 +47,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </GlassPanel>
 
-      <Modal
+      <DocumentViewer
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         title={project.title}

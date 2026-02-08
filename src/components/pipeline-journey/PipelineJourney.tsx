@@ -1,12 +1,13 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion';
+import { ArrowDown, ExternalLink } from 'lucide-react';
 import { pipelineStages } from '../../data/pipelineStages';
+import { caseStudies } from '../../data/caseStudies';
 import Section from '../layout/Section';
 import SectionTitle from '../shared/SectionTitle';
-import PipelineStage from './PipelineStage';
+import TerminalStage from './TerminalStage';
 import DataParticle from './DataParticle';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import type { PipelineStage as PipelineStageType } from '../../types';
 
 export default function PipelineJourney() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -41,25 +42,34 @@ export default function PipelineJourney() {
             style={{ height: reduced ? '100%' : trackHeight }}
           />
 
+          {/* Glow pulse at active position */}
           {!reduced && (
-            <div className="absolute inset-0 overflow-hidden">
-              {[0, 1, 2, 3, 4].map((i) => (
-                <DataParticle
-                  key={i}
-                  delay={i * 1.5}
-                  duration={6}
-                  startY={0}
-                  endY={800}
-                />
-              ))}
-            </div>
+            <>
+              <motion.div
+                className="absolute left-1/2 h-4 w-4 -translate-x-1/2 rounded-full bg-brand/40 blur-md"
+                style={{
+                  top: trackHeight,
+                }}
+              />
+              <div className="absolute inset-0 overflow-hidden">
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <DataParticle
+                    key={i}
+                    delay={i * 1.5}
+                    duration={6}
+                    startY={0}
+                    endY={800}
+                  />
+                ))}
+              </div>
+            </>
           )}
         </div>
 
         {/* Stages */}
-        <div className="space-y-8">
+        <div className="space-y-6">
           {pipelineStages.map((stage, index) => (
-            <PipelineStageWithProgress
+            <StageWithProgress
               key={stage.id}
               stage={stage}
               index={index}
@@ -70,12 +80,55 @@ export default function PipelineJourney() {
         </div>
       </div>
 
-      {/* Bottom CTA */}
-      <div className="mt-10 text-center">
-        <p className="mb-4 text-sm text-muted">
-          This pipeline powers all three case studies above.
-        </p>
-        <div className="flex flex-wrap justify-center gap-3">
+      {/* Pipeline → Case Studies bridge */}
+      <div className="mt-12 space-y-6">
+        {/* Narrative connector */}
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-8 w-px bg-gradient-to-b from-brand/40 to-brand/10" />
+          <div className="rounded-full border border-brand/20 bg-brand/10 px-4 py-1.5 text-xs font-medium text-brand">
+            Pipeline complete — here's what it uncovered
+          </div>
+          <ArrowDown size={16} className="animate-bounce text-brand/40" />
+        </div>
+
+        {/* Case study preview cards */}
+        <div className="grid gap-3 sm:grid-cols-3">
+          {caseStudies.map((study) => (
+            <button
+              key={study.title}
+              onClick={() =>
+                document.getElementById('case-studies')?.scrollIntoView({ behavior: 'smooth' })
+              }
+              className="group rounded-xl border border-line/30 bg-card/40 p-4 text-left transition-all hover:border-brand/20 hover:bg-card/60"
+            >
+              <div className="mb-2 overflow-hidden rounded-lg">
+                <img
+                  src={study.image}
+                  alt={study.imageAlt}
+                  className="h-24 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <h4 className="text-sm font-semibold text-brand">{study.title}</h4>
+              <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted/70">
+                {study.problem}
+              </p>
+            </button>
+          ))}
+        </div>
+
+        {/* Final CTAs */}
+        <div className="flex flex-wrap justify-center gap-3 pt-2">
+          <a
+            href="#case-studies"
+            className="inline-flex items-center gap-2 rounded-xl bg-brand px-6 py-2.5 text-sm font-medium text-bg transition-all hover:bg-brand/90"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('case-studies')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            Dive Into the Case Studies
+          </a>
           <a
             href="https://github.com/G-Schumacher44"
             target="_blank"
@@ -83,16 +136,7 @@ export default function PipelineJourney() {
             className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface/80 px-5 py-2.5 text-sm font-medium text-text transition-all hover:border-brand/30"
           >
             Explore All Repos
-          </a>
-          <a
-            href="#case-studies"
-            className="inline-flex items-center gap-2 rounded-xl bg-brand px-5 py-2.5 text-sm font-medium text-bg transition-all hover:bg-brand/90"
-            onClick={(e) => {
-              e.preventDefault();
-              document.getElementById('case-studies')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
-            See the Case Studies
+            <ExternalLink size={14} />
           </a>
         </div>
       </div>
@@ -100,13 +144,13 @@ export default function PipelineJourney() {
   );
 }
 
-function PipelineStageWithProgress({
+function StageWithProgress({
   stage,
   index,
   activeIndex,
   reduced,
 }: {
-  stage: PipelineStageType;
+  stage: (typeof pipelineStages)[number];
   index: number;
   activeIndex: MotionValue<number>;
   reduced: boolean;
@@ -124,5 +168,5 @@ function PipelineStageWithProgress({
     return unsubscribe;
   }, [activeIndex, index, reduced]);
 
-  return <PipelineStage stage={stage} isActive={active} />;
+  return <TerminalStage stage={stage} isActive={active} reduced={reduced} />;
 }
