@@ -21,19 +21,19 @@ export default function HeroBioCard({ isVisible, onOpenFullBio }: HeroBioCardPro
           transition={{ duration: 0.2, ease: 'easeOut' }}
         >
           <div className="rounded-2xl border border-line/50 bg-card/90 p-5 shadow-2xl backdrop-blur-xl">
-            <div className="flex items-start gap-4">
+            <div className="flex flex-col items-center text-center">
               {/* Photo */}
               <img
                 src={about.photo}
                 alt={about.photoAlt}
                 width={80}
                 height={80}
-                className="flex-shrink-0 rounded-full border-2 border-brand/20"
+                className="mb-4 flex-shrink-0 rounded-full border-2 border-brand/20"
                 style={{ animation: 'float 4s ease-in-out infinite' }}
               />
 
               {/* Bio content */}
-              <div className="min-w-0 flex-1">
+              <div className="min-w-0">
                 <p className="text-sm leading-relaxed text-text">{about.bio}</p>
                 <p className="mt-2 text-xs text-muted">{about.availability}</p>
                 <button

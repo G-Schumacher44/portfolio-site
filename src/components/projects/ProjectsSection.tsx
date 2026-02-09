@@ -7,9 +7,9 @@ import { FadeInStagger, FadeInStaggerItem } from '../shared/FadeIn';
 export default function ProjectsSection() {
   return (
     <Section id="projects" glow>
-      <SectionTitle>Featured Projects</SectionTitle>
+      <SectionTitle>Tools & Frameworks</SectionTitle>
       <p className="mb-6 max-w-2xl text-muted">
-        Open-source tools and frameworks built for real-world data workflows.
+        Open-source solutions I've built to streamline analytics work — from data generation to pipeline automation to model evaluation.
       </p>
 
       <FadeInStagger className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">

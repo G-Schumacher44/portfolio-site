@@ -36,8 +36,11 @@ export const skillCategories: SkillCategory[] = [
     ],
   },
   {
-    title: 'Machine Learning & MLOps',
+    title: 'AI & Machine Learning',
     skills: [
+      { label: 'LLMs & Prompt Engineering' },
+      { label: 'Anthropic Claude API' },
+      { label: 'OpenAI API' },
       { label: 'Machine Learning' },
       { label: 'scikit-learn' },
       { label: 'Pydantic' },

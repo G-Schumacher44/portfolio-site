@@ -36,4 +36,5 @@ export const navigation: NavItem[] = [
     ],
   },
   { label: 'Contact', href: '#contact' },
+  { label: 'Analytics Resource Hub', href: 'https://g-schumacher44.github.io/analyst_resource_hub/', external: true },
 ];

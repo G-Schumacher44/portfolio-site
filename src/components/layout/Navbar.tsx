@@ -54,24 +54,35 @@ export default function Navbar() {
         <ul className="hidden items-center gap-1 md:flex">
           {navigation.map((item) => (
             <li key={item.label} className="relative">
-              <button
-                onClick={() => {
-                  if (item.children) {
-                    setOpenDropdown(openDropdown === item.label ? null : item.label);
-                  } else {
-                    scrollTo(item.href);
-                  }
-                }}
-                className={`
-                  rounded-lg px-3 py-2 text-sm transition-colors
-                  ${activeSection === item.href.slice(1)
-                    ? 'text-brand'
-                    : 'text-muted hover:text-text'
-                  }
-                `}
-              >
-                {item.label}
-              </button>
+              {item.external ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-lg px-3 py-2 text-sm text-muted transition-colors hover:text-text"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <button
+                  onClick={() => {
+                    if (item.children) {
+                      setOpenDropdown(openDropdown === item.label ? null : item.label);
+                    } else {
+                      scrollTo(item.href);
+                    }
+                  }}
+                  className={`
+                    rounded-lg px-3 py-2 text-sm transition-colors
+                    ${activeSection === item.href.slice(1)
+                      ? 'text-brand'
+                      : 'text-muted hover:text-text'
+                    }
+                  `}
+                >
+                  {item.label}
+                </button>
+              )}
 
               {/* Dropdown */}
               <AnimatePresence>
@@ -139,19 +150,32 @@ export default function Navbar() {
             className="overflow-hidden border-t border-line/50 md:hidden"
           >
             <div className="space-y-1 px-4 py-3">
-              {navigation.map((item) => (
-                <button
-                  key={item.label}
-                  onClick={() => scrollTo(item.href)}
-                  className={`
-                    block w-full rounded-lg px-3 py-2 text-left text-sm
-                    ${activeSection === item.href.slice(1) ? 'text-brand' : 'text-muted'}
-                    hover:bg-surface hover:text-text
-                  `}
-                >
-                  {item.label}
-                </button>
-              ))}
+              {navigation.map((item) =>
+                item.external ? (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMobileOpen(false)}
+                    className="block w-full rounded-lg px-3 py-2 text-left text-sm text-muted hover:bg-surface hover:text-text"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <button
+                    key={item.label}
+                    onClick={() => scrollTo(item.href)}
+                    className={`
+                      block w-full rounded-lg px-3 py-2 text-left text-sm
+                      ${activeSection === item.href.slice(1) ? 'text-brand' : 'text-muted'}
+                      hover:bg-surface hover:text-text
+                    `}
+                  >
+                    {item.label}
+                  </button>
+                )
+              )}
             </div>
           </motion.div>
         )}

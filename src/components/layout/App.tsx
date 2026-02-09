@@ -2,12 +2,9 @@ import MicroBanner from './MicroBanner';
 import Navbar from './Navbar';
 import Hero from '../hero/Hero';
 import TerminalAnimation from '../hero/TerminalAnimation';
-import StatsBar from '../stats/StatsBar';
 import SQLStoriesCTA from '../sql-stories/SQLStoriesCTA';
 import ServicesSection from '../services/ServicesSection';
-import HowItWorksSection from '../how-it-works/HowItWorksSection';
 import ProjectsSection from '../projects/ProjectsSection';
-import ResourceHubSection from '../resource-hub/ResourceHubSection';
 import SkillsSection from '../skills/SkillsSection';
 import ContactSection from '../contact/ContactSection';
 import Footer from './Footer';
@@ -29,14 +26,11 @@ export default function App() {
       <Hero />
       <Navbar />
       <main>
-        <StatsBar />
         <SQLStoriesCTA />
         <ServicesSection />
-        <HowItWorksSection />
-        <ProjectsSection />
-        <ResourceHubSection />
-        <SkillsSection />
         <ContactSection />
+        <ProjectsSection />
+        <SkillsSection />
       </main>
       <Footer />
     </>

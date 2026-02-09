@@ -44,6 +44,20 @@ export const services: ServiceData[] = [
     proofLabel: 'Datalake Pipelines',
     proofHref: '#projects',
   },
+  {
+    title: 'AI & Intelligent Automation',
+    icon: 'Bot',
+    description:
+      'LLM-powered workflows and intelligent agents that automate repetitive analytics tasks. From automated insight generation to AI-assisted data quality monitoring—systems that work smarter, not just faster.',
+    includes: [
+      'Automated insight generation with LLMs',
+      'AI-powered data quality & anomaly detection',
+      'Custom analytics agents & copilots',
+      'RAG systems for data documentation',
+    ],
+    proofLabel: 'Model Evaluation Suite',
+    proofHref: '#projects',
+  },
 ];
 
 export const servicesHighlight =

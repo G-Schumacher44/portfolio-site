@@ -2,9 +2,9 @@ import type { StatItem, ContactCard } from '../types';
 
 export const hero = {
   name: 'Garrett Schumacher',
-  tagline: 'Data Analytics & Engineering for Growing Businesses',
+  tagline: 'Data Analytics & AI Automation for Growing Businesses',
   subtitle:
-    'I turn messy data into clear dashboards, automated pipelines, and insights that drive revenue. Operations background. Technical execution.',
+    'I turn messy data into clear dashboards, AI-powered automation, and insights that drive revenue. Operations background. Technical execution.',
   terminalScripts: [
     // Script 1: Full pipeline run — data generation through gold layer
     [
@@ -181,7 +181,7 @@ export const about = {
   photo: '/img/logos/temp_headshot.png',
   photoAlt: 'Photo of Garrett Schumacher',
   modalSrc: 'files/modals/about_summary.html',
-  bio: "An operations leader turned data practitioner. I've managed $5M+ territories, directed a $3.5M business, and learned that the best decisions come from clean data, clear analysis, and honest storytelling. Now I build the pipelines, dashboards, and reports that give teams the confidence to act.",
+  bio: "An operations leader turned data practitioner. I've managed regional territories, led teams, and directed operations for small to medium sized businesses. The best decisions come from clean data, clear analysis, and honest storytelling. Now I build the AI-powered systems and frameworks that give teams the confidence to act.",
   availability: 'Available for: Full-time roles \u2022 Contract projects \u2022 Freelance engagements',
 };
 
