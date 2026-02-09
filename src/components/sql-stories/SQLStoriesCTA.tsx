@@ -29,8 +29,8 @@ export default function SQLStoriesCTA() {
           <div className="flex-1">
             <h2 className="text-xl font-bold text-brand sm:text-2xl">My SQL Stories</h2>
             <p className="mt-1 text-sm leading-relaxed text-muted">
-              From raw data to executive insight — trace 194K rows through a complete
-              analytics pipeline. Five stages, live metrics, three case studies.
+              QuickKart’s first year, told through three real case studies. A guided,
+              client-friendly journey from messy data to decisive action.
             </p>
             <span className="mt-2 inline-block text-xs font-medium text-brand/60 transition-colors group-hover:text-brand">
               Launch the journey &rarr;

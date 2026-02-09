@@ -32,6 +32,7 @@ export interface CaseStudyData {
   title: string;
   image: string;
   imageAlt: string;
+  heroMode?: 'image' | 'dashboard' | 'inventory' | 'retention';
   problem: string;
   delivered: string;
   impact: string;
