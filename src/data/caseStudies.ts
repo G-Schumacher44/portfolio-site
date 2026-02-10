@@ -7,20 +7,17 @@ export const caseStudies: CaseStudyData[] = [
     imageAlt: 'Sales dashboards grid preview',
     heroMode: 'dashboard',
     problem:
-      'A growing retailer saw refunds eroding 21% of net revenue with no visibility into which channels, regions, or products were driving the losses.',
+      'A growing retailer saw refunds eroding 21.14% of gross sales with limited visibility into channel, region, and product‑level drivers.',
     delivered:
-      'End-to-end SQL analysis, a live Looker Studio dashboard, and an executive report identifying root causes across channels, shipping methods, and customer segments.',
+      'End-to-end SQL analysis, a live Looker Studio dashboard, and an executive report surfacing refund drivers by channel, shipping speed, region, and product quality signals.',
     impact:
-      'Pinpointed $10.6M in refund exposure, flagged the highest-risk channel (29% refund rate), and provided a prioritized action plan to reduce returns below 20%.',
+      'Identified $10.61M in refunds on $50.18M sales, highlighted Phone (24.10%) and NewEgg (22.67%) as highest refund-rate channels, and defined a plan to push refunds below 20%.',
     techStack: 'SQL \u2022 Looker Studio \u2022 Executive Reporting',
     modalSrc: 'files/modals/case_vp_sales_summary.html',
-    terminalLine: 'Returns Exposure — Root Cause Drilldown',
-    heroStat: '$10.6M',
-    heroLabel: 'Exposure Flagged',
-    links: [
-      { label: 'View Case Study', href: 'https://github.com/G-Schumacher44/VP-Request', external: true },
-      { label: 'Live Dashboard', href: 'https://lookerstudio.google.com/reporting/e5f1454c-c8e4-481f-9ac8-375a3bdd289c', external: true },
-    ],
+    terminalLine: 'Year-End Returns Diagnostic',
+    heroStat: '$10.61M',
+    heroLabel: 'Refunds Identified',
+    links: [],
   },
   {
     title: 'Inventory Efficiency Audit',
@@ -28,19 +25,17 @@ export const caseStudies: CaseStudyData[] = [
     imageAlt: 'Inventory Audit Dashboard Preview',
     heroMode: 'inventory',
     problem:
-      'An e-commerce retailer had $19.1M in capital locked up in under-utilized inventory with no systematic way to identify which SKUs to prioritize.',
+      'Assesses catalog-wide utilization, SKU-level risk, and capital lock-up to prioritize corrective actions for the Fulfillment Team.',
     delivered:
-      'A SQL-based audit framework with a weighted attention scoring system, interactive workbook with drill-down filters, and an executive summary with tiered recommendations.',
+      'A SQL audit view with tiered attention scoring, an interactive workbook for drill-down analysis, and an executive summary with prioritized recommendations.',
     impact:
-      'Identified 562 under-utilized SKUs, quantified $3.8M in recoverable capital, and projected $0.8M\u2013$1.1M in annual carrying cost savings.',
+      'Identified 562 under-utilized SKUs and $19.1M in tied-up capital; a 20% reduction frees ~$3.8M and lowers annual carrying costs by ~$0.8–$1.1M.',
     techStack: 'SQL \u2022 Python \u2022 Data Storytelling',
     modalSrc: 'files/modals/case_inventory_audit_summary.html',
-    terminalLine: 'Inventory Freeze — Capital Unlock Audit',
-    heroStat: '562',
-    heroLabel: 'SKUs Under-Utilized',
-    links: [
-      { label: 'View Case Study', href: 'https://github.com/G-Schumacher44/sql_stories_portfolio_demo/tree/main', external: true },
-    ],
+    terminalLine: 'SKU Health & Attention Flag System',
+    heroStat: '$19.1M',
+    heroLabel: 'Capital Tied Up',
+    links: [],
   },
   {
     title: 'Customer Retention Strategy',
@@ -48,19 +43,16 @@ export const caseStudies: CaseStudyData[] = [
     imageAlt: 'Customer Retention Chart Preview',
     heroMode: 'retention',
     problem:
-      'A marketing team needed a retention snapshot but had no cohort-level visibility into churn timing, loyalty tier performance, or channel-specific lifetime value.',
+      'The Marketing Team requested a retention snapshot to guide strategy and identify early churn, loyalty gaps, and channel‑level CLV performance.',
     delivered:
-      'Cohort retention heatmaps, first-to-second purchase conversion analysis, loyalty tier diagnostics, and channel CLV segmentation with an executive report.',
+      'Cohort retention heatmaps, first-to-second conversion analysis, loyalty tier diagnostics, and channel CLV segmentation with a shareable executive report.',
     impact:
-      'Revealed an 11-point retention drop in the first 90 days, identified 0% repeat rate in the Bronze loyalty tier, and showed Phone channel drives 58% of high-CLV customers.',
+      'Revealed an 11‑point drop from Month 1→3, 0% repeat in Bronze, and Phone driving 58% of high‑CLV customers — guiding targeted retention actions.',
     techStack: 'SQL \u2022 Python \u2022 Cohort Analysis',
     modalSrc: 'files/retention_summary_modal.html',
     terminalLine: 'Retention Drop — Cohort & CLV Signals',
     heroStat: '11pt',
     heroLabel: '90-Day Retention Drop',
-    links: [
-      { label: 'View Case Study', href: 'https://github.com/G-Schumacher44/sql_stories_portfolio_demo/tree/main', external: true },
-      { label: 'Executive Report', href: 'files/media/Executive_Retention_Report.html', external: true },
-    ],
+    links: [],
   },
 ];

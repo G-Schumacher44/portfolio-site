@@ -62,7 +62,7 @@ export default function CaseStudyVizCard({
             transition={{ duration: 3, repeat: Infinity }}
           />
           {vizType === 'returns' && <ReturnsViz reduced={reduced} />}
-          {vizType === 'inventory' && <InventoryViz reduced={reduced} />}
+          {vizType === 'inventory' && <InventoryDonut reduced={reduced} />}
           {vizType === 'retention' && <RetentionViz reduced={reduced} />}
         </div>
         <h4 className="mt-3 text-xs font-semibold text-text group-hover:text-brand">
@@ -76,8 +76,25 @@ export default function CaseStudyVizCard({
 function ReturnsViz({ reduced }: { reduced: boolean }) {
   const values = [6, 9, 10, 12, 8, 7, 11, 13, 9, 8, 7, 6];
   const max = Math.max(...values);
+  const linePath = values
+    .map((v, i) => {
+      const x = i * 9.2 + 5;
+      const y = 55 - (v / max) * 44;
+      return `${i === 0 ? 'M' : 'L'}${x} ${y}`;
+    })
+    .join(' ');
   return (
     <svg viewBox="0 0 120 60" className="h-14 w-full">
+      <motion.path
+        d={linePath}
+        fill="none"
+        stroke="rgba(245, 158, 11, 0.9)"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        initial={reduced ? false : { pathLength: 0 }}
+        animate={reduced ? undefined : { pathLength: 1 }}
+        transition={{ duration: 1.2 }}
+      />
       {values.map((v, i) => {
         const h = (v / max) * 44;
         const x = i * 9.2 + 2;
@@ -97,6 +114,15 @@ function ReturnsViz({ reduced }: { reduced: boolean }) {
           />
         );
       })}
+      <motion.circle
+        cx="5"
+        cy={55 - (values[0] / max) * 44}
+        r="2.5"
+        fill="#F59E0B"
+        initial={reduced ? false : { cx: 5 }}
+        animate={reduced ? undefined : { cx: [5, 108, 5] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+      />
       <motion.line
         x1="2"
         y1="55"
@@ -112,60 +138,68 @@ function ReturnsViz({ reduced }: { reduced: boolean }) {
   );
 }
 
-function InventoryViz({ reduced }: { reduced: boolean }) {
-  const cells = [
-    0.1, 0.15, 0.4, 0.35, 0.2, 0.1,
-    0.2, 0.3, 0.6, 0.55, 0.35, 0.2,
-    0.15, 0.25, 0.5, 0.7, 0.45, 0.25,
-    0.1, 0.2, 0.4, 0.6, 0.5, 0.3,
-  ];
+function InventoryDonut({ reduced }: { reduced: boolean }) {
+  const locked = 19.1;
+  const productive = 9.1;
+  const total = locked + productive;
+  const lockedFrac = locked / total;
+  const radius = 20;
+  const cx = 40;
+  const cy = 30;
+  const circumference = 2 * Math.PI * radius;
+  const lockedLen = circumference * lockedFrac;
+  const productiveLen = circumference - lockedLen;
   return (
-    <svg viewBox="0 0 120 60" className="h-14 w-full">
-      {cells.map((v, i) => {
-        const row = Math.floor(i / 6);
-        const col = i % 6;
-        const x = col * 18 + 4;
-        const y = row * 11 + 6;
-        const opacity = 0.15 + v * 0.8;
-        return (
-          <motion.rect
-            key={i}
-            x={x}
-            y={y}
-            width="14"
-            height="8"
-            rx="1"
-            fill={`rgba(56, 189, 248, ${opacity})`}
-            initial={reduced ? false : { opacity: 0 }}
-            animate={reduced ? undefined : { opacity }}
-            transition={{ duration: 0.4, delay: i * 0.01 }}
-          />
-        );
-      })}
-      <motion.rect
-        x="2"
-        y="2"
-        width="116"
-        height="56"
-        rx="6"
-        fill="none"
-        stroke="rgba(148, 163, 184, 0.2)"
-        initial={reduced ? false : { opacity: 0.4 }}
-        animate={reduced ? undefined : { opacity: [0.4, 0.8, 0.4] }}
-        transition={{ duration: 3, repeat: Infinity }}
-      />
-      <motion.rect
-        x="6"
-        y="6"
-        width="30"
-        height="44"
-        rx="4"
-        fill="rgba(56, 189, 248, 0.08)"
-        initial={reduced ? false : { x: 6 }}
-        animate={reduced ? undefined : { x: [6, 70, 6] }}
-        transition={{ duration: 5, repeat: Infinity }}
-      />
-    </svg>
+    <div className="flex items-center gap-3">
+      <svg viewBox="0 0 80 60" className="h-14 w-20">
+        <circle
+          cx={cx}
+          cy={cy}
+          r={radius}
+          stroke="rgba(148, 163, 184, 0.2)"
+          strokeWidth="8"
+          fill="none"
+        />
+        <motion.circle
+          cx={cx}
+          cy={cy}
+          r={radius}
+          stroke="#F59E0B"
+          strokeWidth="8"
+          fill="none"
+          strokeLinecap="round"
+          strokeDasharray={`${lockedLen} ${circumference - lockedLen}`}
+          strokeDashoffset={0}
+          initial={reduced ? false : { strokeDasharray: `0 ${circumference}` }}
+          animate={reduced ? undefined : { strokeDasharray: `${lockedLen} ${circumference - lockedLen}` }}
+          transition={{ duration: 0.8 }}
+        />
+        <motion.circle
+          cx={cx}
+          cy={cy}
+          r={radius}
+          stroke="#60A5FA"
+          strokeWidth="8"
+          fill="none"
+          strokeLinecap="round"
+          strokeDasharray={`${productiveLen} ${circumference - productiveLen}`}
+          strokeDashoffset={-lockedLen}
+          initial={reduced ? false : { strokeDasharray: `0 ${circumference}` }}
+          animate={reduced ? undefined : { strokeDasharray: `${productiveLen} ${circumference - productiveLen}` }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        />
+      </svg>
+      <div className="text-[10px] text-muted/70">
+        <div className="flex items-center gap-1">
+          <span className="h-2 w-2 rounded-full bg-[#F59E0B]" />
+          <span>$19.1M locked</span>
+        </div>
+        <div className="mt-1 flex items-center gap-1">
+          <span className="h-2 w-2 rounded-full bg-[#60A5FA]" />
+          <span>$9.1M productive</span>
+        </div>
+      </div>
+    </div>
   );
 }
 

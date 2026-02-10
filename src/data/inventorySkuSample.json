@@ -1,0 +1,1324 @@
+{
+  "bins": [
+    0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0,
+    1.1
+  ],
+  "counts": [
+    147,
+    620,
+    373,
+    110,
+    27,
+    7,
+    2,
+    0,
+    0,
+    0,
+    0
+  ],
+  "avg_util_pct": 19.29,
+  "under_util_skus": 1140,
+  "total_skus": 1286,
+  "tier_counts": {
+    "Tier 0 \u2013 Healthy": 93,
+    "Tier 1 \u2013 Low Attention": 52,
+    "Tier 2 \u2013 Moderate Attention": 1013,
+    "Tier 3 \u2013 High Attention": 128
+  },
+  "rows": [
+    {
+      "util_pct": 35.2,
+      "return_pct": 27.1,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "illustrated novel"
+    },
+    {
+      "util_pct": 18.6,
+      "return_pct": 34.7,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "rustic rug"
+    },
+    {
+      "util_pct": 22.7,
+      "return_pct": 10.3,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "modern chair"
+    },
+    {
+      "util_pct": 32.4,
+      "return_pct": 14.1,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "elegant lamp"
+    },
+    {
+      "util_pct": 35.2,
+      "return_pct": 18.8,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "elegant table"
+    },
+    {
+      "util_pct": 17.6,
+      "return_pct": 9.1,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "colorful car"
+    },
+    {
+      "util_pct": 11.7,
+      "return_pct": 39.4,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "illustrated novel"
+    },
+    {
+      "util_pct": 14.0,
+      "return_pct": 32.0,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "durable jacket"
+    },
+    {
+      "util_pct": 15.2,
+      "return_pct": 31.0,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "interactive car"
+    },
+    {
+      "util_pct": 31.5,
+      "return_pct": 26.8,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "cozy table"
+    },
+    {
+      "util_pct": 15.9,
+      "return_pct": 37.0,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "wireless camera"
+    },
+    {
+      "util_pct": 30.1,
+      "return_pct": 6.1,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "stylish sweater"
+    },
+    {
+      "util_pct": 5.2,
+      "return_pct": 40.9,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "durable shirt"
+    },
+    {
+      "util_pct": 12.2,
+      "return_pct": 33.3,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "compact camera"
+    },
+    {
+      "util_pct": 31.1,
+      "return_pct": 10.6,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "illustrated anthology"
+    },
+    {
+      "util_pct": 23.7,
+      "return_pct": 11.4,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "fun car"
+    },
+    {
+      "util_pct": 7.2,
+      "return_pct": 37.5,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "comfortable jacket"
+    },
+    {
+      "util_pct": 17.0,
+      "return_pct": 30.0,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "rustic chair"
+    },
+    {
+      "util_pct": 60.0,
+      "return_pct": 13.7,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "elegant table"
+    },
+    {
+      "util_pct": 10.6,
+      "return_pct": 8.7,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "modern memoir"
+    },
+    {
+      "util_pct": 39.6,
+      "return_pct": 10.6,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "hardcover memoir"
+    },
+    {
+      "util_pct": 32.9,
+      "return_pct": 17.2,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "modern table"
+    },
+    {
+      "util_pct": 37.2,
+      "return_pct": 8.2,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "compact monitor"
+    },
+    {
+      "util_pct": 10.5,
+      "return_pct": 33.3,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "educational puzzle"
+    },
+    {
+      "util_pct": 7.7,
+      "return_pct": 5.0,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "stylish sweater"
+    },
+    {
+      "util_pct": 31.7,
+      "return_pct": 9.8,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "illustrated guide"
+    },
+    {
+      "util_pct": 23.8,
+      "return_pct": 31.0,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "elegant chair"
+    },
+    {
+      "util_pct": 32.7,
+      "return_pct": 9.8,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "comfortable jacket"
+    },
+    {
+      "util_pct": 10.1,
+      "return_pct": 0,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "classic shirt"
+    },
+    {
+      "util_pct": 31.4,
+      "return_pct": 20.8,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "illustrated memoir"
+    },
+    {
+      "util_pct": 45.0,
+      "return_pct": 23.4,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "elegant rug"
+    },
+    {
+      "util_pct": 17.8,
+      "return_pct": 39.2,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "comfortable sweater"
+    },
+    {
+      "util_pct": 30.6,
+      "return_pct": 30.6,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "durable jacket"
+    },
+    {
+      "util_pct": 20.8,
+      "return_pct": 16.3,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "smart camera"
+    },
+    {
+      "util_pct": 30.4,
+      "return_pct": 10.9,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "stylish sweater"
+    },
+    {
+      "util_pct": 31.8,
+      "return_pct": 8.1,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "smart monitor"
+    },
+    {
+      "util_pct": 25.8,
+      "return_pct": 25.7,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "elegant rug"
+    },
+    {
+      "util_pct": 12.6,
+      "return_pct": 10.7,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "wireless headphones"
+    },
+    {
+      "util_pct": 34.4,
+      "return_pct": 16.7,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "rustic lamp"
+    },
+    {
+      "util_pct": 22.1,
+      "return_pct": 18.0,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "cozy table"
+    },
+    {
+      "util_pct": 32.0,
+      "return_pct": 17.5,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "durable jeans"
+    },
+    {
+      "util_pct": 24.5,
+      "return_pct": 16.7,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "cozy lamp"
+    },
+    {
+      "util_pct": 36.1,
+      "return_pct": 6.5,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "rustic chair"
+    },
+    {
+      "util_pct": 45.8,
+      "return_pct": 21.0,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "hardcover anthology"
+    },
+    {
+      "util_pct": 9.9,
+      "return_pct": 33.3,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "hardcover anthology"
+    },
+    {
+      "util_pct": 14.6,
+      "return_pct": 32.6,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "elegant rug"
+    },
+    {
+      "util_pct": 10.4,
+      "return_pct": 38.5,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "fun doll"
+    },
+    {
+      "util_pct": 10.3,
+      "return_pct": 37.5,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "classic shirt"
+    },
+    {
+      "util_pct": 17.3,
+      "return_pct": 12.2,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "educational car"
+    },
+    {
+      "util_pct": 34.5,
+      "return_pct": 13.3,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "durable sweater"
+    },
+    {
+      "util_pct": 37.0,
+      "return_pct": 15.9,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "modern anthology"
+    },
+    {
+      "util_pct": 8.7,
+      "return_pct": 8.7,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "comfortable sweater"
+    },
+    {
+      "util_pct": 34.4,
+      "return_pct": 13.7,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "elegant chair"
+    },
+    {
+      "util_pct": 12.0,
+      "return_pct": 17.6,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "educational doll"
+    },
+    {
+      "util_pct": 33.3,
+      "return_pct": 2.3,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "smart camera"
+    },
+    {
+      "util_pct": 32.1,
+      "return_pct": 22.2,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "hardcover memoir"
+    },
+    {
+      "util_pct": 18.1,
+      "return_pct": 30.2,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "elegant table"
+    },
+    {
+      "util_pct": 45.1,
+      "return_pct": 15.9,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "modern rug"
+    },
+    {
+      "util_pct": 31.1,
+      "return_pct": 11.1,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "wireless camera"
+    },
+    {
+      "util_pct": 31.2,
+      "return_pct": 15.0,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "modern chair"
+    },
+    {
+      "util_pct": 12.8,
+      "return_pct": 30.3,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "cozy chair"
+    },
+    {
+      "util_pct": 34.2,
+      "return_pct": 9.3,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "wireless camera"
+    },
+    {
+      "util_pct": 7.5,
+      "return_pct": 40.9,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "wireless speaker"
+    },
+    {
+      "util_pct": 33.3,
+      "return_pct": 22.6,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "elegant lamp"
+    },
+    {
+      "util_pct": 9.6,
+      "return_pct": 31.6,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "durable sweater"
+    },
+    {
+      "util_pct": 61.3,
+      "return_pct": 5.8,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "elegant table"
+    },
+    {
+      "util_pct": 30.4,
+      "return_pct": 22.7,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "wireless monitor"
+    },
+    {
+      "util_pct": 32.4,
+      "return_pct": 12.5,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "portable headphones"
+    },
+    {
+      "util_pct": 41.3,
+      "return_pct": 4.3,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "wireless headphones"
+    },
+    {
+      "util_pct": 35.4,
+      "return_pct": 10.5,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "modern guide"
+    },
+    {
+      "util_pct": 33.1,
+      "return_pct": 9.3,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "rustic lamp"
+    },
+    {
+      "util_pct": 33.9,
+      "return_pct": 23.6,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "classic guide"
+    },
+    {
+      "util_pct": 11.0,
+      "return_pct": 50.0,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "stylish jeans"
+    },
+    {
+      "util_pct": 40.5,
+      "return_pct": 3.2,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "rustic lamp"
+    },
+    {
+      "util_pct": 32.4,
+      "return_pct": 8.1,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "interactive puzzle"
+    },
+    {
+      "util_pct": 19.5,
+      "return_pct": 36.6,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "cozy table"
+    },
+    {
+      "util_pct": 47.1,
+      "return_pct": 0,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "rustic table"
+    },
+    {
+      "util_pct": 34.5,
+      "return_pct": 4.8,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "modern novel"
+    },
+    {
+      "util_pct": 21.6,
+      "return_pct": 10.0,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "modern rug"
+    },
+    {
+      "util_pct": 32.8,
+      "return_pct": 9.1,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "rustic rug"
+    },
+    {
+      "util_pct": 35.1,
+      "return_pct": 17.0,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "hardcover novel"
+    },
+    {
+      "util_pct": 20.3,
+      "return_pct": 7.7,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "modern table"
+    },
+    {
+      "util_pct": 25.0,
+      "return_pct": 32.7,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "elegant rug"
+    },
+    {
+      "util_pct": 7.2,
+      "return_pct": 52.9,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "portable monitor"
+    },
+    {
+      "util_pct": 35.3,
+      "return_pct": 6.0,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "colorful puzzle"
+    },
+    {
+      "util_pct": 34.8,
+      "return_pct": 11.1,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "modern anthology"
+    },
+    {
+      "util_pct": 34.3,
+      "return_pct": 16.3,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "illustrated novel"
+    },
+    {
+      "util_pct": 10.4,
+      "return_pct": 0,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "classic sweater"
+    },
+    {
+      "util_pct": 17.2,
+      "return_pct": 12.1,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "comfortable jeans"
+    },
+    {
+      "util_pct": 43.0,
+      "return_pct": 14.9,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "modern rug"
+    },
+    {
+      "util_pct": 11.6,
+      "return_pct": 40.9,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "fun doll"
+    },
+    {
+      "util_pct": 38.8,
+      "return_pct": 21.6,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "modern rug"
+    },
+    {
+      "util_pct": 35.5,
+      "return_pct": 5.0,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "rustic table"
+    },
+    {
+      "util_pct": 12.7,
+      "return_pct": 11.1,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "wireless camera"
+    },
+    {
+      "util_pct": 31.4,
+      "return_pct": 8.3,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "compact camera"
+    },
+    {
+      "util_pct": 32.4,
+      "return_pct": 19.5,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "portable camera"
+    },
+    {
+      "util_pct": 17.0,
+      "return_pct": 7.1,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "wireless camera"
+    },
+    {
+      "util_pct": 32.7,
+      "return_pct": 7.7,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "stylish jeans"
+    },
+    {
+      "util_pct": 44.4,
+      "return_pct": 6.9,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "illustrated novel"
+    },
+    {
+      "util_pct": 13.3,
+      "return_pct": 9.1,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "stylish sweater"
+    },
+    {
+      "util_pct": 32.4,
+      "return_pct": 10.0,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "rustic table"
+    },
+    {
+      "util_pct": 34.5,
+      "return_pct": 11.1,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "cozy rug"
+    },
+    {
+      "util_pct": 2.9,
+      "return_pct": 61.1,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "classic jacket"
+    },
+    {
+      "util_pct": 31.9,
+      "return_pct": 15.6,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "compact camera"
+    },
+    {
+      "util_pct": 33.6,
+      "return_pct": 7.5,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "interactive car"
+    },
+    {
+      "util_pct": 11.0,
+      "return_pct": 8.0,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "portable headphones"
+    },
+    {
+      "util_pct": 50.9,
+      "return_pct": 11.1,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "illustrated novel"
+    },
+    {
+      "util_pct": 26.0,
+      "return_pct": 29.1,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "hardcover novel"
+    },
+    {
+      "util_pct": 33.3,
+      "return_pct": 5.4,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "wireless monitor"
+    },
+    {
+      "util_pct": 31.9,
+      "return_pct": 5.6,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "modern guide"
+    },
+    {
+      "util_pct": 34.4,
+      "return_pct": 10.6,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "hardcover memoir"
+    },
+    {
+      "util_pct": 39.7,
+      "return_pct": 7.8,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "elegant rug"
+    },
+    {
+      "util_pct": 33.6,
+      "return_pct": 11.9,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "rustic chair"
+    },
+    {
+      "util_pct": 10.8,
+      "return_pct": 0,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "interactive doll"
+    },
+    {
+      "util_pct": 3.4,
+      "return_pct": 37.5,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "classic guide"
+    },
+    {
+      "util_pct": 35.1,
+      "return_pct": 13.3,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "modern rug"
+    },
+    {
+      "util_pct": 14.5,
+      "return_pct": 37.9,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "colorful car"
+    },
+    {
+      "util_pct": 26.7,
+      "return_pct": 37.8,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "educational doll"
+    },
+    {
+      "util_pct": 31.1,
+      "return_pct": 14.8,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "hardcover guide"
+    },
+    {
+      "util_pct": 9.0,
+      "return_pct": 14.3,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "stylish jacket"
+    },
+    {
+      "util_pct": 22.7,
+      "return_pct": 38.3,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "modern table"
+    },
+    {
+      "util_pct": 23.6,
+      "return_pct": 0,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "fun doll"
+    },
+    {
+      "util_pct": 14.8,
+      "return_pct": 31.1,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "modern anthology"
+    },
+    {
+      "util_pct": 31.8,
+      "return_pct": 16.1,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "rustic lamp"
+    },
+    {
+      "util_pct": 12.7,
+      "return_pct": 22.9,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "interactive doll"
+    },
+    {
+      "util_pct": 19.5,
+      "return_pct": 7.4,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "wireless headphones"
+    },
+    {
+      "util_pct": 41.2,
+      "return_pct": 18.3,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "rustic chair"
+    },
+    {
+      "util_pct": 21.7,
+      "return_pct": 16.3,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "classic novel"
+    },
+    {
+      "util_pct": 39.9,
+      "return_pct": 9.2,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "rustic table"
+    },
+    {
+      "util_pct": 16.5,
+      "return_pct": 15.2,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "compact headphones"
+    },
+    {
+      "util_pct": 38.2,
+      "return_pct": 0,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "stylish sweater"
+    },
+    {
+      "util_pct": 30.6,
+      "return_pct": 5.6,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "fun puzzle"
+    },
+    {
+      "util_pct": 33.0,
+      "return_pct": 21.4,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "rustic rug"
+    },
+    {
+      "util_pct": 45.1,
+      "return_pct": 0,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "illustrated memoir"
+    },
+    {
+      "util_pct": 6.1,
+      "return_pct": 50.0,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "compact speaker"
+    },
+    {
+      "util_pct": 10.4,
+      "return_pct": 31.0,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "rustic lamp"
+    },
+    {
+      "util_pct": 14.6,
+      "return_pct": 16.7,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "colorful puzzle"
+    },
+    {
+      "util_pct": 18.9,
+      "return_pct": 33.3,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "hardcover anthology"
+    },
+    {
+      "util_pct": 6.5,
+      "return_pct": 7.7,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "durable shirt"
+    },
+    {
+      "util_pct": 15.5,
+      "return_pct": 2.9,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "smart monitor"
+    },
+    {
+      "util_pct": 13.2,
+      "return_pct": 43.8,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "modern guide"
+    },
+    {
+      "util_pct": 13.3,
+      "return_pct": 21.2,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "compact monitor"
+    },
+    {
+      "util_pct": 31.4,
+      "return_pct": 0,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "rustic lamp"
+    },
+    {
+      "util_pct": 36.0,
+      "return_pct": 15.1,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "cozy lamp"
+    },
+    {
+      "util_pct": 33.3,
+      "return_pct": 12.0,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "stylish jacket"
+    },
+    {
+      "util_pct": 5.2,
+      "return_pct": 45.5,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "compact monitor"
+    },
+    {
+      "util_pct": 31.4,
+      "return_pct": 6.8,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "stylish jeans"
+    },
+    {
+      "util_pct": 36.2,
+      "return_pct": 5.0,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "rustic rug"
+    },
+    {
+      "util_pct": 20.8,
+      "return_pct": 19.1,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "modern table"
+    },
+    {
+      "util_pct": 20.2,
+      "return_pct": 17.0,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "portable monitor"
+    },
+    {
+      "util_pct": 31.6,
+      "return_pct": 4.8,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "durable shirt"
+    },
+    {
+      "util_pct": 23.3,
+      "return_pct": 30.6,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "classic memoir"
+    },
+    {
+      "util_pct": 17.9,
+      "return_pct": 30.4,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "hardcover novel"
+    },
+    {
+      "util_pct": 30.3,
+      "return_pct": 2.2,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "classic jeans"
+    },
+    {
+      "util_pct": 17.2,
+      "return_pct": 6.7,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "stylish sweater"
+    },
+    {
+      "util_pct": 15.9,
+      "return_pct": 20.0,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "durable jeans"
+    },
+    {
+      "util_pct": 33.6,
+      "return_pct": 11.9,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "interactive puzzle"
+    },
+    {
+      "util_pct": 19.0,
+      "return_pct": 39.4,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "portable monitor"
+    },
+    {
+      "util_pct": 11.5,
+      "return_pct": 0,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "classic sweater"
+    },
+    {
+      "util_pct": 1.7,
+      "return_pct": 50.0,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "wireless camera"
+    },
+    {
+      "util_pct": 31.2,
+      "return_pct": 8.3,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "cozy chair"
+    },
+    {
+      "util_pct": 33.6,
+      "return_pct": 13.0,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "classic guide"
+    },
+    {
+      "util_pct": 15.9,
+      "return_pct": 31.2,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "portable speaker"
+    },
+    {
+      "util_pct": 15.6,
+      "return_pct": 0,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "compact speaker"
+    },
+    {
+      "util_pct": 31.4,
+      "return_pct": 7.7,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "modern lamp"
+    },
+    {
+      "util_pct": 18.4,
+      "return_pct": 10.6,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "rustic table"
+    },
+    {
+      "util_pct": 22.6,
+      "return_pct": 17.9,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "classic novel"
+    },
+    {
+      "util_pct": 19.0,
+      "return_pct": 31.0,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "smart monitor"
+    },
+    {
+      "util_pct": 23.0,
+      "return_pct": 27.7,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "classic memoir"
+    },
+    {
+      "util_pct": 51.9,
+      "return_pct": 5.3,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "rustic table"
+    },
+    {
+      "util_pct": 44.4,
+      "return_pct": 11.1,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "modern rug"
+    },
+    {
+      "util_pct": 13.4,
+      "return_pct": 11.1,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "classic jeans"
+    },
+    {
+      "util_pct": 34.5,
+      "return_pct": 14.3,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "cozy lamp"
+    },
+    {
+      "util_pct": 16.1,
+      "return_pct": 30.8,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "modern anthology"
+    },
+    {
+      "util_pct": 44.1,
+      "return_pct": 7.5,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "hardcover novel"
+    },
+    {
+      "util_pct": 14.5,
+      "return_pct": 14.3,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "colorful blocks"
+    },
+    {
+      "util_pct": 36.9,
+      "return_pct": 11.8,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "smart camera"
+    },
+    {
+      "util_pct": 12.0,
+      "return_pct": 40.7,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "stylish shirt"
+    },
+    {
+      "util_pct": 6.0,
+      "return_pct": 36.8,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "classic jacket"
+    },
+    {
+      "util_pct": 6.7,
+      "return_pct": 10.0,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "wireless speaker"
+    },
+    {
+      "util_pct": 31.6,
+      "return_pct": 2.7,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "fun car"
+    },
+    {
+      "util_pct": 31.0,
+      "return_pct": 7.7,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "wireless speaker"
+    },
+    {
+      "util_pct": 27.5,
+      "return_pct": 7.1,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "hardcover memoir"
+    },
+    {
+      "util_pct": 21.7,
+      "return_pct": 12.5,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "portable speaker"
+    },
+    {
+      "util_pct": 33.8,
+      "return_pct": 7.4,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "compact camera"
+    },
+    {
+      "util_pct": 34.6,
+      "return_pct": 9.7,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "classic memoir"
+    },
+    {
+      "util_pct": 51.0,
+      "return_pct": 3.8,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "cozy chair"
+    },
+    {
+      "util_pct": 32.0,
+      "return_pct": 14.5,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "illustrated novel"
+    },
+    {
+      "util_pct": 20.8,
+      "return_pct": 37.2,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "modern chair"
+    },
+    {
+      "util_pct": 31.4,
+      "return_pct": 4.4,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "wireless monitor"
+    },
+    {
+      "util_pct": 31.6,
+      "return_pct": 0,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "cozy lamp"
+    },
+    {
+      "util_pct": 39.0,
+      "return_pct": 18.8,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "modern anthology"
+    },
+    {
+      "util_pct": 32.5,
+      "return_pct": 17.0,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "hardcover novel"
+    },
+    {
+      "util_pct": 16.5,
+      "return_pct": 22.2,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "smart headphones"
+    },
+    {
+      "util_pct": 26.2,
+      "return_pct": 19.0,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "illustrated memoir"
+    },
+    {
+      "util_pct": 8.9,
+      "return_pct": 45.8,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "comfortable shirt"
+    },
+    {
+      "util_pct": 5.9,
+      "return_pct": 44.0,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "stylish sweater"
+    },
+    {
+      "util_pct": 19.8,
+      "return_pct": 32.3,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "elegant table"
+    },
+    {
+      "util_pct": 38.1,
+      "return_pct": 4.4,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "smart headphones"
+    },
+    {
+      "util_pct": 38.3,
+      "return_pct": 2.1,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "smart speaker"
+    },
+    {
+      "util_pct": 2.2,
+      "return_pct": 44.4,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "wireless camera"
+    },
+    {
+      "util_pct": 31.0,
+      "return_pct": 13.0,
+      "tier": "Tier 1 \u2013 Low Attention",
+      "sku": "smart speaker"
+    },
+    {
+      "util_pct": 38.8,
+      "return_pct": 20.6,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "cozy chair"
+    },
+    {
+      "util_pct": 32.7,
+      "return_pct": 3.8,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "modern anthology"
+    },
+    {
+      "util_pct": 15.6,
+      "return_pct": 31.0,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "stylish shirt"
+    },
+    {
+      "util_pct": 38.8,
+      "return_pct": 10.0,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "rustic rug"
+    },
+    {
+      "util_pct": 13.5,
+      "return_pct": 30.0,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "colorful puzzle"
+    },
+    {
+      "util_pct": 16.8,
+      "return_pct": 23.8,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "interactive doll"
+    },
+    {
+      "util_pct": 23.2,
+      "return_pct": 24.3,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "modern table"
+    },
+    {
+      "util_pct": 18.6,
+      "return_pct": 27.3,
+      "tier": "Tier 2 \u2013 Moderate Attention",
+      "sku": "smart headphones"
+    },
+    {
+      "util_pct": 35.5,
+      "return_pct": 5.8,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "hardcover anthology"
+    },
+    {
+      "util_pct": 10.7,
+      "return_pct": 39.0,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "classic sweater"
+    },
+    {
+      "util_pct": 19.1,
+      "return_pct": 36.4,
+      "tier": "Tier 3 \u2013 High Attention",
+      "sku": "hardcover memoir"
+    },
+    {
+      "util_pct": 36.8,
+      "return_pct": 13.1,
+      "tier": "Tier 0 \u2013 Healthy",
+      "sku": "modern chair"
+    }
+  ]
+}

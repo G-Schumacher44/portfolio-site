@@ -117,9 +117,6 @@ function ModalContent({
         // Brief pause between stages, then auto-scroll and activate
         setTimeout(() => {
           setActiveStages((prev) => prev.map((v, i) => (i <= nextIndex ? true : v)));
-          // Auto-scroll to keep the next stage in view
-          const stageElements = scrollRef.current?.querySelectorAll('[data-stage]');
-          stageElements?.[nextIndex]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 600);
       }
     },
@@ -201,6 +198,15 @@ function ModalContent({
             <h3 className="mb-6 pl-[56px] text-lg font-semibold text-brand sm:pl-[64px]">
               How the insights were built
             </h3>
+            <div className="mb-8 ml-[56px] inline-flex items-start gap-3 rounded-2xl border border-brand/30 bg-brand/10 px-4 py-3 text-left shadow-[0_0_30px_rgba(102,153,204,0.15)] sm:ml-[64px]">
+              <div className="mt-0.5 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-brand/70" />
+              <div>
+                <div className="text-xs uppercase tracking-[0.2em] text-brand/80">Data Modeling Studio</div>
+                <div className="mt-1 text-sm text-text/80">
+                  Using my Operations Data Modeling Studio, we follow QuickKart's simulated data from raw numbers to actionable insight.
+                </div>
+              </div>
+            </div>
 
             {/* Stages container */}
             <div className="relative">
