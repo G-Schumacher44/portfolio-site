@@ -6,12 +6,14 @@ Thumbs.db
 
 # Node / package managers (if you later add a build system)
 node_modules/
-package-lock.json
 yarn.lock
 
 # Logs & temp files
 *.log
 *.tmp
+tmp/
+output/
+.venv-imagegen/
 
 # Local planning docs
 MEMORY.md
