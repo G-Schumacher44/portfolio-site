@@ -125,7 +125,7 @@ const linkedDocs = [
 
 export default function ArchitectureFlowChart({ isOpen, onClose }: ArchitectureFlowChartProps) {
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
-  const [docViewer, setDocViewer] = useState<{ title: string; src: string } | null>(null);
+  const [docViewer, setDocViewer] = useState<{ label: string; src: string } | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollToSection = useCallback((id: string) => {

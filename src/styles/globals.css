@@ -1,6 +1,6 @@
 @import "tailwindcss" source(none);
-@source "../../src/**/*.{tsx,ts}";
 @import "./animations.css";
+@source "../../src/**/*.{tsx,ts}";
 
 @theme {
   --color-bg: #0c0d10;
