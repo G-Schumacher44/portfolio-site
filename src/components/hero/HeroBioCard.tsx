@@ -4,10 +4,11 @@ import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 interface HeroBioCardProps {
   isVisible: boolean;
-  onOpenFullBio: () => void;
+  onOpenResume: () => void;
+  onOpenBio: () => void;
 }
 
-export default function HeroBioCard({ isVisible, onOpenFullBio }: HeroBioCardProps) {
+export default function HeroBioCard({ isVisible, onOpenResume, onOpenBio }: HeroBioCardProps) {
   const reduced = useReducedMotion();
 
   return (
@@ -36,15 +37,20 @@ export default function HeroBioCard({ isVisible, onOpenFullBio }: HeroBioCardPro
               <div className="min-w-0">
                 <p className="text-sm leading-relaxed text-text">{about.bio}</p>
                 <p className="mt-2 text-xs text-muted">{about.availability}</p>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onOpenFullBio();
-                  }}
-                  className="mt-3 text-sm font-medium text-brand transition-colors hover:text-text"
-                >
-                  Read full bio &rarr;
-                </button>
+                <div className="mt-3 flex items-center justify-center gap-4">
+                  <button
+                    onClick={(e) => { e.stopPropagation(); onOpenResume(); }}
+                    className="text-sm font-medium text-brand transition-colors hover:text-text"
+                  >
+                    View Resume &rarr;
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); onOpenBio(); }}
+                    className="text-xs text-muted/70 transition-colors hover:text-muted"
+                  >
+                    Full bio
+                  </button>
+                </div>
               </div>
             </div>
           </div>

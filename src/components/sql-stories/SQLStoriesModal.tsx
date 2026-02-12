@@ -254,92 +254,40 @@ function ModalContent({
               </div>
             </div>
 
-            {/* Pipeline-to-stories bridge */}
-            <div className="mt-12 space-y-0">
-              {/* Branching line SVG */}
-              <div className="relative mx-auto w-full max-w-md">
-                <svg
-                  viewBox="0 0 300 80"
-                  className="mx-auto block w-full"
-                  preserveAspectRatio="xMidYMid meet"
-                >
-                  {/* Static lines */}
-                  {/* Trunk */}
-                  <line x1="150" y1="0" x2="150" y2="35" stroke="var(--color-brand)" strokeOpacity="0.15" strokeWidth="1" />
-                  {/* Left branch */}
-                  <path d="M150 35 Q150 55 50 60 L50 80" fill="none" stroke="var(--color-brand)" strokeOpacity="0.15" strokeWidth="1" />
-                  {/* Center branch */}
-                  <line x1="150" y1="35" x2="150" y2="80" stroke="var(--color-brand)" strokeOpacity="0.15" strokeWidth="1" />
-                  {/* Right branch */}
-                  <path d="M150 35 Q150 55 250 60 L250 80" fill="none" stroke="var(--color-brand)" strokeOpacity="0.15" strokeWidth="1" />
-
-                  {/* Pulse dots — one per branch, all fire simultaneously */}
-                  {/* Trunk pulse */}
-                  <circle r="2.5" fill="var(--color-brand)" opacity="0.7">
-                    <animateMotion dur="2s" repeatCount="indefinite" keyPoints="0;0.45" keyTimes="0;1" calcMode="spline" keySplines="0.4 0 0.2 1">
-                      <mpath href="#trunk-path" />
-                    </animateMotion>
-                  </circle>
-                  {/* Left branch pulse */}
-                  <circle r="2" fill="var(--color-brand)" opacity="0.6">
-                    <animateMotion dur="2s" repeatCount="indefinite" begin="0.8s" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.4 0 0.2 1">
-                      <mpath href="#left-branch" />
-                    </animateMotion>
-                  </circle>
-                  {/* Center branch pulse */}
-                  <circle r="2" fill="var(--color-brand)" opacity="0.6">
-                    <animateMotion dur="2s" repeatCount="indefinite" begin="0.8s" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.4 0 0.2 1">
-                      <mpath href="#center-branch" />
-                    </animateMotion>
-                  </circle>
-                  {/* Right branch pulse */}
-                  <circle r="2" fill="var(--color-brand)" opacity="0.6">
-                    <animateMotion dur="2s" repeatCount="indefinite" begin="0.8s" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.4 0 0.2 1">
-                      <mpath href="#right-branch" />
-                    </animateMotion>
-                  </circle>
-
-                  {/* Hidden paths for animateMotion */}
-                  <defs>
-                    <path id="trunk-path" d="M150 0 L150 35" />
-                    <path id="left-branch" d="M150 35 Q150 55 50 60 L50 80" />
-                    <path id="center-branch" d="M150 35 L150 80" />
-                    <path id="right-branch" d="M150 35 Q150 55 250 60 L250 80" />
-                  </defs>
-                </svg>
-              </div>
+            {/* Divider before CTA */}
+            <div className="mt-12 flex items-center gap-4">
+              <div className="h-px flex-1 bg-line/30" />
+              <span className="text-[10px] uppercase tracking-[0.2em] text-muted/40">your data could look like this</span>
+              <div className="h-px flex-1 bg-line/30" />
             </div>
 
             {/* Client CTA */}
             <div className="mt-10 rounded-xl border border-brand/20 bg-brand/5 p-6 text-center">
               <h4 className="text-sm font-semibold text-brand">
-                Want a clearer view of your data?
+                Like what you see?
               </h4>
               <p className="mt-2 text-xs leading-relaxed text-muted/70">
-                Explore the live QuickKart dashboard or read the executive summary.
+                I build these kinds of systems for real businesses. Let's talk about what your data could look like.
               </p>
               <div className="mt-4 flex flex-wrap justify-center gap-3">
                 <a
-                  href="https://lookerstudio.google.com/reporting/e5f1454c-c8e4-481f-9ac8-375a3bdd289c"
+                  href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-lg border border-brand/30 bg-brand/10 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/50 hover:bg-brand/20"
                 >
-                  View Live Dashboard
+                  Book a Discovery Call
                   <ExternalLink size={12} />
                 </a>
-                <button
-                  onClick={() =>
-                    setDocViewer({
-                      title: 'Executive Retail Returns Report',
-                      src: '/files/media/Executive_Retail_Returns_Report.html',
-                    })
-                  }
+                <a
+                  href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-lg border border-line/40 bg-surface/60 px-4 py-2 text-xs font-semibold text-text transition-all hover:border-brand/30 hover:text-brand"
                 >
-                  Read Executive Summary
+                  Schedule an Interview
                   <ExternalLink size={12} className="opacity-50" />
-                </button>
+                </a>
               </div>
             </div>
 

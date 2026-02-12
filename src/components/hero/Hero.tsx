@@ -8,7 +8,8 @@ import { hero, about } from '../../data/sections';
 
 export default function Hero() {
   const [cardVisible, setCardVisible] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [resumeOpen, setResumeOpen] = useState(false);
+  const [bioOpen, setBioOpen] = useState(false);
   const triggerRef = useRef<HTMLDivElement>(null);
   const hideTimer = useRef<ReturnType<typeof setTimeout>>();
 
@@ -24,9 +25,14 @@ export default function Hero() {
     hideTimer.current = setTimeout(() => setCardVisible(false), 150);
   }, []);
 
-  const handleOpenFullBio = useCallback(() => {
+  const handleOpenResume = useCallback(() => {
     setCardVisible(false);
-    setModalOpen(true);
+    setResumeOpen(true);
+  }, []);
+
+  const handleOpenBio = useCallback(() => {
+    setCardVisible(false);
+    setBioOpen(true);
   }, []);
 
   // Click outside to dismiss
@@ -80,14 +86,14 @@ export default function Hero() {
 
           <button
             onClick={() => setCardVisible((prev) => !prev)}
-            className="mt-1 text-xs italic text-muted/60 transition-colors hover:text-brand"
+            className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-line/50 bg-surface/60 px-3 py-1 text-xs text-muted transition-all hover:border-brand/40 hover:bg-surface hover:text-brand"
             aria-expanded={cardVisible}
             aria-haspopup="true"
           >
-            Who is this guy?
+            About me ↓
           </button>
 
-          <HeroBioCard isVisible={cardVisible} onOpenFullBio={handleOpenFullBio} />
+          <HeroBioCard isVisible={cardVisible} onOpenResume={handleOpenResume} onOpenBio={handleOpenBio} />
         </div>
 
         <p className="mt-2 text-xl font-medium tracking-tight text-brand md:text-2xl">
@@ -102,8 +108,14 @@ export default function Hero() {
       </motion.div>
 
       <DocumentViewer
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
+        isOpen={resumeOpen}
+        onClose={() => setResumeOpen(false)}
+        title="Resume — Garrett Schumacher"
+        src={about.resumeSrc}
+      />
+      <DocumentViewer
+        isOpen={bioOpen}
+        onClose={() => setBioOpen(false)}
         title="About Me"
         src={about.modalSrc}
       />

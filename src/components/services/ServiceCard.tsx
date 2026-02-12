@@ -1,13 +1,22 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BarChart3, LayoutDashboard, Workflow, ChevronDown } from 'lucide-react';
+import { BarChart3, LayoutDashboard, Workflow, Bot, ChevronDown } from 'lucide-react';
 import type { ServiceData } from '../../types';
 import GlassPanel from '../shared/GlassPanel';
+
+function scrollToId(href: string, e: React.MouseEvent) {
+  e.stopPropagation();
+  if (href.startsWith('#')) {
+    const el = document.getElementById(href.slice(1));
+    if (el) { el.scrollIntoView({ behavior: 'smooth' }); return; }
+  }
+}
 
 const iconMap: Record<string, typeof BarChart3> = {
   BarChart3,
   LayoutDashboard,
   Workflow,
+  Bot,
 };
 
 interface ServiceCardProps {
@@ -63,16 +72,32 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             </ul>
             <p className="mt-4 text-xs text-muted">
               See it in action:{' '}
-              <a
-                href={service.proofHref}
-                {...(service.proofExternal
-                  ? { target: '_blank', rel: 'noopener noreferrer' }
-                  : {})}
-                className="text-brand hover:underline"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {service.proofLabel}
-              </a>
+              {service.proofLinks ? (
+                service.proofLinks.map((link, i) => (
+                  <span key={link.label}>
+                    {i > 0 && <span className="mx-1 text-muted/40">·</span>}
+                    <a
+                      href={link.href}
+                      {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      className="text-brand hover:underline"
+                      onClick={(e) => scrollToId(link.href, e)}
+                    >
+                      {link.label}
+                    </a>
+                  </span>
+                ))
+              ) : (
+                <a
+                  href={service.proofHref}
+                  {...(service.proofExternal
+                    ? { target: '_blank', rel: 'noopener noreferrer' }
+                    : {})}
+                  className="text-brand hover:underline"
+                  onClick={(e) => scrollToId(service.proofHref, e)}
+                >
+                  {service.proofLabel}
+                </a>
+              )}
             </p>
           </motion.div>
         )}

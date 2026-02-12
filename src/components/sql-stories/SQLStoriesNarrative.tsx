@@ -76,8 +76,8 @@ export default function SQLStoriesNarrative({
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold text-brand">The Three Decisions</h3>
-          <span className="text-[10px] uppercase tracking-wider text-muted/50">
-            explore the cases
+          <span className="text-[10px] uppercase tracking-wider text-brand/50">
+            click to explore ↓
           </span>
         </div>
         <div className="grid gap-3 sm:grid-cols-3">
@@ -85,9 +85,9 @@ export default function SQLStoriesNarrative({
             <CaseStudyVizCard
               key={study.title}
               title={study.title}
-              heroStat={study.heroStat}
-              heroLabel={study.heroLabel}
-              terminalLine={study.terminalLine}
+              heroStat={study.heroStat ?? ''}
+              heroLabel={study.heroLabel ?? ''}
+              terminalLine={study.terminalLine ?? ''}
               onClick={() => onSelectStudy(study)}
               vizType={index === 0 ? 'returns' : index === 1 ? 'inventory' : 'retention'}
               reduced={reduced}

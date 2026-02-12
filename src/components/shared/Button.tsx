@@ -27,13 +27,10 @@ export default function Button({
   const variants = {
     primary: `
       relative overflow-hidden
-      border border-brand/40 bg-brand/10 text-brand
-      backdrop-blur-sm
-      hover:border-brand/60 hover:bg-brand/20 hover:text-text
-      hover:shadow-[0_0_24px_rgba(102,153,204,0.2)]
+      border border-brand/60 bg-[#1a2a3f] text-brand
+      hover:bg-[#1e3248] hover:border-brand/80
+      hover:shadow-[0_0_24px_rgba(102,153,204,0.25)]
       active:scale-[0.98]
-      before:absolute before:inset-0 before:-z-10
-      before:bg-gradient-to-br before:from-brand/5 before:to-transparent
     `,
     secondary: `
       border border-line bg-surface/80 text-text

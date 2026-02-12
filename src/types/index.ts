@@ -1,6 +1,7 @@
 export interface NavItem {
   label: string;
   href: string;
+  external?: boolean;
   children?: NavDropdownItem[];
 }
 
@@ -25,6 +26,7 @@ export interface ServiceData {
   proofLabel: string;
   proofHref: string;
   proofExternal?: boolean;
+  proofLinks?: { label: string; href: string; external?: boolean }[];
   icon: string;
 }
 

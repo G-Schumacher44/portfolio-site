@@ -5,7 +5,7 @@ export const services: ServiceData[] = [
     title: 'Analysis & Reporting',
     icon: 'BarChart3',
     description:
-      'Turn raw data into executive-ready reports. I dig into your numbers, find the patterns that matter, and deliver insights your team can act on immediately.',
+      "Your data has the answers — I find them. I dig into your numbers, surface the patterns that actually matter, and deliver clear, actionable insights your team can run with.",
     includes: [
       'Revenue & operations diagnostics',
       'Customer retention & churn analysis',
@@ -13,13 +13,13 @@ export const services: ServiceData[] = [
       'KPI dashboards (Looker, Tableau)',
     ],
     proofLabel: 'Case Studies',
-    proofHref: '#case-studies',
+    proofHref: '#sql-stories',
   },
   {
     title: 'Dashboards & Visualization',
     icon: 'LayoutDashboard',
     description:
-      "Interactive dashboards that update automatically and tell a clear story. No more spreadsheet chaos or stale reports sitting in someone's inbox.",
+      "Dashboards that actually get used. Live data, clean design, self-serve filters — built so your team gets answers without waiting on a report.",
     includes: [
       'Looker Studio & Tableau builds',
       'Automated refresh from live data',
@@ -34,7 +34,7 @@ export const services: ServiceData[] = [
     title: 'Pipelines & Automation',
     icon: 'Workflow',
     description:
-      'Automated data workflows that clean, validate, and deliver trusted data without manual effort. Systems that run reliably so your team can focus on decisions, not data wrangling.',
+      "Data you can trust, delivered automatically. I build the pipelines that clean, validate, and route your data so your team focuses on decisions — not on fixing broken spreadsheets.",
     includes: [
       'ETL/ELT pipeline development',
       'Data quality gates & validation',
@@ -42,21 +42,24 @@ export const services: ServiceData[] = [
       'Workflow orchestration & scheduling',
     ],
     proofLabel: 'Datalake Pipelines',
-    proofHref: '#projects',
+    proofHref: '#technical-showcase-cta',
   },
   {
-    title: 'AI & Intelligent Automation',
+    title: 'AI & Automation',
     icon: 'Bot',
     description:
-      'LLM-powered workflows and intelligent agents that automate repetitive analytics tasks. From automated insight generation to AI-assisted data quality monitoring—systems that work smarter, not just faster.',
+      "Practical AI where it actually helps. I help teams work smarter with tools they already use — from training staff on LLMs to connecting your data with Google Workspace.",
     includes: [
-      'Automated insight generation with LLMs',
-      'AI-powered data quality & anomaly detection',
-      'Custom analytics agents & copilots',
-      'RAG systems for data documentation',
+      'Staff LLM training & adoption',
+      'Data integrations with Google Workspace',
+      'AI for automation and analytics',
     ],
     proofLabel: 'Model Evaluation Suite',
-    proofHref: '#projects',
+    proofHref: '#technical-showcase-cta',
+    proofLinks: [
+      { label: 'Model Evaluation Suite', href: '#technical-showcase-cta' },
+      { label: 'Fridai Core', href: '#technical-showcase-cta' },
+    ],
   },
 ];
 

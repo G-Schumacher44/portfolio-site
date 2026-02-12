@@ -24,7 +24,7 @@ export default function CaseStudyVizCard({
   return (
     <button
       onClick={onClick}
-      className="group overflow-hidden rounded-xl border border-line/30 text-left transition-all hover:border-brand/20 hover:shadow-[0_0_24px_rgba(102,153,204,0.12)]"
+      className="group overflow-hidden rounded-xl border border-line/30 text-left transition-all hover:-translate-y-1 hover:border-brand/40 hover:shadow-[0_0_28px_rgba(102,153,204,0.18)] active:translate-y-0"
     >
       {/* Mini terminal header */}
       <div className="flex items-center gap-1.5 border-b border-line/20 bg-[#0a0f14] px-3 py-1.5">

@@ -181,7 +181,8 @@ export const about = {
   photo: '/img/logos/temp_headshot.png',
   photoAlt: 'Photo of Garrett Schumacher',
   modalSrc: 'files/modals/about_summary.html',
-  bio: "An operations leader turned data practitioner. I've managed regional territories, led teams, and directed operations for small to medium sized businesses. The best decisions come from clean data, clear analysis, and honest storytelling. Now I build the AI-powered systems and frameworks that give teams the confidence to act.",
+  resumeSrc: '/pdf/gschumacher_resume.pdf',
+  bio: "I spent years in operations — managing territories, leading teams, making calls that should've had better data behind them. I got tired of guessing. So I taught myself the tools, built the systems, and never looked back. Now I'm the person who makes data actually usable: clean pipelines, honest analysis, and automated systems that replace the guesswork.",
   availability: 'Available for: Full-time roles \u2022 Contract projects \u2022 Freelance engagements',
 };
 

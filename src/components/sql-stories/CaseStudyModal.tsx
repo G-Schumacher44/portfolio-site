@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink } from 'lucide-react';
@@ -14,256 +14,314 @@ interface CaseStudyModalProps {
 }
 
 export default function CaseStudyModal({ study, onClose, reduced }: CaseStudyModalProps) {
-  if (!study) return null;
+  return createPortal(
+    <AnimatePresence>
+      {study && (
+        <CaseStudyModalContent study={study} onClose={onClose} reduced={reduced} />
+      )}
+    </AnimatePresence>,
+    document.body
+  );
+}
+
+function CaseStudyModalContent({
+  study,
+  onClose,
+  reduced,
+}: {
+  study: CaseStudyData;
+  onClose: () => void;
+  reduced: boolean;
+}) {
   const [workbookOpen, setWorkbookOpen] = useState(false);
   const [execSummaryOpen, setExecSummaryOpen] = useState(false);
   const [retentionSummaryOpen, setRetentionSummaryOpen] = useState(false);
   const [vpSummaryOpen, setVpSummaryOpen] = useState(false);
 
-  return createPortal(
-    <AnimatePresence>
-      {study && (
+  const anyDocOpen = workbookOpen || execSummaryOpen || retentionSummaryOpen || vpSummaryOpen;
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (anyDocOpen) {
+          setWorkbookOpen(false);
+          setExecSummaryOpen(false);
+          setRetentionSummaryOpen(false);
+          setVpSummaryOpen(false);
+        } else {
+          onClose();
+        }
+      }
+    },
+    [onClose, anyDocOpen]
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
+
+  return (
+    <>
+      <motion.div
+        className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+      >
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6"
+          className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+          onClick={onClose}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
+        />
+
+        <motion.div
+          className="relative flex h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl border border-line/40 bg-bg/95 shadow-2xl backdrop-blur-xl"
+          initial={{ opacity: 0, scale: 0.96, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 10 }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${study.title} case study`}
         >
-          <motion.div
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            onClick={onClose}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          />
-
-          <motion.div
-            className="relative flex h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl border border-line/40 bg-bg/95 shadow-2xl backdrop-blur-xl"
-            initial={{ opacity: 0, scale: 0.96, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 10 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${study.title} case study`}
-          >
-            <div className="relative flex items-center justify-between border-b border-line/40 px-5 py-3 sm:px-8">
-              <div>
-                <h3 className="text-lg font-semibold text-brand sm:text-xl">{study.title}</h3>
-                <p className="text-xs text-muted/60">{study.techStack}</p>
-              </div>
-              <button
-                onClick={onClose}
-                className="flex-shrink-0 rounded-lg p-1.5 text-muted transition-colors hover:bg-surface hover:text-text"
-                aria-label="Close case study"
-              >
-                <X size={20} />
-              </button>
+          <div className="relative flex items-center justify-between border-b border-line/40 px-5 py-3 sm:px-8">
+            <div>
+              <h3 className="text-lg font-semibold text-brand sm:text-xl">{study.title}</h3>
+              <p className="text-xs text-muted/60">{study.techStack}</p>
             </div>
+            <button
+              onClick={onClose}
+              className="flex-shrink-0 rounded-lg p-1.5 text-muted transition-colors hover:bg-surface hover:text-text"
+              aria-label="Close case study"
+            >
+              <X size={20} />
+            </button>
+          </div>
 
-            <div className="relative z-10 flex-1 overflow-y-auto">
-              <div className="mx-auto max-w-5xl px-5 py-6 sm:px-8">
-                {/* Hero visual */}
-                <div className="relative overflow-hidden rounded-2xl border border-line/30 bg-[#0a0f14]/90">
-                  {study.heroMode === 'dashboard' ? (
-                    <DashboardHeroViz reduced={reduced} />
-                  ) : study.heroMode === 'inventory' ? (
-                    <InventoryHeroViz reduced={reduced} />
-                  ) : study.heroMode === 'retention' ? (
-                    <RetentionHeroViz reduced={reduced} />
-                  ) : (
-                    <motion.img
-                      src={study.image}
-                      alt={study.imageAlt}
-                      className="h-[280px] w-full object-contain sm:h-[360px]"
-                      initial={reduced ? false : { opacity: 0.75 }}
-                      animate={reduced ? undefined : { opacity: [0.75, 1, 0.85] }}
-                      transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-bg/85 via-transparent to-transparent" />
-                  {study.heroMode !== 'retention' && (
-                    <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                      <div className="text-3xl font-bold text-brand">{study.heroStat}</div>
-                      <div className="text-xs uppercase tracking-wider text-muted/70">{study.heroLabel}</div>
-                    </div>
-                  )}
+          <div className="relative z-10 flex-1 overflow-y-auto">
+            <div className="mx-auto max-w-5xl px-5 py-6 sm:px-8">
+              {/* Hero visual */}
+              <div className="relative overflow-hidden rounded-2xl border border-line/30 bg-[#0a0f14]/90">
+                {study.heroMode === 'dashboard' ? (
+                  <DashboardHeroViz reduced={reduced} />
+                ) : study.heroMode === 'inventory' ? (
+                  <InventoryHeroViz reduced={reduced} />
+                ) : study.heroMode === 'retention' ? (
+                  <RetentionHeroViz reduced={reduced} />
+                ) : (
+                  <motion.img
+                    src={study.image}
+                    alt={study.imageAlt}
+                    className="h-[280px] w-full object-contain sm:h-[360px]"
+                    initial={reduced ? false : { opacity: 0.75 }}
+                    animate={reduced ? undefined : { opacity: [0.75, 1, 0.85] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-bg/85 via-transparent to-transparent" />
+                {study.heroMode !== 'retention' && (
+                  <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+                    <div className="text-3xl font-bold text-brand">{study.heroStat}</div>
+                    <div className="text-xs uppercase tracking-wider text-muted/70">{study.heroLabel}</div>
+                  </div>
+                )}
+              </div>
+
+              {/* Narrative blocks */}
+              <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                <div className="rounded-xl border border-line/30 bg-card/40 p-4">
+                  <div className="text-[10px] uppercase tracking-wider text-muted/60">Problem</div>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{study.problem}</p>
                 </div>
-
-                {/* Narrative blocks */}
-                <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                  <div className="rounded-xl border border-line/30 bg-card/40 p-4">
-                    <div className="text-[10px] uppercase tracking-wider text-muted/60">Problem</div>
-                    <p className="mt-2 text-sm leading-relaxed text-muted">{study.problem}</p>
-                  </div>
-                  <div className="rounded-xl border border-line/30 bg-card/40 p-4">
-                    <div className="text-[10px] uppercase tracking-wider text-muted/60">Delivered</div>
-                    <p className="mt-2 text-sm leading-relaxed text-muted">{study.delivered}</p>
-                  </div>
-                  <div className="rounded-xl border border-brand/20 bg-brand/5 p-4">
-                    <div className="text-[10px] uppercase tracking-wider text-brand/70">Impact</div>
-                    <p className="mt-2 text-sm leading-relaxed text-text">{study.impact}</p>
-                  </div>
+                <div className="rounded-xl border border-line/30 bg-card/40 p-4">
+                  <div className="text-[10px] uppercase tracking-wider text-muted/60">Delivered</div>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{study.delivered}</p>
                 </div>
+                <div className="rounded-xl border border-brand/20 bg-brand/5 p-4">
+                  <div className="text-[10px] uppercase tracking-wider text-brand/70">Impact</div>
+                  <p className="mt-2 text-sm leading-relaxed text-text">{study.impact}</p>
+                </div>
+              </div>
 
-                {study.heroMode === 'dashboard' && (
-                  <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-xl border border-line/30 bg-card/40 p-4">
-                      <div className="text-[10px] uppercase tracking-wider text-muted/60">Executive Summary</div>
-                      <ul className="mt-2 space-y-2 text-sm leading-relaxed text-muted">
-                        <li>Sales peaked in Q4 2024 at $12.97M.</li>
-                        <li>Refunds total $10.61M (21.14% of $50.18M gross sales).</li>
-                        <li>Refund pressure is highest in Phone (24.10%) and NewEgg (22.67%).</li>
-                        <li>Quality-related reasons account for $4.21M (39.68%) of refunds.</li>
-                        <li>Key takeaway: growth is strong, but refunds must fall below 20% to protect margin.</li>
-                      </ul>
-                      <button
-                        onClick={() => setVpSummaryOpen(true)}
-                        className="mt-3 inline-flex items-center gap-2 rounded-lg border border-line/40 bg-surface/60 px-3 py-2 text-xs font-semibold text-text transition-all hover:border-brand/30 hover:text-brand"
-                      >
-                        Open Executive Summary
-                        <ExternalLink size={12} className="opacity-50" />
-                      </button>
-                    </div>
-                    <div className="rounded-xl border border-line/30 bg-card/40 p-4">
-                      <div className="text-[10px] uppercase tracking-wider text-muted/60">Recommendations</div>
-                      <ul className="mt-2 space-y-2 text-sm leading-relaxed text-muted">
-                        <li>Prioritize product QA flags on top return reasons (defective, damage, misdescription).</li>
-                        <li>Recalibrate expedited shipping expectations to reduce mismatch returns.</li>
-                        <li>De-risk high refund-rate channels with tighter policies and CX guardrails.</li>
-                        <li>Focus regional interventions where refund rates exceed 21%.</li>
-                      </ul>
-                    </div>
-                    <div className="rounded-xl border border-brand/30 bg-brand/5 p-4 sm:col-span-2">
-                      <div className="text-[10px] uppercase tracking-wider text-brand/70">Live Dashboard</div>
-                      <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
-                        <p className="text-sm leading-relaxed text-text/80">
-                          Explore the live Looker dashboard for channel, region, and refund driver insights.
-                        </p>
-                        <a
-                          href="https://lookerstudio.google.com/reporting/e5f1454c-c8e4-481f-9ac8-375a3bdd289c"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 rounded-lg border border-brand/40 bg-brand/15 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/60 hover:bg-brand/25"
-                        >
-                          Live Looker Dashboard
-                          <ExternalLink size={12} className="opacity-60" />
-                        </a>
-                      </div>
-                    </div>
+              {study.heroMode === 'dashboard' && (
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  <div className="rounded-xl border border-line/30 bg-card/40 p-4">
+                    <div className="text-[10px] uppercase tracking-wider text-muted/60">Executive Summary</div>
+                    <ul className="mt-2 space-y-2 text-sm leading-relaxed text-muted">
+                      <li>Sales peaked in Q4 2024 at $12.97M.</li>
+                      <li>Refunds total $10.61M (21.14% of $50.18M gross sales).</li>
+                      <li>Refund pressure is highest in Phone (24.10%) and NewEgg (22.67%).</li>
+                      <li>Quality-related reasons account for $4.21M (39.68%) of refunds.</li>
+                      <li>Key takeaway: growth is strong, but refunds must fall below 20% to protect margin.</li>
+                    </ul>
+                    <button
+                      onClick={() => setVpSummaryOpen(true)}
+                      className="mt-3 inline-flex items-center gap-2 rounded-lg border border-line/40 bg-surface/60 px-3 py-2 text-xs font-semibold text-text transition-all hover:border-brand/30 hover:text-brand"
+                    >
+                      Open Executive Summary
+                      <ExternalLink size={12} className="opacity-50" />
+                    </button>
                   </div>
-                )}
-
-                {study.heroMode === 'inventory' && (
-                  <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-xl border border-line/30 bg-card/40 p-4">
-                      <div className="text-[10px] uppercase tracking-wider text-muted/60">Executive Summary</div>
-                      <ul className="mt-2 space-y-2 text-sm leading-relaxed text-muted">
-                        <li>Utilization is low across the catalog; under‑performing SKUs are broadly distributed.</li>
-                        <li>~$19.1M is tied up in under‑utilized inventory; a 20% reduction frees ~$3.8M.</li>
-                        <li>Moderate attention tiers dominate; focus on forecasting, clearance, and promotions.</li>
-                        <li>Tiering guide: &lt;0.20 Healthy · 0.20–0.50 Low · 0.50–0.80 Moderate · ≥0.80 High.</li>
-                      </ul>
-                      <button
-                        onClick={() => setExecSummaryOpen(true)}
-                        className="mt-3 inline-flex items-center gap-2 rounded-lg border border-line/40 bg-surface/60 px-3 py-2 text-xs font-semibold text-text transition-all hover:border-brand/30 hover:text-brand"
-                      >
-                        Open Executive Summary
-                        <ExternalLink size={12} className="opacity-50" />
-                      </button>
-                    </div>
-                    <div className="rounded-xl border border-line/30 bg-card/40 p-4">
-                      <div className="text-[10px] uppercase tracking-wider text-muted/60">Recommendations</div>
-                      <ul className="mt-2 list-disc space-y-2 pl-4 text-sm leading-relaxed text-muted">
-                        <li>Triage Tier 2 &amp; 3 SKUs; mitigating half the risk can prevent ~$500k annually.</li>
-                        <li>Category‑level review to improve forecasting and supplier performance.</li>
-                        <li>Address under‑utilized inventory (&lt;30%) with promos, bundles, and delisting.</li>
-                        <li>Harden data validation to reduce anomalies and decision risk.</li>
-                      </ul>
-                    </div>
-                    <div className="rounded-xl border border-line/30 bg-card/40 p-4 sm:col-span-2">
-                      <div className="text-[10px] uppercase tracking-wider text-muted/60">Workbook Overview</div>
-                      <div className="mt-3 grid gap-4 sm:grid-cols-2">
-                        <div className="space-y-2">
-                          <button
-                            onClick={() => setWorkbookOpen(true)}
-                            className="inline-flex items-center gap-2 rounded-lg border border-line/40 bg-surface/60 px-3 py-2 text-xs font-semibold text-text transition-all hover:border-brand/30 hover:text-brand"
-                          >
-                            Open Workbook Overview
-                            <ExternalLink size={12} className="opacity-50" />
-                          </button>
-                        </div>
-                        <div className="text-xs leading-relaxed text-muted/70">
-                          <p>
-                            Key deliverable: an automated Google Sheet workbook that refreshes daily and
-                            provides SKU-level drill-downs, tier filtering, and capital-loss estimates for
-                            rapid action.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="rounded-xl border border-line/30 bg-card/40 p-4">
+                    <div className="text-[10px] uppercase tracking-wider text-muted/60">Recommendations</div>
+                    <ul className="mt-2 space-y-2 text-sm leading-relaxed text-muted">
+                      <li>Prioritize product QA flags on top return reasons (defective, damage, misdescription).</li>
+                      <li>Recalibrate expedited shipping expectations to reduce mismatch returns.</li>
+                      <li>De-risk high refund-rate channels with tighter policies and CX guardrails.</li>
+                      <li>Focus regional interventions where refund rates exceed 21%.</li>
+                    </ul>
                   </div>
-                )}
-
-                {study.heroMode === 'retention' && (
-                  <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-xl border border-line/30 bg-card/40 p-4">
-                      <div className="text-[10px] uppercase tracking-wider text-muted/60">Executive Summary</div>
-                      <ul className="mt-2 list-disc space-y-2 pl-4 text-sm leading-relaxed text-muted">
-                        <li>First→Second conversion averages ~34%; Nov/Dec ’24 cohorts exceed 50%.</li>
-                        <li>Month 1→3 retention drops ~11 points; weak cohorts (Jan/Apr ’25) fall below 5% by Month 3.</li>
-                        <li>Bronze tier shows 0% repeat; Platinum retains ~45–50%.</li>
-                        <li>Phone drives 58% high‑CLV customers; Website/Email ~40%; Social Media lowest at 33%.</li>
-                      </ul>
-                      <button
-                        onClick={() => setRetentionSummaryOpen(true)}
-                        className="mt-3 inline-flex items-center gap-2 rounded-lg border border-line/40 bg-surface/60 px-3 py-2 text-xs font-semibold text-text transition-all hover:border-brand/30 hover:text-brand"
-                      >
-                        Open Executive Summary
-                        <ExternalLink size={12} className="opacity-50" />
-                      </button>
-                    </div>
-                    <div className="rounded-xl border border-line/30 bg-card/40 p-4">
-                      <div className="text-[10px] uppercase tracking-wider text-muted/60">Recommendations</div>
-                      <ul className="mt-2 list-disc space-y-2 pl-4 text-sm leading-relaxed text-muted">
-                        <li>Launch win‑back campaigns within 30 days for underperforming cohorts.</li>
-                        <li>Replicate holiday campaign patterns across other seasonal peaks.</li>
-                        <li>Redesign Bronze/Silver benefits to drive early repeat purchases.</li>
-                        <li>Prioritize Email and Website acquisition; reposition Social for top‑of‑funnel.</li>
-                      </ul>
-                    </div>
-                  </div>
-                )}
-
-                {/* Action links */}
-                {study.links && study.links.length > 0 && (
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    {study.links.map((link) => (
+                  <div className="rounded-xl border border-brand/30 bg-brand/5 p-4 sm:col-span-2">
+                    <div className="text-[10px] uppercase tracking-wider text-brand/70">Live Dashboard</div>
+                    <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
+                      <p className="text-sm leading-relaxed text-text/80">
+                        Explore the live Looker dashboard for channel, region, and refund driver insights.
+                      </p>
                       <a
-                        key={link.label}
-                        href={link.href}
-                        {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                        className="inline-flex items-center gap-2 rounded-lg border border-line/40 bg-surface/60 px-4 py-2 text-xs font-semibold text-text transition-all hover:border-brand/30 hover:text-brand"
+                        href="https://lookerstudio.google.com/reporting/e5f1454c-c8e4-481f-9ac8-375a3bdd289c"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-lg border border-brand/40 bg-brand/15 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/60 hover:bg-brand/25"
                       >
-                        {link.label}
-                        <ExternalLink size={12} className="opacity-50" />
+                        Live Looker Dashboard
+                        <ExternalLink size={12} className="opacity-60" />
                       </a>
-                    ))}
+                    </div>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
+
+              {study.heroMode === 'inventory' && (
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  <div className="rounded-xl border border-line/30 bg-card/40 p-4">
+                    <div className="text-[10px] uppercase tracking-wider text-muted/60">Executive Summary</div>
+                    <ul className="mt-2 space-y-2 text-sm leading-relaxed text-muted">
+                      <li>Utilization is low across the catalog; under‑performing SKUs are broadly distributed.</li>
+                      <li>~$19.1M is tied up in under‑utilized inventory; a 20% reduction frees ~$3.8M.</li>
+                      <li>Moderate attention tiers dominate; focus on forecasting, clearance, and promotions.</li>
+                      <li>Tiering guide: &lt;0.20 Healthy · 0.20–0.50 Low · 0.50–0.80 Moderate · ≥0.80 High.</li>
+                    </ul>
+                    <button
+                      onClick={() => setExecSummaryOpen(true)}
+                      className="mt-3 inline-flex items-center gap-2 rounded-lg border border-line/40 bg-surface/60 px-3 py-2 text-xs font-semibold text-text transition-all hover:border-brand/30 hover:text-brand"
+                    >
+                      Open Executive Summary
+                      <ExternalLink size={12} className="opacity-50" />
+                    </button>
+                  </div>
+                  <div className="rounded-xl border border-line/30 bg-card/40 p-4">
+                    <div className="text-[10px] uppercase tracking-wider text-muted/60">Recommendations</div>
+                    <ul className="mt-2 list-disc space-y-2 pl-4 text-sm leading-relaxed text-muted">
+                      <li>Triage Tier 2 &amp; 3 SKUs; mitigating half the risk can prevent ~$500k annually.</li>
+                      <li>Category‑level review to improve forecasting and supplier performance.</li>
+                      <li>Address under‑utilized inventory (&lt;30%) with promos, bundles, and delisting.</li>
+                      <li>Harden data validation to reduce anomalies and decision risk.</li>
+                    </ul>
+                  </div>
+                  <div className="rounded-xl border border-line/30 bg-card/40 p-4 sm:col-span-2">
+                    <div className="text-[10px] uppercase tracking-wider text-muted/60">Workbook Overview</div>
+                    <div className="mt-3 grid gap-4 sm:grid-cols-2">
+                      <div className="space-y-2">
+                        <button
+                          onClick={() => setWorkbookOpen(true)}
+                          className="inline-flex items-center gap-2 rounded-lg border border-line/40 bg-surface/60 px-3 py-2 text-xs font-semibold text-text transition-all hover:border-brand/30 hover:text-brand"
+                        >
+                          Open Workbook Overview
+                          <ExternalLink size={12} className="opacity-50" />
+                        </button>
+                      </div>
+                      <div className="text-xs leading-relaxed text-muted/70">
+                        <p>
+                          Key deliverable: an automated Google Sheet workbook that refreshes daily and
+                          provides SKU-level drill-downs, tier filtering, and capital-loss estimates for
+                          rapid action.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {study.heroMode === 'retention' && (
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  <div className="rounded-xl border border-line/30 bg-card/40 p-4">
+                    <div className="text-[10px] uppercase tracking-wider text-muted/60">Executive Summary</div>
+                    <ul className="mt-2 list-disc space-y-2 pl-4 text-sm leading-relaxed text-muted">
+                      <li>First→Second conversion averages ~34%; Nov/Dec '24 cohorts exceed 50%.</li>
+                      <li>Month 1→3 retention drops ~11 points; weak cohorts (Jan/Apr '25) fall below 5% by Month 3.</li>
+                      <li>Bronze tier shows 0% repeat; Platinum retains ~45–50%.</li>
+                      <li>Phone drives 58% high‑CLV customers; Website/Email ~40%; Social Media lowest at 33%.</li>
+                    </ul>
+                    <button
+                      onClick={() => setRetentionSummaryOpen(true)}
+                      className="mt-3 inline-flex items-center gap-2 rounded-lg border border-line/40 bg-surface/60 px-3 py-2 text-xs font-semibold text-text transition-all hover:border-brand/30 hover:text-brand"
+                    >
+                      Open Executive Summary
+                      <ExternalLink size={12} className="opacity-50" />
+                    </button>
+                  </div>
+                  <div className="rounded-xl border border-line/30 bg-card/40 p-4">
+                    <div className="text-[10px] uppercase tracking-wider text-muted/60">Recommendations</div>
+                    <ul className="mt-2 list-disc space-y-2 pl-4 text-sm leading-relaxed text-muted">
+                      <li>Launch win‑back campaigns within 30 days for underperforming cohorts.</li>
+                      <li>Replicate holiday campaign patterns across other seasonal peaks.</li>
+                      <li>Redesign Bronze/Silver benefits to drive early repeat purchases.</li>
+                      <li>Prioritize Email and Website acquisition; reposition Social for top‑of‑funnel.</li>
+                    </ul>
+                  </div>
+                  {/* Retention CTA — mirrors the dashboard live link card */}
+                  <div className="rounded-xl border border-brand/20 bg-brand/5 p-4 sm:col-span-2">
+                    <div className="text-[10px] uppercase tracking-wider text-brand/70">Want to see this for your business?</div>
+                    <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
+                      <p className="text-sm leading-relaxed text-text/80">
+                        I build retention dashboards, cohort analyses, and loyalty diagnostics for real businesses.
+                      </p>
+                      <a
+                        href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-lg border border-brand/40 bg-brand/15 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/60 hover:bg-brand/25"
+                      >
+                        Book a Discovery Call
+                        <ExternalLink size={12} className="opacity-60" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Action links */}
+              {study.links && study.links.length > 0 && (
+                <div className="mt-6 flex flex-wrap gap-3">
+                  {study.links.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      className="inline-flex items-center gap-2 rounded-lg border border-line/40 bg-surface/60 px-4 py-2 text-xs font-semibold text-text transition-all hover:border-brand/30 hover:text-brand"
+                    >
+                      {link.label}
+                      <ExternalLink size={12} className="opacity-50" />
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
-          </motion.div>
+          </div>
         </motion.div>
-      )}
-      {study?.heroMode === 'inventory' && (
+      </motion.div>
+
+      {study.heroMode === 'inventory' && (
         <InventoryWorkbookViewer
           isOpen={workbookOpen}
           onClose={() => setWorkbookOpen(false)}
         />
       )}
-      {study?.heroMode === 'inventory' && (
+      {study.heroMode === 'inventory' && (
         <DocumentViewer
           isOpen={execSummaryOpen}
           onClose={() => setExecSummaryOpen(false)}
@@ -271,7 +329,7 @@ export default function CaseStudyModal({ study, onClose, reduced }: CaseStudyMod
           src="/files/modals/case_inventory_audit_summary.html"
         />
       )}
-      {study?.heroMode === 'retention' && (
+      {study.heroMode === 'retention' && (
         <DocumentViewer
           isOpen={retentionSummaryOpen}
           onClose={() => setRetentionSummaryOpen(false)}
@@ -279,7 +337,7 @@ export default function CaseStudyModal({ study, onClose, reduced }: CaseStudyMod
           src="/files/retention_summary_modal.html"
         />
       )}
-      {study?.heroMode === 'dashboard' && (
+      {study.heroMode === 'dashboard' && (
         <DocumentViewer
           isOpen={vpSummaryOpen}
           onClose={() => setVpSummaryOpen(false)}
@@ -287,8 +345,7 @@ export default function CaseStudyModal({ study, onClose, reduced }: CaseStudyMod
           src="/files/modals/case_vp_sales_summary.html"
         />
       )}
-    </AnimatePresence>,
-    document.body
+    </>
   );
 }
 
@@ -416,14 +473,16 @@ function Panel({
   children,
   titleClassName,
   showOverlay = true,
+  bgClassName = 'bg-[#101a28]',
 }: {
   title: string;
   children: React.ReactNode;
   titleClassName?: string;
   showOverlay?: boolean;
+  bgClassName?: string;
 }) {
   return (
-    <div className="relative flex h-full flex-col overflow-hidden rounded-xl border border-brand/20 bg-[#101a28] p-3 shadow-[0_0_32px_rgba(102,153,204,0.18)]">
+    <div className={`relative flex h-full flex-col overflow-hidden rounded-xl border border-brand/20 p-3 shadow-[0_0_32px_rgba(102,153,204,0.18)] ${bgClassName}`}>
       <div className={`mb-2 text-[10px] uppercase tracking-wider text-brand/80 ${titleClassName ?? ''}`}>
         {title}
       </div>
@@ -493,34 +552,6 @@ function LinePanel({ reduced }: { reduced: boolean }) {
         $12.97M
       </text>
       <line x1="6" y1="72" x2="234" y2="72" stroke="rgba(148, 163, 184, 0.25)" strokeWidth="1" />
-    </svg>
-  );
-}
-
-function BarPanel({ reduced }: { reduced: boolean }) {
-  const values = [8, 12, 10, 16, 14, 9, 13, 18];
-  const max = Math.max(...values);
-  return (
-    <svg viewBox="0 0 220 80" className="h-full w-full">
-      {values.map((v, i) => {
-        const h = (v / max) * 56;
-        const x = 8 + i * 26;
-        const y = 68 - h;
-        return (
-          <motion.rect
-            key={i}
-            x={x}
-            y={reduced ? y : 68}
-            width="16"
-            height={reduced ? h : 0}
-            rx="2"
-            fill="rgba(34, 211, 238, 0.75)"
-            initial={false}
-            animate={reduced ? undefined : { y, height: h }}
-            transition={{ duration: 0.6, delay: i * 0.05 }}
-          />
-        );
-      })}
     </svg>
   );
 }
@@ -642,103 +673,6 @@ function DonutPanel({
         ))}
       </div>
     </div>
-  );
-}
-
-function StackPanel({ reduced }: { reduced: boolean }) {
-  const rows = [
-    [30, 20, 15],
-    [26, 18, 12],
-    [32, 22, 14],
-  ];
-  const colors = ['rgba(56, 189, 248, 0.8)', 'rgba(34, 211, 238, 0.7)', 'rgba(20, 184, 166, 0.6)'];
-  return (
-    <svg viewBox="0 0 220 80" className="h-full w-full">
-      {rows.map((row, r) => {
-        let x = 8;
-        return row.map((v, i) => {
-          const w = v * 2;
-          const rect = (
-            <motion.rect
-              key={`${r}-${i}`}
-              x={x}
-              y={12 + r * 20}
-              width={reduced ? w : 0}
-              height="12"
-              rx="2"
-              fill={colors[i]}
-              initial={false}
-              animate={reduced ? undefined : { width: w }}
-              transition={{ duration: 0.7, delay: r * 0.1 + i * 0.05 }}
-            />
-          );
-          x += w + 4;
-          return rect;
-        });
-      })}
-    </svg>
-  );
-}
-
-function HeatPanel({ reduced }: { reduced: boolean }) {
-  const cells = Array.from({ length: 20 }, (_, i) => 0.15 + ((i * 7) % 10) / 12);
-  return (
-    <svg viewBox="0 0 220 80" className="h-full w-full">
-      {cells.map((v, i) => {
-        const row = Math.floor(i / 5);
-        const col = i % 5;
-        const x = 10 + col * 40;
-        const y = 12 + row * 16;
-        const opacity = 0.15 + v * 0.8;
-        return (
-          <motion.rect
-            key={i}
-            x={x}
-            y={y}
-            width="28"
-            height="10"
-            rx="2"
-            fill={`rgba(56, 189, 248, ${opacity})`}
-            initial={reduced ? false : { opacity: 0 }}
-            animate={reduced ? undefined : { opacity }}
-            transition={{ duration: 0.5, delay: i * 0.02 }}
-          />
-        );
-      })}
-      <motion.rect
-        x="10"
-        y="12"
-        width="60"
-        height="56"
-        rx="4"
-        fill="rgba(56, 189, 248, 0.08)"
-        initial={reduced ? false : { x: 10 }}
-        animate={reduced ? undefined : { x: [10, 140, 10] }}
-        transition={{ duration: 5, repeat: Infinity }}
-      />
-    </svg>
-  );
-}
-
-function RankPanel({ reduced }: { reduced: boolean }) {
-  const values = [70, 55, 48, 40, 35];
-  return (
-    <svg viewBox="0 0 220 80" className="h-full w-full">
-      {values.map((v, i) => (
-        <motion.rect
-          key={i}
-          x="10"
-          y={10 + i * 14}
-          width={reduced ? v * 2 : 0}
-          height="8"
-          rx="3"
-          fill="rgba(56, 189, 248, 0.7)"
-          initial={false}
-          animate={reduced ? undefined : { width: v * 2 }}
-          transition={{ duration: 0.6, delay: i * 0.08 }}
-        />
-      ))}
-    </svg>
   );
 }
 
@@ -867,58 +801,6 @@ function SkuDrilldown({ reduced }: { reduced: boolean }) {
   );
 }
 
-function UtilizationHistogram({ reduced }: { reduced: boolean }) {
-  const bins = inventorySkuSample.bins;
-  const counts = inventorySkuSample.counts;
-  const max = Math.max(...counts);
-  const avg = inventorySkuSample.avg_util_pct;
-  const under = inventorySkuSample.under_util_skus;
-  const total = inventorySkuSample.total_skus;
-
-  return (
-    <div className="relative h-full">
-      <svg viewBox="0 0 220 80" className="h-full w-full">
-        {counts.map((c, i) => {
-          const h = (c / max) * 56;
-          const x = 8 + i * 18;
-          const y = 68 - h;
-          return (
-            <motion.rect
-              key={i}
-              x={x}
-              y={reduced ? y : 68}
-              width="12"
-              height={reduced ? h : 0}
-              rx="2"
-              fill="rgba(56, 189, 248, 0.75)"
-              initial={false}
-              animate={reduced ? undefined : { y, height: h }}
-              transition={{ duration: 0.5, delay: i * 0.03 }}
-            />
-          );
-        })}
-        {/* 30% threshold line */}
-        <line
-          x1={8 + 2 * 18}
-          y1="10"
-          x2={8 + 2 * 18}
-          y2="68"
-          stroke="rgba(245, 158, 11, 0.9)"
-          strokeDasharray="3 3"
-        />
-        <text x={8 + 2 * 18 - 6} y={8} fill="rgba(245,158,11,0.9)" fontSize="7">
-          30%
-        </text>
-        <line x1="6" y1="68" x2="214" y2="68" stroke="rgba(148, 163, 184, 0.25)" strokeWidth="1" />
-      </svg>
-      <div className="mt-1 text-[10px] text-muted/70">
-        Avg utilization: <span className="text-brand">{avg.toFixed(2)}%</span> ·
-        Under‑utilized: <span className="text-brand">{under}</span>/<span>{total}</span> SKUs
-      </div>
-    </div>
-  );
-}
-
 function AttentionTierMix({ reduced }: { reduced: boolean }) {
   const tiers = inventorySkuSample.tier_counts || {};
   const items = [
@@ -972,13 +854,13 @@ function RetentionHeroViz({ reduced }: { reduced: boolean }) {
           </Panel>
         </div>
         <div className="grid grid-cols-3 gap-3">
-          <Panel title="Avg Days to 2nd Purchase (Target 30d)">
+          <Panel title="Avg Days to 2nd Purchase (Target 30d)" showOverlay={false} bgClassName="bg-[#05080f]">
             <SecondPurchasePanel reduced={reduced} />
           </Panel>
-          <Panel title="CLV Mix by Channel">
+          <Panel title="CLV Mix by Channel" showOverlay={false} bgClassName="bg-[#05080f]">
             <ChannelClvPanel reduced={reduced} />
           </Panel>
-          <Panel title="First→Second Conversion by Cohort">
+          <Panel title="First→Second Conversion by Cohort" showOverlay={false} bgClassName="bg-[#05080f]">
             <ConversionPanel reduced={reduced} />
           </Panel>
         </div>
@@ -1005,13 +887,11 @@ function ConversionPanel({ reduced }: { reduced: boolean }) {
           <motion.rect
             key={d.cohort}
             x={x}
-            y={reduced ? y : 70}
             width="16"
-            height={reduced ? h : 0}
             rx="2"
-            fill="rgba(96, 165, 250, 0.8)"
-            initial={false}
-            animate={reduced ? undefined : { y, height: h }}
+            fill="rgba(96, 165, 250, 1)"
+            initial={reduced ? { y, height: h } : { y: 70, height: 0 }}
+            animate={{ y, height: h }}
             transition={{ duration: 0.6, delay: i * 0.04 }}
           />
         );
@@ -1042,7 +922,7 @@ function RetentionHeatmapPanel({ reduced }: { reduced: boolean }) {
   const rows = retentionDashboard.heatmap;
   const cols = 7;
   const values = rows.flatMap((r) => r.values.slice(1)); // skip month 0 = 100%
-  const scaleMax = Math.max(...values.filter((v) => v !== null && v > 0), 1);
+  const scaleMax = Math.max(...values.filter((v): v is number => v !== null && v > 0), 1);
   return (
     <svg viewBox="0 0 360 160" className="h-full w-full">
       {/* X-axis labels */}
@@ -1052,7 +932,7 @@ function RetentionHeatmapPanel({ reduced }: { reduced: boolean }) {
         </text>
       ))}
       {rows.map((row, r) =>
-        row.values.map((v: number, c: number) => {
+        row.values.map((v: number | null, c: number) => {
           const x = 64 + c * 36;
           const y = 18 + r * 10;
           const norm = v ? Math.min((v / scaleMax), 1) : 0;
@@ -1119,13 +999,11 @@ function SecondPurchasePanel({ reduced }: { reduced: boolean }) {
           <motion.rect
             key={d.cohort}
             x={x}
-            y={reduced ? y : 70}
             width="16"
-            height={reduced ? h : 0}
             rx="2"
-            fill={slow ? 'rgba(245, 158, 11, 0.85)' : 'rgba(96, 165, 250, 0.8)'}
-            initial={false}
-            animate={reduced ? undefined : { y, height: h }}
+            fill={slow ? 'rgba(251, 191, 36, 1)' : 'rgba(96, 165, 250, 1)'}
+            initial={reduced ? { y, height: h } : { y: 70, height: 0 }}
+            animate={{ y, height: h }}
             transition={{ duration: 0.6, delay: i * 0.04 }}
           />
         );
@@ -1151,37 +1029,34 @@ function ChannelClvPanel({ reduced }: { reduced: boolean }) {
             <motion.rect
               x="8"
               y={y}
-              width={reduced ? lowW : 0}
               height="8"
               rx="2"
-              fill="rgba(148, 197, 255, 0.6)"
-              initial={false}
-              animate={reduced ? undefined : { width: lowW }}
+              fill="rgba(147, 197, 253, 1)"
+              initial={reduced ? { width: lowW } : { width: 0 }}
+              animate={{ width: lowW }}
               transition={{ duration: 0.6, delay: i * 0.05 }}
             />
             <motion.rect
               x={8 + lowW}
               y={y}
-              width={reduced ? medW : 0}
               height="8"
               rx="2"
-              fill="rgba(59, 130, 246, 0.7)"
-              initial={false}
-              animate={reduced ? undefined : { width: medW }}
+              fill="rgba(59, 130, 246, 1)"
+              initial={reduced ? { width: medW } : { width: 0 }}
+              animate={{ width: medW }}
               transition={{ duration: 0.6, delay: i * 0.05 + 0.1 }}
             />
             <motion.rect
               x={8 + lowW + medW}
               y={y}
-              width={reduced ? highW : 0}
               height="8"
               rx="2"
-              fill="rgba(245, 158, 11, 0.8)"
-              initial={false}
-              animate={reduced ? undefined : { width: highW }}
+              fill="rgba(251, 191, 36, 1)"
+              initial={reduced ? { width: highW } : { width: 0 }}
+              animate={{ width: highW }}
               transition={{ duration: 0.6, delay: i * 0.05 + 0.2 }}
             />
-            <text x={8 + lowW + medW + highW + 4} y={y + 7} fontSize="7" fill="rgba(245,158,11,0.9)">
+            <text x={8 + lowW + medW + highW + 4} y={y + 7} fontSize="7" fill="rgba(251,191,36,1)">
               {c.high_pct}%
             </text>
           </g>
