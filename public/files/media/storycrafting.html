@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D1Q0RESQ6H"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);} 
+        gtag('js', new Date());
+        gtag('config', 'G-D1Q0RESQ6H');
+    </script>
+    <link rel="canonical" href="https://www.garrettschumacher.com/files/media/storycrafting.html" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How SQL Stories Are Made</title>
+    <style>
+        :root { --bg:#0c0d10; --card:#14161a; --text:#e9edf1; --muted:#a7b0bb; --brand:#69c; --line:#22262c; }
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        main {
+            max-width: 800px;
+            margin: 2em auto;
+            padding: 2em;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+        }
+        h1, h2, h3 {
+            color: var(--brand);
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 8px;
+        }
+        h1 { font-size: 2rem; }
+        h2 { font-size: 1.75rem; margin-top: 2em; }
+        h3 { font-size: 1.5rem; margin-top: 1.5em; border-bottom: none; }
+        p, li { color: var(--text); }
+        strong { color: var(--brand); font-weight: 600; }
+        code {
+            background: var(--bg);
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        ul { list-style: none; padding-left: 0; }
+        li { margin-bottom: 0.5em; padding-left: 1.5em; position: relative; }
+        li::before {
+            content: '→';
+            color: var(--brand);
+            position: absolute;
+            left: 0;
+        }
+        blockquote {
+            border-left: 4px solid var(--brand);
+            padding-left: 1em;
+            margin-left: 0;
+            color: var(--muted);
+            font-style: italic;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid var(--line);
+            margin: 2em 0;
+        }
+        .footer-nav { text-align: center; margin-top: 3em; font-size: 0.9em; }
+        .footer-nav a { color: var(--brand); text-decoration: none; margin: 0 0.5em; }
+        .footer-nav a:hover { text-decoration: underline; }
+        .footer-tagline { text-align: center; color: var(--muted); margin-top: 1em; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>🛠️ How SQL Stories Are Made</h1>
+        <h2>🎯 Purpose</h2>
+        <p>This document explains how each SQL Story in this repo is created using a mix of synthetic data generation, structured business framing, and AI-assisted scenario design. The goal is to simulate realistic business questions and data challenges that strengthen SQL and analytical fluency.</p>
+        <hr>
+        <h2>🧬 Data Generation Strategy</h2>
+        <p>All stories are powered by a dataset produced using the companion project:
+        <br>➡️ <a href="https://github.com/G-Schumacher44/ecom_sales_data_generator" target="_blank" rel="noopener"><code>ecom_sales_data_generator</code></a>
+        </p>
+        <p>That repo provides:</p>
+        <ul>
+            <li>Modular Python scripts for data simulation</li>
+            <li>Scenario-based YAML configurations</li>
+            <li>Controlled injection of data messiness</li>
+        </ul>
+        <p>🗂️ This repository includes <code>database.zip</code>, which contains the pre-built SQLite databases. The output includes:</p>
+        <ul>
+            <li>Clean CSVs for each table (<code>orders</code>, <code>order_items</code>, <code>returns</code>, etc.)</li>
+            <li>A zip archive with loading assets: <code>ecom_data_gen_output/database.zip</code></li>
+        </ul>
+        <p>Inside that zip:</p>
+        <ul>
+            <li><code>*.csv</code> files (one per table)</li>
+            <li><code>load_data.sql</code> to construct the schema and load into SQLite</li>
+        </ul>
+        <hr>
+        <h3>🧪 Mess Injection (Realism Tuning)</h3>
+        <p>The data generator supports configurable “mess” levels:</p>
+        <ul>
+            <li><code>none</code>: perfectly clean, ideal for baselines or learners</li>
+            <li><code>medium</code>: includes nulls, case issues, date shifts, return spikes</li>
+            <li><code>heavy</code>: simulates real-world chaos — fuzzy joins, data mismatches, and edge-case outliers</li>
+        </ul>
+        <p>This messiness emulates POS systems or early-stage data warehouses where governance is still maturing.</p>
+        <blockquote>
+            <p>The included database was configured with a <code>medium</code> mess injection.</p>
+        </blockquote>
+        <hr>
+        <h2>🤖 AI's Role in Story Design</h2>
+        <p>AI acts as a <strong>co-author and validator</strong>, helping shape business scenarios around each dataset. Contributions include:</p>
+        <ul>
+            <li>Business context and stakeholder goals</li>
+            <li>Analytical framing and key metrics</li>
+            <li>Prompt engineering for SQL challenges</li>
+            <li>Narrative tone and documentation</li>
+        </ul>
+        <p>AI helps keep every story grounded, engaging, and useful — from beginner tutorials to portfolio-grade projects.</p>
+        <hr>
+        <div class="footer-nav">
+            <a href="https://github.com/G-Schumacher44/sql_stories_skills_builder/blob/main/README.md" target="_blank" rel="noopener">🏠 <b>Main README</b></a>
+            &nbsp;·&nbsp;
+            <a href="https://github.com/G-Schumacher44/sql_stories_skills_builder/blob/main/USAGE.md" target="_blank" rel="noopener">📖 <b>Usage Guide</b></a>
+        </div>
+        <div class="footer-tagline">
+            <sub>✨ SQL · Python · Storytelling ✨</sub>
+        </div>
+    </main>
+</body>
+</html>

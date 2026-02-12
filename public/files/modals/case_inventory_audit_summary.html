@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D1Q0RESQ6H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} 
+    gtag('js', new Date());
+    gtag('config', 'G-D1Q0RESQ6H');
+  </script>
+  <meta name="robots" content="noindex,follow" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Executive Summary - Inventory Health Audit</title>
+  
+  <link rel="stylesheet" href="./modal.css" />
+</head>
+<body>
+  <h1>Executive Summary - Inventory Health Audit</h1>
+  <p class="muted">Assesses catalog‑wide utilization, SKU‑level risk, and capital lock‑up to prioritize corrective actions for the Fulfillment Team.</p>
+
+  <h2>KPI Snapshot</h2>
+  <table class="kpi">
+    <thead>
+      <tr><th>Metric</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Total SKUs</td><td>1286</td></tr>
+      <tr><td>Under‑Utilized SKUs (&lt;30%)</td><td>562</td></tr>
+      <tr><td>Oversold SKUs</td><td>8</td></tr>
+      <tr><td>High Attention Flagged SKUs</td><td>32</td></tr>
+      <tr><td>Moderate Attention Flagged SKUs</td><td>530</td></tr>
+      <tr><td>Estimated Capital Tied Up</td><td>$19.1M</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Key Insights</h2>
+  <h3>Utilization is low (~56%) across the catalog</h3>
+  <p>Under‑performing SKUs are broadly distributed rather than isolated. Lift utilization above 70% via SKU rationalization and demand‑based purchasing.</p>
+  <div align="center">
+    <img src="../../img/case_study/util_hist.png" alt="Utilization distribution across catalog" width="520" />
+    <p class="muted">Utilization skews low; raising the floor materially improves capital efficiency.</p>
+  </div>
+
+  <h3>~$19.1M in capital lock‑up</h3>
+  <p>A 20% reduction frees ~$3.8M and lowers annual carrying costs by ~$0.8–$1.1M (assuming 20–30% carrying rates).</p>
+  <div align="center">
+    <img src="../../img/case_study/cap_lock_donut.png" alt="Capital locked in under‑utilized inventory" width="520" />
+    <p class="muted">Estimated ~$19.1M tied up; targeted reductions free working capital and lower carrying costs.</p>
+  </div>
+
+  <h3>Risk is spread; “Moderate Attention” dominates</h3>
+  <p>Moderate‑risk SKUs hover around ~40–50% across categories; focus on forecasting, clearance, and promotions to shift these upward.</p>
+  <p class="muted">Tiering guide: &lt;0.20 = ✅ Healthy · 0.20–0.50 = 🔵 Low · 0.50–0.80 = 🟡 Moderate · ≥0.80 = 🔴 High</p>
+  <div align="center">
+    <img src="../../img/case_study/dist_attn_flags.png" alt="Risk distribution by attention tier and category" width="520" />
+    <p class="muted">Moderate‑risk SKUs dominate across categories; systematic interventions can shift these upward.</p>
+  </div>
+
+  <h2>Recommendations</h2>
+  <ol>
+    <li><strong>Triage Tier 2 &amp; 3 SKUs:</strong> Prioritize items with high return rates; mitigating half the risk could prevent ~$500k annually.</li>
+    <li><strong>Category‑level review:</strong> Partner with managers to address forecasts, supplier performance, and product‑market fit; expect ~$1.9M–$3.8M annual savings from improved forecasting.</li>
+    <li><strong>Address under‑utilized inventory (&lt;30%):</strong> Use promos/markdowns/bundles; consider delisting chronic poor performers; even a 20% improvement recovers ~$770k–$1.15M annually.</li>
+    <li><strong>Improve data governance:</strong> Harden validation at entry to reduce anomalies and decision risk.</li>
+  </ol>
+
+  <h2>Key Deliverables</h2>
+  <ul>
+    <li><strong>Executive Summary (this document):</strong> High‑level narrative of findings, risks, and recommendations for stakeholders.</li>
+    <li><strong>Interactive Workbook (Excel/Google Sheets):</strong> Drill‑down tool with pivot tables and filters to explore utilization, locked capital, and returns by SKU/category.
+    </li>
+    <li><strong>SQL Audit View (<code>build_inventory_audit_view.sql</code>):</strong> Core script consolidating product, sales, and returns data into the inventory audit view with KPIs and flags.</li>
+    <li><strong>EDA Scripts (<code>eda_inv_audit.sql</code>, <code>eda_inv_audit_viz.sql</code>):</strong> Supporting SQL for exploratory analysis and visualizations of patterns and anomalies.</li>
+    <li><strong>Executive Report Notebook (<code>exec_report_viz.ipynb</code>):</strong> Supplementary Python/Jupyter assets to reproduce and extend the visuals.</li>
+  </ul>
+
+  <h2>Workbook Overview</h2>
+  <div align="center">
+    <img src="../../img/case_study/story_01_dashboard.png" alt="Inventory Audit dashboard overview" width="600" />
+  </div>
+  <p>
+    The Inventory Audit Workbook is the primary interactive tool for exploring results. It provides SKU‑level detail, pivot tables, and calculated fields to quantify locked capital, non‑restockable losses, and utilization efficiency by product or category.
+  </p>
+  <ul>
+    <li><strong>Drill‑Down Views:</strong> Filters for category, tier flag, and utilization ratio</li>
+    <li><strong>Capital & Loss Estimates:</strong> Built‑in formulas translate gaps and returns into financial exposure</li>
+    <li><strong>Return Rate Flags:</strong> ≤ 0.12 = ✅ • 0.12–0.20 = ⚠️ • &gt; 0.20 = 🚨</li>
+    <li><strong>Utilization Ratio Flags:</strong> ≤ 0.30 = ✅ • &gt; 0.30 = 🚨</li>
+    <li><strong>Refresh Scaffold:</strong> Google Apps Script button scaffolded for data refresh (future automation planned)</li>
+  </ul>
+
+  <h2>How the Attention Score Works</h2>
+  <p>To prioritize SKUs, a weighted scoring system blends three diagnostic signals:</p>
+  <ul>
+    <li><strong>Low Utilization:</strong> Flags items with excess stock sitting idle (utilization below 30%)</li>
+    <li><strong>High Return Rate:</strong> Highlights products with frequent returns (≥ 30%)</li>
+    <li><strong>Volume Sensitivity:</strong> Extra weight for lower‑volume SKUs so small denominators aren’t overlooked</li>
+  </ul>
+  <p>Signals combine into a composite score (0–1) and auto‑group into four tiers — <strong>Healthy → High Risk</strong> — helping business users focus on the most critical issues first while tracking emerging risks.</p>
+
+  
+  
+
+  <h2>In Closing</h2>
+  <p>
+    This audit provides a clear, evidence‑based view of inventory challenges and opportunities. By applying the proposed tiered approach, the business can shift from reactive to proactive inventory management. Prioritizing high‑risk SKUs and addressing under‑utilization will release tied‑up capital, lower carrying costs, and streamline operations. Executing these actions will strengthen working capital, supplier performance, and customer satisfaction, delivering measurable financial and operational gains.
+  </p>
+
+  <hr />
+  <p class="footer-note"><strong>From reactive to proactive inventory — freeing capital and improving SKU health.</strong></p>
+
+  
+</body>
+</html>

@@ -1,0 +1,200 @@
+{
+  "conversion": [
+    {
+      "conversion_pct": 24.7,
+      "avg_days": 83.0,
+      "cohort": "2025-01"
+    },
+    {
+      "conversion_pct": 18.4,
+      "avg_days": 73.0,
+      "cohort": "2025-02"
+    },
+    {
+      "conversion_pct": 16.9,
+      "avg_days": 70.0,
+      "cohort": "2025-03"
+    },
+    {
+      "conversion_pct": 16.8,
+      "avg_days": 61.0,
+      "cohort": "2025-04"
+    },
+    {
+      "conversion_pct": 13.8,
+      "avg_days": 37.0,
+      "cohort": "2025-05"
+    },
+    {
+      "conversion_pct": 13.4,
+      "avg_days": 29.0,
+      "cohort": "2025-06"
+    },
+    {
+      "conversion_pct": 14.6,
+      "avg_days": 17.0,
+      "cohort": "2025-07"
+    },
+    {
+      "conversion_pct": 12.4,
+      "avg_days": 31.0,
+      "cohort": "2025-08"
+    }
+  ],
+  "heatmap": [
+    {
+      "cohort": "2025-01",
+      "values": [
+        100.0,
+        6.1,
+        3.3,
+        5.2,
+        1.9,
+        2.8,
+        0.9
+      ]
+    },
+    {
+      "cohort": "2025-02",
+      "values": [
+        100.0,
+        5.3,
+        3.7,
+        5.3,
+        4.2,
+        2.1,
+        2.6
+      ]
+    },
+    {
+      "cohort": "2025-03",
+      "values": [
+        100.0,
+        1.8,
+        5.1,
+        2.8,
+        4.6,
+        5.1,
+        null
+      ]
+    },
+    {
+      "cohort": "2025-04",
+      "values": [
+        100.0,
+        5.0,
+        5.9,
+        2.3,
+        3.2,
+        null,
+        null
+      ]
+    },
+    {
+      "cohort": "2025-05",
+      "values": [
+        100.0,
+        3.5,
+        3.1,
+        4.4,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "cohort": "2025-06",
+      "values": [
+        100.0,
+        6.7,
+        7.4,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "cohort": "2025-07",
+      "values": [
+        100.0,
+        11.2,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "cohort": "2025-08",
+      "values": [
+        100.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  ],
+  "loyalty": [
+    {
+      "tier": "",
+      "repeat_pct": 1.4,
+      "avg_orders": 0.2,
+      "avg_days": 62.0
+    },
+    {
+      "tier": "BRONZE",
+      "repeat_pct": 0,
+      "avg_orders": 0.01,
+      "avg_days": 0
+    },
+    {
+      "tier": "GOLD",
+      "repeat_pct": 5.8,
+      "avg_orders": 1.06,
+      "avg_days": 72.0
+    },
+    {
+      "tier": "PLATINUM",
+      "repeat_pct": 28.3,
+      "avg_orders": 1.34,
+      "avg_days": 62.0
+    },
+    {
+      "tier": "SILVER",
+      "repeat_pct": 1.6,
+      "avg_orders": 1.02,
+      "avg_days": 108.0
+    }
+  ],
+  "clv_mix": [
+    {
+      "channel": "Email",
+      "low_pct": 62.3,
+      "med_pct": 7.0,
+      "high_pct": 30.7
+    },
+    {
+      "channel": "Phone",
+      "low_pct": 50.7,
+      "med_pct": 6.7,
+      "high_pct": 42.6
+    },
+    {
+      "channel": "Social Media",
+      "low_pct": 73.4,
+      "med_pct": 7.2,
+      "high_pct": 19.4
+    },
+    {
+      "channel": "Website",
+      "low_pct": 66.1,
+      "med_pct": 6.8,
+      "high_pct": 27.1
+    }
+  ]
+}

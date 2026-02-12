@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,follow" />
+  <title>Ecom Datalake Pipelines - Executive Summary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./modal.css" />
+<style>
+    :root {
+      --bg: #0a0b0e;
+      --card: #141a22;
+      --text: #f1f5f9;
+      --muted: #a5b0bf;
+      --brand: #66e3c4;
+      --brand-2: #4fa8ff;
+      --line: #1f2733;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Space Grotesk", "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(79,168,255,0.15), transparent 60%),
+        radial-gradient(800px 500px at 90% 20%, rgba(102,227,196,0.12), transparent 50%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      margin: 0;
+      padding: 28px 32px 36px;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; }
+    h1, h2, h3 { margin: 1.25em 0 0.5em; }
+    h1 { margin-top: 0; font-size: 2.2rem; letter-spacing: 0.2px; }
+    h2 { font-size: 1.35rem; color: var(--brand); border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+    h3 { font-size: 1.1rem; color: var(--brand-2); }
+    p { max-width: 78ch; }
+    a { color: var(--brand-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .tagline {
+      font-family: "IBM Plex Mono", "Courier New", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .hero {
+      background: linear-gradient(135deg, rgba(20,26,34,0.95), rgba(15,20,30,0.9));
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      margin-bottom: 24px;
+    }
+    .hero-sub { color: var(--muted); margin-top: 6px; font-size: 1.05rem; }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .stat-card {
+      background: linear-gradient(160deg, rgba(20,26,34,0.9), rgba(12,16,22,0.9));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-card strong {
+      display: block;
+      font-size: 2rem;
+      color: var(--brand);
+      margin-bottom: 4px;
+    }
+    .stat-card span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .highlight-box {
+      background: rgba(102,227,196,0.08);
+      border: 1px solid rgba(102,227,196,0.3);
+      border-radius: 12px;
+      padding: 18px;
+      margin: 16px 0;
+    }
+    .highlight-box h3 { margin-top: 0; }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(120deg, rgba(79,168,255,0.25), rgba(102,227,196,0.2));
+      border: 1px solid rgba(79,168,255,0.35);
+      border-radius: 12px;
+      padding: 12px 20px;
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin: 8px 12px 8px 0;
+    }
+    .cta:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(79,168,255,0.18); }
+    ul { margin: 12px 0; }
+    li { margin: 8px 0; }
+    .muted { color: var(--muted); }
+    .divider { height: 1px; background: var(--line); margin: 32px 0; }
+    @media (max-width: 700px) {
+      body { padding: 20px; }
+      h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="tagline">Executive Summary</div>
+      <h1>Ecom Datalake Pipelines</h1>
+      <p class="hero-sub">A production-ready medallion lakehouse showcasing modern data engineering patterns with dbt, DuckDB, BigQuery, and Polars.</p>
+    </div>
+
+    <section>
+      <h2>Project at a Glance</h2>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <strong>147</strong>
+          <span>dbt Quality Tests</span>
+        </div>
+        <div class="stat-card">
+          <strong>16</strong>
+          <span>Validated Tables</span>
+        </div>
+        <div class="stat-card">
+          <strong>4</strong>
+          <span>Pipeline Layers</span>
+        </div>
+        <div class="stat-card">
+          <strong>194k</strong>
+          <span>Sample Rows</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>What This Project Demonstrates</h2>
+      <p>
+        This is a <strong>production-grade data lakehouse transformation pipeline</strong> that transforms raw e-commerce data through Bronze, Silver, and Gold layers using industry-standard tools and best practices.
+      </p>
+      <p>
+        Unlike basic ETL demos, this project includes <strong>data contracts, quality gates, schema evolution handling, observability patterns, and CI/CD integration</strong> — the kind of infrastructure you'd see in a mature data engineering team.
+      </p>
+    </section>
+
+    <section>
+      <h2>Technical Architecture</h2>
+      <div class="highlight-box">
+        <h3>Bronze Layer</h3>
+        <p class="muted">Raw Parquet ingestion from Google Cloud Storage with manifest validation, lineage metadata, and partition-level audit trails.</p>
+      </div>
+      <div class="highlight-box">
+        <h3>Base Silver (dbt + DuckDB)</h3>
+        <p class="muted">Type-safe transformations with data contracts, primary key uniqueness checks, and foreign key referential integrity using DuckDB for fast local development.</p>
+      </div>
+      <div class="highlight-box">
+        <h3>Enriched Silver (Polars)</h3>
+        <p class="muted">Business-aligned tables with precomputed metrics, cohort analysis, and behavioral features using pure Polars transforms for performance.</p>
+      </div>
+      <div class="highlight-box">
+        <h3>Gold Marts (dbt + BigQuery)</h3>
+        <p class="muted">Aggregated analytics tables optimized for BI and reporting in BigQuery with partition-level incremental processing.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Why This Matters for Portfolio</h2>
+      <ul>
+        <li><strong>Production-ready patterns:</strong> Data contracts, quality gates, and observability that hiring managers recognize</li>
+        <li><strong>Full stack coverage:</strong> From raw ingestion to analytics-ready marts with orchestration</li>
+        <li><strong>Modern tooling:</strong> dbt, DuckDB, Polars, BigQuery, Airflow — the current data engineering stack</li>
+        <li><strong>Quality-first mindset:</strong> 147 automated tests prove attention to data integrity</li>
+        <li><strong>Self-documenting:</strong> Auto-generated schema maps, data dictionaries, and profiling reports</li>
+        <li><strong>Runnable demo:</strong> 14MB of sample data allows full local execution in under 2 minutes</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Key Differentiators</h2>
+      <p><strong>1. Spec-Driven Architecture</strong></p>
+      <p class="muted">YAML specifications drive table lists, partition keys, and validation gates — not hardcoded logic.</p>
+
+      <p><strong>2. Data Contracts</strong></p>
+      <p class="muted">Explicit Bronze → Silver type mapping prevents runtime failures from schema drift.</p>
+
+      <p><strong>3. Partition-Level Observability</strong></p>
+      <p class="muted">Audit JSON emitted per table and partition enables SLA dashboards and alerting.</p>
+
+      <p><strong>4. Dimension Snapshot Validation</strong></p>
+      <p class="muted">Validates schema and primary key integrity without expensive historical scans.</p>
+    </section>
+
+    <section>
+      <h2>Ecosystem Context</h2>
+      <p>
+        This project is part of the <strong>SQL Stories</strong> ecosystem, representing the transformation layer that sits between the <a href="https://github.com/G-Schumacher44/ecom_sales_data_generator" target="_blank">ecom_sales_data_generator</a> (synthetic data) and <a href="https://github.com/G-Schumacher44/ecom-datalake-exten" target="_blank">ecom-datalake-exten</a> (Bronze ingestion) projects.
+      </p>
+      <p class="muted">
+        Together, these projects demonstrate an end-to-end data platform from data generation through analytics-ready marts.
+      </p>
+    </section>
+
+    <div class="divider"></div>
+
+    <section>
+      <h2>Explore Further</h2>
+      <a class="cta" href="ecom_pipelines_summary.html">View Full Project Details</a>
+      <a class="cta" href="https://github.com/G-Schumacher44/ecom_datalake_pipelines" target="_blank" rel="noopener">View GitHub Repository ⭐</a>
+    </section>
+  </div>
+</body>
+</html>

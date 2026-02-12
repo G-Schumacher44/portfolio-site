@@ -1,4 +1,4 @@
-# 🔄 Executive Summary – Scenario 02: Customer Retention
+# 🔄 Executive Summary — Retention Cohort Analysis
 
 
 The Marketing Team specifically requested a retention snapshot to guide strategy, recognizing customer retention as a powerful driver of growth and profitability. This snapshot uncovered key opportunities across three core areas: early engagement, seasonal conversion spikes, and loyalty program gaps. Additionally, the analysis surfaced further areas for future exploration, such as channel optimization and customer segmentation. The following report delves into these insights, providing a detailed look at customer segment engagement and actionable recommendations to strengthen loyalty and reduce churn.

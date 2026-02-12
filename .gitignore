@@ -13,6 +13,11 @@ yarn.lock
 *.log
 *.tmp
 
+# Local planning docs
+MEMORY.md
+ROADMAP.md
+build_docs/
+
 # Build output (if you add a bundler or static site generator)
 dist/
 build/

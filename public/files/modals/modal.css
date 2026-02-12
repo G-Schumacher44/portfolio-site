@@ -1,0 +1,209 @@
+:root {
+  --bg: #0c0d10;
+  --bg-accent: #14161a;
+  --card: #14161a;
+  --surface: #161a20;
+  --text: #e9edf1;
+  --muted: #a7b0bb;
+  --brand: #6699cc;
+  --brand-2: #7fb0e0;
+  --line: #22262c;
+  --glow: rgba(102, 153, 204, 0.15);
+  --brand-dim: rgba(102, 153, 204, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/files/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/files/fonts/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+body {
+  margin: 0;
+  padding: clamp(20px, 2.6vw, 32px);
+  background: radial-gradient(900px 520px at 12% 8%, rgba(102, 153, 204, 0.12), transparent 60%),
+    radial-gradient(700px 420px at 90% 18%, rgba(127, 176, 224, 0.12), transparent 55%),
+    var(--bg);
+  color: var(--text);
+  font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--text);
+  margin: 1.25em 0 0.5em;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 1.6rem;
+  letter-spacing: 0.2px;
+}
+
+h2 {
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 6px;
+  color: var(--brand);
+}
+
+h3 {
+  font-size: 1.05rem;
+}
+
+p,
+ul,
+ol {
+  max-width: 78ch;
+}
+
+ul,
+ol {
+  padding-left: 1.2rem;
+}
+
+li + li {
+  margin-top: 0.35rem;
+}
+
+a {
+  color: var(--brand-2);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  display: block;
+  margin: 16px auto;
+  border: 1px solid var(--line);
+  background: var(--card);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.25);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 24px 0;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-size: 0.95em;
+  background: rgba(102, 153, 204, 0.12);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+
+pre {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  overflow: auto;
+}
+
+select,
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+select {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+iframe {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.pill {
+  display: inline-block;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  margin: 4px 6px 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+
+.muted {
+  color: var(--muted);
+}
+
+.footer-note {
+  text-align: center;
+  font-size: 1.05rem;
+  color: var(--muted);
+  letter-spacing: 0.2px;
+}
+
+.kpis {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 16px;
+  background: var(--brand-dim);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 8px 0;
+  font-size: 0.95rem;
+}
+
+table th,
+table td {
+  border: 1px solid var(--line);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+table th {
+  background-color: var(--card);
+}
+
+
+@media (max-width: 640px) {
+  body {
+    padding: 18px 18px 24px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+}
