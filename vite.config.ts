@@ -14,5 +14,15 @@ export default defineConfig({
     commonjsOptions: {
       include: [/framer-motion/, /node_modules/],
     },
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/mermaid')) return 'mermaid'
+          if (id.includes('node_modules/katex')) return 'katex'
+          if (id.includes('node_modules/cytoscape')) return 'cytoscape'
+          return undefined
+        },
+      },
+    },
   },
 })

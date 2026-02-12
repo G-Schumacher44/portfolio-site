@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 
 interface StageMetricsProps {
   src: string;
-  stageId: string;
 }
 
 interface TableMetric {
@@ -44,7 +43,7 @@ function AnimatedNumber({ value, duration = 1200 }: { value: number; duration?: 
   return <>{display.toLocaleString()}</>;
 }
 
-export default function StageMetrics({ src, stageId }: StageMetricsProps) {
+export default function StageMetrics({ src }: StageMetricsProps) {
   const [data, setData] = useState<Record<string, unknown> | null>(null);
   const [error, setError] = useState(false);
 

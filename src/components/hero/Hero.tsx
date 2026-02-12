@@ -11,7 +11,7 @@ export default function Hero() {
   const [resumeOpen, setResumeOpen] = useState(false);
   const [bioOpen, setBioOpen] = useState(false);
   const triggerRef = useRef<HTMLDivElement>(null);
-  const hideTimer = useRef<ReturnType<typeof setTimeout>>();
+  const hideTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const supportsHover =
     typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;

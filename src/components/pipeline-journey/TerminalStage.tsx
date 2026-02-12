@@ -208,7 +208,7 @@ export default function TerminalStage({ stage, isActive, reduced, onComplete, on
               )}
 
               {/* Live data metrics (fetched from JSON) */}
-              {stage.liveDataSrc && <StageMetrics src={stage.liveDataSrc} stageId={stage.id} />}
+              {stage.liveDataSrc && <StageMetrics src={stage.liveDataSrc} />}
 
               {/* Details + links */}
               <div className="border-t border-line/50 pt-3">
