@@ -46,8 +46,8 @@ export const technicalProjects: TechnicalProject[] = [
     slug: 'analyst-toolkit',
     title: 'Analyst Toolkit',
     subtitle: 'Starter Kit + Deployment Utility (packaged together).',
-    image: '/img/projects/comic_analyst_starterkit.png',
-    imageAlt: 'Analyst Toolkit starter kit comic',
+    image: '/comic_imgs/analyst_toolkit_logo.png',
+    imageAlt: 'Analyst Toolkit logo',
     summary:
       'A pragmatic toolbox for spinning up analytics projects fast, then shipping them safely.',
     tags: ['SQL', 'ETL', 'QA', 'Templates'],
