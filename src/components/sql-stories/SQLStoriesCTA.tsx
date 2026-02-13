@@ -29,11 +29,11 @@ export default function SQLStoriesCTA() {
           <div className="flex-1">
             <h2 className="text-xl font-bold text-brand sm:text-2xl">My SQL Stories</h2>
             <p className="mt-1 text-sm leading-relaxed text-muted">
-              QuickKart’s first year, told through three real case studies. A guided,
-              client-friendly journey from messy data to decisive action.
+              The story of QuickKart's first year of operations, told through three end-to-end case studies —
+              inventory risk, retention cohorts, and sales diagnostics — showing how raw data becomes a decision you can act on today.
             </p>
             <span className="mt-2 inline-block text-xs font-medium text-brand/60 transition-colors group-hover:text-brand">
-              Launch the journey &rarr;
+              See the work &rarr;
             </span>
           </div>
         </GlassPanel>

@@ -1,4 +1,0 @@
-/* Placeholder stylesheet to avoid 404s and allow incremental styling. */
-:root { --bg:#0c0d10; --card:#14161a; --text:#e9edf1; --muted:#a7b0bb; --brand:#69c; --line:#22262c; }
-body { background: var(--bg); color: var(--text); }
-

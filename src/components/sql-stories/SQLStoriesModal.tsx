@@ -171,7 +171,7 @@ function ModalContent({
               QuickKart: Year One
             </h2>
             <p className="text-xs text-muted/60">
-              Three decisions, one dataset — built for curiosity, confidence, and clarity.
+              A simulated e-commerce company — three real analytical decisions, fully worked.
             </p>
           </div>
           <button
@@ -201,9 +201,9 @@ function ModalContent({
             <div className="mb-8 ml-[56px] inline-flex items-start gap-3 rounded-2xl border border-brand/30 bg-brand/10 px-4 py-3 text-left shadow-[0_0_30px_rgba(102,153,204,0.15)] sm:ml-[64px]">
               <div className="mt-0.5 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-brand/70" />
               <div>
-                <div className="text-xs uppercase tracking-[0.2em] text-brand/80">Data Modeling Studio</div>
+                <div className="text-xs uppercase tracking-[0.2em] text-brand/80">Analytics Engine</div>
                 <div className="mt-1 text-sm text-text/80">
-                  Using my Operations Data Modeling Studio, we follow QuickKart's simulated data from raw numbers to actionable insight.
+                  A framework built on synthetic data — raw ingestion to actionable insight, end to end. QuickKart is the proof of concept.
                 </div>
               </div>
             </div>

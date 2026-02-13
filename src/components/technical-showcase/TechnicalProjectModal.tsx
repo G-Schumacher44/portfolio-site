@@ -217,7 +217,7 @@ export default function TechnicalProjectModal({
         label: 'Bronze Hydration',
       },
       description:
-        'Wraps the ecom generator and adds everything needed to land a real Bronze layer: Hive-style date partitioning, Parquet conversion, Hadoop-style per-batch manifests, and GCS upload hooks. Backfill Bear lives here as a configurable multi-date hydration workflow.',
+        'Wraps the ecom generator and adds everything needed to land a real Bronze layer: Hive-style date partitioning, Parquet conversion, Hadoop-style per-batch manifests, and GCS upload hooks. Backlog Bear lives here as a configurable multi-date hydration workflow.',
       tools: ['Python', 'Parquet', 'GCS', 'YAML', 'CLI'],
       artifacts: ['Partitioned Parquet exports', 'Per-batch lineage manifests', 'GCS upload hooks', 'Backfill playbooks'],
       links: [
@@ -225,7 +225,7 @@ export default function TechnicalProjectModal({
         { label: 'Config Guide', href: 'https://github.com/G-Schumacher44/ecom-datalake-exten/blob/main/docs/resource_hub/datalakes_extention/CONFIG_GUIDE.md' },
         { label: 'CLI Reference', href: 'https://github.com/G-Schumacher44/ecom-datalake-exten/blob/main/docs/resource_hub/datalakes_extention/CLI_REFERENCE.md' },
         { label: 'Testing Guide', href: 'https://github.com/G-Schumacher44/ecom-datalake-exten/blob/main/docs/resource_hub/datalakes_extention/TESTING_GUIDE.md' },
-        { label: 'Backfill Bear', href: 'https://github.com/G-Schumacher44/ecom-datalake-exten/blob/main/docs/resource_hub/datalakes_extention/workflows/BACKLOG_BEAR.md' },
+        { label: 'Backlog Bear', href: 'https://github.com/G-Schumacher44/ecom-datalake-exten/blob/main/docs/resource_hub/datalakes_extention/workflows/BACKLOG_BEAR.md' },
         { label: 'Generator Overview', href: 'https://github.com/G-Schumacher44/ecom-datalake-exten/blob/main/docs/resource_hub/ecom_generator/README.md' },
         { label: 'Schema Reference', href: 'https://github.com/G-Schumacher44/ecom-datalake-exten/blob/main/docs/resource_hub/ecom_generator/database_schema_reference.md' },
       ],
@@ -260,17 +260,17 @@ export default function TechnicalProjectModal({
       ],
     },
     'backfill-bear': {
-      title: 'Backfill Bear',
+      title: 'Backlog Bear',
       subtitle: 'Configurable historical hydration workflow',
       image: '/img/projects/comic_backlog_bear.png',
-      callout: 'You can\'t build a 5-year trend report on 3 days of data. Backfill Bear fixes that.',
+      callout: 'You can\'t build a 5-year trend report on 3 days of data. Backlog Bear fixes that.',
       comicStrip: {
-        src: '/img/tech_showcase/comic_strips/datalakes/backfill_bear_origins.png',
-        alt: 'Backfill Bear origins comic strip',
-        label: 'Backfill Bear Origins',
+        src: '/img/tech_showcase/comic_strips/datalakes/backlog_bear_origins.png',
+        alt: 'Backlog Bear origins comic strip',
+        label: 'Backlog Bear Origins',
       },
       description:
-        'A workflow inside the Datalake Extension for running configurable multi-date historical backfills. Specify a date range, and Backfill Bear generates Bronze data for each partition, locks in consistent Hive-style paths, and produces a per-batch Hadoop-style manifest — making historical hydration repeatable and auditable.',
+        'A workflow inside the Datalake Extension for running configurable multi-date historical backfills. Specify a date range, and Backlog Bear generates Bronze data for each partition, locks in consistent Hive-style paths, and produces a per-batch Hadoop-style manifest — making historical hydration repeatable and auditable.',
       tools: ['CLI', 'YAML', 'Parquet', 'Python'],
       artifacts: ['Multi-date partitioned Parquet', 'Per-batch manifests', 'Hydration logs'],
       links: [
@@ -436,7 +436,7 @@ export default function TechnicalProjectModal({
                             {[
                               { name: 'Ecom Generator', tag: 'Data source', desc: 'Synthetic relational ecommerce data — customers, orders, products, returns — with configurable volume, messiness tiers, and built-in QA.' },
                               { name: 'Datalake Extension', tag: 'Bronze + hydration', desc: 'Wraps the generator with Hive-style partitioning, Parquet conversion, and Hadoop-style manifests to land a clean, structured Bronze layer in GCS.' },
-                              { name: 'Backfill Bear', tag: 'Historical backfill', desc: 'Workflow inside the Extension for configurable multi-date hydration — generates historical Bronze partitions with per-batch manifests for full lineage.' },
+                              { name: 'Backlog Bear', tag: 'Historical backfill', desc: 'Workflow inside the Extension for configurable multi-date hydration — generates historical Bronze partitions with per-batch manifests for full lineage.' },
                               { name: 'Datalake Pipelines', tag: 'Silver → Gold', desc: 'Full-stack medallion pipeline — dbt + DuckDB for Silver transforms, Polars + BigQuery for Gold aggregations, Airflow DAGs for orchestration.' },
                             ].map((mod) => (
                               <div key={mod.name} className="flex gap-3 text-sm text-[#2b2a27]">
@@ -945,7 +945,7 @@ export default function TechnicalProjectModal({
                               {[
                                 { label: 'Ecom Generator', desc: 'Data source' },
                                 { label: 'Datalake Extension', desc: 'Bronze layer' },
-                                { label: 'Backfill Bear', desc: 'History' },
+                                { label: 'Backlog Bear', desc: 'History' },
                                 { label: 'Pipelines', desc: 'Silver → Gold' },
                                 { label: 'SQL Stories', desc: 'Analytics lab' },
                               ].map((node, i, arr) => (
@@ -992,7 +992,7 @@ export default function TechnicalProjectModal({
                             <ul className="mt-2 space-y-2 text-sm text-[#2b2a27]">
                               <li>No realistic test data → configurable synthetic generator with referential integrity, messiness tiers, and built-in QA.</li>
                               <li>Raw CSV chaos → extension adds partitioning, Parquet conversion, and Hadoop-style manifests for a structured Bronze layer.</li>
-                              <li>Manual multi-date backfills → Backfill Bear runs configurable historical hydration with consistent partitions and per-batch manifests.</li>
+                              <li>Manual multi-date backfills → Backlog Bear runs configurable historical hydration with consistent partitions and per-batch manifests.</li>
                               <li>Inconsistent transforms → spec-driven dbt models enforce schema contracts and quality gates at every medallion layer.</li>
                               <li>No visibility into pipeline health → Airflow DAGs + observability strategy surface run status, SLA tracking, and failure alerts.</li>
                             </ul>
@@ -1046,10 +1046,10 @@ export default function TechnicalProjectModal({
                               >
                                 <img
                                   src="/img/projects/comic_backlog_bear.png"
-                                  alt="Backfill Bear"
+                                  alt="Backlog Bear"
                                   className="h-14 w-full object-contain"
                                 />
-                                <div className="mt-2 text-xs font-semibold text-[#2b2a27]">Backfill Bear</div>
+                                <div className="mt-2 text-xs font-semibold text-[#2b2a27]">Backlog Bear</div>
                                 <div className="text-[11px] text-[#2b2a27]">Configurable historical backfills.</div>
                               </button>
                             </div>
@@ -1095,7 +1095,7 @@ export default function TechnicalProjectModal({
                                   { label: 'Config Guide', href: 'https://github.com/G-Schumacher44/ecom-datalake-exten/blob/main/docs/resource_hub/datalakes_extention/CONFIG_GUIDE.md' },
                                   { label: 'CLI Reference', href: 'https://github.com/G-Schumacher44/ecom-datalake-exten/blob/main/docs/resource_hub/datalakes_extention/CLI_REFERENCE.md' },
                                   { label: 'Testing Guide', href: 'https://github.com/G-Schumacher44/ecom-datalake-exten/blob/main/docs/resource_hub/datalakes_extention/TESTING_GUIDE.md' },
-                                  { label: 'Backfill Bear', href: 'https://github.com/G-Schumacher44/ecom-datalake-exten/blob/main/docs/resource_hub/datalakes_extention/workflows/BACKLOG_BEAR.md' },
+                                  { label: 'Backlog Bear', href: 'https://github.com/G-Schumacher44/ecom-datalake-exten/blob/main/docs/resource_hub/datalakes_extention/workflows/BACKLOG_BEAR.md' },
                                 ].map((link) => renderDocLink(link, setDocOpen))}
                               </div>
                               <div className="mt-3 mb-2 text-[9px] font-bold uppercase tracking-widest text-[#2b2a27]/60">Pipelines Docs</div>
@@ -1322,7 +1322,7 @@ export default function TechnicalProjectModal({
                         </p>
                         <a
                           href="mailto:garrettschumacher44@gmail.com"
-                          className="inline-flex items-center gap-2 rounded-full border-2 border-[#2b2a27] bg-[#2b2a27] px-4 py-2 text-[11px] font-semibold uppercase tracking-widest text-[#fff7e6] transition-opacity hover:opacity-80"
+                          className="inline-flex items-center gap-2 rounded-lg border border-brand/40 bg-brand/10 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/60 hover:bg-brand/20"
                         >
                           Get in touch
                         </a>

@@ -60,14 +60,14 @@ export const technicalProjects: TechnicalProject[] = [
   },
   {
     slug: 'regression-model-eval',
-    title: 'Regression Model Evaluation Suite',
+    title: 'ML Model Evaluation Suite',
     subtitle: 'Metric sanity checks, automated.',
     image: '/img/projects/comic_model_eval.png',
     imageAlt: 'Model evaluation suite comic',
     summary:
-      'A regression-focused evaluation harness with repeatable benchmarks, diagnostics, and visual QA.',
+      'A config-driven evaluation harness for regression and classification models — repeatable benchmarks, diagnostics, and a stakeholder-ready HTML report.',
     tags: ['Python', 'ML', 'Metrics', 'Automation'],
-    callout: 'Because shipping a model without diagnostics is a haunted house.',
+    callout: 'Built so every model gets the same honest diagnostic — no skipped steps.',
     comicStrip: {
       src: '/img/tech_showcase/comic_strips/model_eval/model_eval_strip.png',
       alt: 'Model evaluation suite comic strip',
@@ -77,7 +77,7 @@ export const technicalProjects: TechnicalProject[] = [
   {
     slug: 'ecommerce-datalakes',
     title: 'Ecommerce Datalakes',
-    subtitle: 'Extension + Pipelines + Backfill Bear.',
+    subtitle: 'Extension + Pipelines + Backlog Bear.',
     image: '/img/projects/comic_datalakes.png',
     imageAlt: 'Ecommerce datalakes comic banner',
     summary:
@@ -87,7 +87,7 @@ export const technicalProjects: TechnicalProject[] = [
     includes: [
       'Datalake Extension (Bronze + hydration)',
       'Pipelines (Silver → Gold)',
-      'Backfill Bear (historical backfill workflow)',
+      'Backlog Bear (historical backfill workflow)',
     ],
     comicStrip: {
       src: '/img/tech_showcase/comic_strips/datalakes/pipelines_main.png',

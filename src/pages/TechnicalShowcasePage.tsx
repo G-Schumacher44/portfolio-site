@@ -40,8 +40,8 @@ export default function TechnicalShowcasePage() {
                   The Technical Showcase
                 </h1>
                 <p className="mt-2 max-w-2xl text-sm">
-                  Engineer-to-engineer breakdowns, rendered as comic strips. Click a panel to drop
-                  into the technical deep-dive.
+                  Real projects, comic format. Each strip is a working system — click any panel to
+                  see the architecture, artifacts, and engineering decisions behind it.
                 </p>
               </div>
               <div className="rounded-2xl border-2 border-[#2b2a27] bg-white px-4 py-2 text-xs">
