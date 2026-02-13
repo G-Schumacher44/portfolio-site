@@ -31,6 +31,7 @@ export default function HeroBioCard({ isVisible, onOpenResume, onOpenBio }: Hero
                 height={80}
                 className="mb-4 flex-shrink-0 rounded-full border-2 border-brand/20"
                 style={{ animation: 'float 4s ease-in-out infinite' }}
+                loading="lazy"
               />
 
               {/* Bio content */}

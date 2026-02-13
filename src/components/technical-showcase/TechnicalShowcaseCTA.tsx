@@ -50,6 +50,7 @@ export default function TechnicalShowcaseCTA() {
                   src={strip.src}
                   alt={strip.alt}
                   className="h-28 w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
                 />
               </button>
             ))}
@@ -102,6 +103,7 @@ export default function TechnicalShowcaseCTA() {
                     alt={active.alt}
                     className="w-full"
                     style={{ borderRadius: 0, border: 'none', margin: 0, boxShadow: 'none' }}
+                    loading="lazy"
                   />
                 </div>
               </motion.div>

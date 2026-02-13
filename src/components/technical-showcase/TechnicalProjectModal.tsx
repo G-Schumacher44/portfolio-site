@@ -374,6 +374,7 @@ export default function TechnicalProjectModal({
                           src={project.image}
                           alt={project.imageAlt}
                           className="h-80 w-full object-contain"
+                          loading="lazy"
                         />
                       </div>
                       {project.relatedImages && (
@@ -384,6 +385,7 @@ export default function TechnicalProjectModal({
                               src={img.src}
                               alt={img.alt}
                               className="w-full rounded-2xl border-[3px] border-[#2b2a27] object-cover"
+                              loading="lazy"
                             />
                           ))}
                         </div>
@@ -421,6 +423,7 @@ export default function TechnicalProjectModal({
                                   src={strip.src}
                                   alt={strip.alt}
                                   className="h-32 w-full object-contain"
+                                  loading="lazy"
                                 />
                               </button>
                             ))}
@@ -476,6 +479,7 @@ export default function TechnicalProjectModal({
                                   src={panel.src}
                                   alt={panel.alt}
                                   className="h-24 w-full object-contain"
+                                  loading="lazy"
                                 />
                               </button>
                             ))}
@@ -643,6 +647,7 @@ export default function TechnicalProjectModal({
                                   src="/img/projects/comic_analyst_starterkit.png"
                                   alt="Analyst Toolkit Starter Kit"
                                   className="h-16 w-full object-contain"
+                                  loading="lazy"
                                 />
                                 <div className="mt-2 text-xs font-semibold text-[#2b2a27]">Starter Kit</div>
                                 <div className="text-[11px] text-[#2b2a27]">
@@ -657,6 +662,7 @@ export default function TechnicalProjectModal({
                                   src="/img/projects/comic_analyst_deploy.png"
                                   alt="Analyst Toolkit Deployment Utility"
                                   className="h-16 w-full object-contain"
+                                  loading="lazy"
                                 />
                                 <div className="mt-2 text-xs font-semibold text-[#2b2a27]">Deployment Utility</div>
                                 <div className="text-[11px] text-[#2b2a27]">
@@ -1012,6 +1018,7 @@ export default function TechnicalProjectModal({
                                   src="/img/projects/ecom_generator.png"
                                   alt="Ecom Sales Generator"
                                   className="h-14 w-full object-contain"
+                                  loading="lazy"
                                 />
                                 <div className="mt-2 text-xs font-semibold text-[#2b2a27]">Ecom Generator</div>
                                 <div className="text-[11px] text-[#2b2a27]">Synthetic relational ecommerce data.</div>
@@ -1024,6 +1031,7 @@ export default function TechnicalProjectModal({
                                   src="/img/projects/comic_datalakes.png"
                                   alt="Datalake Extension"
                                   className="h-14 w-full object-contain"
+                                  loading="lazy"
                                 />
                                 <div className="mt-2 text-xs font-semibold text-[#2b2a27]">Datalake Extension</div>
                                 <div className="text-[11px] text-[#2b2a27]">Partitioning, Parquet + manifests → Bronze.</div>
@@ -1036,6 +1044,7 @@ export default function TechnicalProjectModal({
                                   src="/img/projects/comic_pipelines.png"
                                   alt="Datalake Pipelines"
                                   className="h-14 w-full object-contain"
+                                  loading="lazy"
                                 />
                                 <div className="mt-2 text-xs font-semibold text-[#2b2a27]">Pipelines</div>
                                 <div className="text-[11px] text-[#2b2a27]">dbt + DuckDB → Silver, Polars + BQ → Gold.</div>
@@ -1048,6 +1057,7 @@ export default function TechnicalProjectModal({
                                   src="/img/projects/comic_backlog_bear.png"
                                   alt="Backlog Bear"
                                   className="h-14 w-full object-contain"
+                                  loading="lazy"
                                 />
                                 <div className="mt-2 text-xs font-semibold text-[#2b2a27]">Backlog Bear</div>
                                 <div className="text-[11px] text-[#2b2a27]">Configurable historical backfills.</div>
@@ -1350,6 +1360,7 @@ export default function TechnicalProjectModal({
                           src={artifact.src}
                           alt={artifact.alt}
                           className="h-28 w-full object-contain"
+                          loading="lazy"
                         />
                       </button>
                     ))}
@@ -1466,6 +1477,7 @@ function StoryboardModal({
                         alt={panel.alt}
                         className="w-full rounded-xl object-contain"
                         style={{ maxHeight: '420px' }}
+                        loading="lazy"
                       />
                     </div>
                     {/* Annotation */}
@@ -1538,7 +1550,9 @@ function PlotViewerModal({
               </button>
             </div>
             <div className="flex h-[calc(80vh-64px)] items-center justify-center p-6">
-              <img src={plot.src} alt={plot.alt} className="max-h-full w-full object-contain" />
+              <img src={plot.src} alt={plot.alt} className="max-h-full w-full object-contain"
+              loading="lazy"
+                        />
             </div>
           </motion.div>
         </motion.div>
@@ -1625,7 +1639,9 @@ function CompanionModal({
               <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
                 <div className="space-y-4">
                   <div className="rounded-2xl border-[3px] border-[#2b2a27] bg-[#fff7e6] p-4">
-                    <img src={content.image} alt={content.title} className="h-56 w-full object-contain" />
+                    <img src={content.image} alt={content.title} className="h-56 w-full object-contain"
+                    loading="lazy"
+                        />
                   </div>
                   {content.comicStrip && (
                     <div className="rounded-2xl border-[3px] border-[#2b2a27] bg-white p-4">
@@ -1650,6 +1666,7 @@ function CompanionModal({
                           src={content.comicStrip.src}
                           alt={content.comicStrip.alt}
                           className="h-32 w-full object-contain"
+                          loading="lazy"
                         />
                       </button>
                     </div>
@@ -1705,7 +1722,9 @@ function CompanionModal({
                             {img.label && (
                               <div className="mb-1.5 text-[9px] font-bold uppercase tracking-widest text-[#2b2a27]/60">{img.label}</div>
                             )}
-                            <img src={img.src} alt={img.alt} className="w-full rounded-lg object-cover" />
+                            <img src={img.src} alt={img.alt} className="w-full rounded-lg object-cover"
+                            loading="lazy"
+                        />
                           </button>
                         ))}
                       </div>
@@ -2199,7 +2218,9 @@ function MarkdownBody({
           </a>
         ),
         img: ({ src, alt }) => (
-          <img src={src} alt={alt} className="my-2 max-w-full rounded-xl border-[2px] border-[#2b2a27]" />
+          <img src={src} alt={alt} className="my-2 max-w-full rounded-xl border-[2px] border-[#2b2a27]"
+          loading="lazy"
+                        />
         ),
         div: ({ className, children }) => {
           if (className?.includes('doc-tile')) {

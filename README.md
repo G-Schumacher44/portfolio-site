@@ -1,27 +1,112 @@
 <p align="center">
-  <img src="img/logos/dark_logo_banner.png" width="1000" alt="Analytics and Engineering Portfolio Banner" />
+  <img src="public/img/logos/dark_logo_banner.png" width="1000" alt="GS Analytics — Portfolio Banner" />
   <br>
-  <em>Analytics &amp; Engineering Portfolio</em>
+  <em>Analytics & Engineering Portfolio</em>
 </p>
 
 <p align="center">
   <img alt="MIT License" src="https://img.shields.io/badge/license-MIT-blue" />
-  <img alt="Project Status: Alpha" src="https://img.shields.io/badge/status-alpha-lightgrey" />
-  <img alt="Version 0.1.0" src="https://img.shields.io/badge/version-v0.1.0-blueviolet" />
+  <img alt="Status: Active" src="https://img.shields.io/badge/status-active-brightgreen" />
+  <img alt="React 19" src="https://img.shields.io/badge/React-19-61dafb?logo=react" />
+  <img alt="Vite 6" src="https://img.shields.io/badge/Vite-6-646cff?logo=vite" />
 </p>
 
-# 📊 Analytics & Engineering Portfolio
+# GS Analytics — Portfolio Site
 
+**🔗 [garrettschumacher.com](https://garrettschumacher.com)**
 
-## 📌 Overview
-This repository contains the source code and assets for my **Analytics & Engineering Portfolio**, hosted at:
-
-**🔗 [Visit the live site](https://www.garrettschumacher.com/)**
-
-The portfolio showcases:
-- **Data Analysis** — Exploratory analysis, visualization, and reporting.
-- **Data Engineering** — ETL pipelines, automation scripts, and database work.
-- **Technical Writing** — Guides, documentation, and knowledge-sharing resources.
+Personal portfolio for Garrett Schumacher — data analyst and analytics engineer. Showcases end-to-end data work through case studies, interactive demos, and technical write-ups.
 
 ---
 
+## Stack
+
+| Layer | Tech |
+|-------|------|
+| Framework | React 19 + TypeScript |
+| Build | Vite 6 |
+| Styling | Tailwind CSS 4 (via `@tailwindcss/postcss`) |
+| Animation | Framer Motion |
+| Routing | React Router v6 (BrowserRouter) |
+| Deploy | GitHub Actions → `gh-pages` branch |
+
+---
+
+## Routes
+
+| Path | Description |
+|------|-------------|
+| `/` | Main portfolio — hero, services, SQL Stories, projects, contact |
+| `/technical-showcase` | Comic-format technical project gallery |
+| `/quick-view` | Fast-scan resume/portfolio summary |
+
+---
+
+## Project Structure
+
+```
+src/
+  components/
+    hero/                # Hero section, bio card, terminal animation
+    layout/              # App shell, Navbar, Footer, MicroBanner, Section
+    projects/            # Featured projects grid
+    contact/             # Contact section
+    sql-stories/         # SQL Stories modal system (CaseStudyModal, ArchitectureFlowChart, TerminalStage)
+    technical-showcase/  # TechnicalShowcasePage, TechnicalProjectModal, TechnicalShowcaseCTA
+    shared/              # GlassPanel, GradientBorder, Button, DocumentViewer, Modal
+  data/                  # Content data files (projects, services, navigation, etc.)
+  pages/                 # Route-level page components (lazy-loaded)
+  hooks/                 # useScrollDirection, useScrollSpy
+public/
+  files/                 # Static HTML modals, reports, demos (served at /files/...)
+  img/                   # Logos, backgrounds, comic strips, project screenshots
+  robots.txt
+  sitemap.xml
+```
+
+---
+
+## Branch Strategy
+
+| Branch | Purpose |
+|--------|---------|
+| `main` | Live site (vanilla HTML — legacy) |
+| `freelance-preview` | Vanilla HTML redesign (completed) |
+| `react-rebuild` | React migration — **active development** |
+
+---
+
+## Local Dev
+
+```bash
+npm install
+npm run dev       # http://localhost:5173
+npm run build     # Production build to dist/
+npm run preview   # Preview production build
+```
+
+> First `npm run dev` load is slow (~30–60s) while Framer Motion transforms. Subsequent loads are fast.
+
+---
+
+## Design Tokens
+
+```
+--color-bg:      #0c0d10
+--color-card:    #14161a
+--color-surface: #161a20
+--color-text:    #e9edf1
+--color-muted:   #a7b0bb
+--color-brand:   #6699cc   ← blue, not green
+--color-line:    #22262c
+```
+
+---
+
+## Key Notes
+
+- **Tailwind scanning**: Uses `source(none)` + explicit `@source` in `globals.css` to avoid scanning `public/` (causes hang)
+- **Modal HTML files**: Live in `public/files/modals/` and `public/files/` — served via iframe in `DocumentViewer`
+- **Comic page palette**: `#f3e6cf` bg / `#2b2a27` ink / `#fff7e6` paper — uses inline `style` props to avoid Tailwind variable bleed
+- **Favicon**: `public/img/logos/gs_analytics_thumb_2.png`
+- **OG image**: `public/img/logos/gs_analytics_thumb_2.png`

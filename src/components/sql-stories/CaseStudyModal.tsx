@@ -386,6 +386,7 @@ function InventoryWorkbookViewer({
             src="/img/case_study/story_01_dashboard.png"
             alt="Inventory audit workbook overview"
             className="h-full w-full object-contain"
+            loading="lazy"
           />
         </div>
         <div className="space-y-3 text-sm leading-relaxed text-muted/80">
