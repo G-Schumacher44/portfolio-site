@@ -128,6 +128,19 @@ export default function Navbar() {
           </button>
         )}
 
+        {/* Quick View pill — far right, hiring manager shortcut */}
+        <button
+          onClick={() => scrollTo('/quick-view')}
+          className="
+            hidden shrink-0 items-center gap-1.5 rounded-lg border border-muted/20
+            bg-surface px-3 py-1.5 text-xs font-medium text-muted
+            transition-all hover:border-muted/40 hover:text-text
+            md:flex
+          "
+        >
+          Quick View
+        </button>
+
         {/* Analytics Resource Hub — far right */}
         <a
           href={resourceHubUrl}
