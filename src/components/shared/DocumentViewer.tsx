@@ -84,7 +84,7 @@ export default function DocumentViewer({
             </div>
 
             {/* Body */}
-            <div className="relative flex-1 overflow-auto">
+            <div className="relative flex-1 overflow-hidden">
               {src ? (
                 <>
                   {iframeLoading && (
@@ -95,7 +95,7 @@ export default function DocumentViewer({
                   <iframe
                     src={src}
                     title={title || 'Content'}
-                    className="h-full w-full border-0"
+                    className="absolute inset-0 h-full w-full border-0"
                     loading="lazy"
                     onLoad={() => setIframeLoading(false)}
                   />

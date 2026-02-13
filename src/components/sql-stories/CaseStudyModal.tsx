@@ -243,6 +243,23 @@ function CaseStudyModalContent({
                       </div>
                     </div>
                   </div>
+                  <div className="rounded-xl border border-brand/20 bg-brand/5 p-4 sm:col-span-2">
+                    <div className="text-[10px] uppercase tracking-wider text-brand/70">Want to see this for your business?</div>
+                    <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
+                      <p className="text-sm leading-relaxed text-text/80">
+                        Got inventory data sitting idle? Let's turn it into a working audit system.
+                      </p>
+                      <a
+                        href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-lg border border-brand/40 bg-brand/15 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/60 hover:bg-brand/25"
+                      >
+                        Book a Discovery Call
+                        <ExternalLink size={12} className="opacity-60" />
+                      </a>
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -278,7 +295,7 @@ function CaseStudyModalContent({
                     <div className="text-[10px] uppercase tracking-wider text-brand/70">Want to see this for your business?</div>
                     <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
                       <p className="text-sm leading-relaxed text-text/80">
-                        I build retention dashboards, cohort analyses, and loyalty diagnostics for real businesses.
+                        Turn your customer data into a clear retention story — let's talk.
                       </p>
                       <a
                         href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
