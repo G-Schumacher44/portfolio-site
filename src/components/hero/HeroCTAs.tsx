@@ -2,25 +2,36 @@ import Button from '../shared/Button';
 
 export default function HeroCTAs() {
   return (
-    <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:gap-10">
-      {/* Work With Me */}
-      <div className="text-center">
-        <span className="mb-3 block text-xs font-medium uppercase tracking-widest text-muted">
-          Work With Me
-        </span>
-        <div className="flex flex-wrap justify-center gap-3">
-          <Button
-            variant="primary"
-            href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
-            external
-          >
-            Book a Free Consultation
+    <div className="mt-8 flex flex-col items-center gap-8">
+      {/* Top row: Work With Me + Hiring Manager */}
+      <div className="flex flex-wrap justify-center gap-10">
+        <div className="text-center">
+          <span className="mb-3 block text-xs font-medium uppercase tracking-widest text-muted">
+            Work With Me
+          </span>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Button
+              variant="primary"
+              href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
+              external
+            >
+              Book a Free Consultation
+            </Button>
+            <Button href="mailto:me@garrettschumacher.com">Email Me</Button>
+          </div>
+        </div>
+
+        <div className="text-center">
+          <span className="mb-3 block text-xs font-medium uppercase tracking-widest text-muted">
+            Hiring Manager?
+          </span>
+          <Button variant="primary" href="/quick-view">
+            Quick View
           </Button>
-          <Button href="mailto:me@garrettschumacher.com">Email Me</Button>
         </div>
       </div>
 
-      {/* Explore My Work */}
+      {/* Bottom row: Explore My Work */}
       <div className="text-center">
         <span className="mb-3 block text-xs font-medium uppercase tracking-widest text-muted">
           Explore My Work
@@ -39,16 +50,6 @@ export default function HeroCTAs() {
             LinkedIn
           </Button>
         </div>
-      </div>
-
-      {/* Hiring Manager shortcut */}
-      <div className="text-center">
-        <span className="mb-3 block text-xs font-medium uppercase tracking-widest text-muted">
-          Hiring Manager?
-        </span>
-        <Button variant="primary" href="/quick-view">
-          Quick View — 5 min read
-        </Button>
       </div>
     </div>
   );
