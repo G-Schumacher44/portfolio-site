@@ -7,6 +7,7 @@ import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import mermaid from 'mermaid';
 import type { TechnicalProject } from '../../data/technicalProjects';
+import DocumentViewer from '../shared/DocumentViewer';
 
 type DocLink = { label: string; href: string };
 const DOC_EXTENSIONS = ['.md', '.py', '.txt', '.csv'];
@@ -49,6 +50,7 @@ export default function TechnicalProjectModal({
 }) {
   const [activePlot, setActivePlot] = useState<{ src: string; alt: string } | null>(null);
   const [storyboardOpen, setStoryboardOpen] = useState(false);
+  const [deckOpen, setDeckOpen] = useState(false);
   const [companionOpen, setCompanionOpen] = useState<
     'starter' | 'deploy' | 'datalake-exten' | 'datalake-pipelines' | 'backfill-bear' | 'ecom-generator' | null
   >(null);
@@ -428,6 +430,20 @@ export default function TechnicalProjectModal({
                               </button>
                             ))}
                           </div>
+                        </div>
+                      )}
+                      {isSpotlight && (
+                        <div className="rounded-2xl border-[3px] border-[#2b2a27] bg-white p-4">
+                          <div className="text-[11px] uppercase tracking-[0.3em] text-[#2b2a27]">Project Overview</div>
+                          <p className="mt-1 text-xs text-[#2b2a27]">
+                            Slide deck — architecture, design decisions, and roadmap.
+                          </p>
+                          <button
+                            onClick={() => setDeckOpen(true)}
+                            className="mt-3 rounded-xl border-[3px] border-[#2b2a27] bg-[#fff7e6] px-4 py-2 text-xs font-semibold uppercase tracking-widest text-[#2b2a27] transition-colors hover:bg-[#2b2a27] hover:text-[#fff7e6]"
+                          >
+                            Open Deck →
+                          </button>
                         </div>
                       )}
                       {isDatalakes && (
@@ -1390,6 +1406,12 @@ export default function TechnicalProjectModal({
         onClose={() => setCompanionOpen(null)}
       />
       <DocModal doc={docOpen} onDocOpen={setDocOpen} onClose={() => setDocOpen(null)} />
+      <DocumentViewer
+        isOpen={deckOpen}
+        onClose={() => setDeckOpen(false)}
+        src="/files/modals/fridai-overview.html"
+        title="FridAI Core — Project Overview"
+      />
     </>
   );
 }
