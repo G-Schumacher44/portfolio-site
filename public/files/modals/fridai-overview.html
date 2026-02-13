@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FridAI Core — Project Overview</title>
+<style>
+  :root {
+    --bg:        #0d0f14;
+    --surface:   #161a24;
+    --border:    #2a2f3e;
+    --accent:    #5b7fff;
+    --accent2:   #9b5bff;
+    --accent3:   #3ecfb2;
+    --warn:      #ffb347;
+    --text:      #e8eaf0;
+    --muted:     #7a7f99;
+    --code-bg:   #1a1f2e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* ── Deck shell ────────────────────────────────────────────── */
+  #deck { width: 100%; height: 100%; position: relative; }
+
+  .slide {
+    display: none;
+    position: absolute;
+    inset: 0;
+    padding: 36px 52px 80px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    animation: fadeIn 0.35s ease;
+    overflow-y: auto;
+  }
+  .slide.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Nav ────────────────────────────────────────────────────── */
+  #nav {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(22,26,36,0.9);
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 10px 24px;
+    backdrop-filter: blur(12px);
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  #nav.visible { opacity: 1; }
+  #nav button {
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+  #nav button:hover { background: var(--border); }
+  #nav button:disabled { opacity: 0.3; cursor: default; }
+  #slide-counter {
+    font-size: 13px;
+    color: var(--muted);
+    min-width: 64px;
+    text-align: center;
+  }
+
+  /* ── Slide number badge ──────────────────────────────────────── */
+  .slide-num {
+    position: absolute;
+    top: 22px;
+    right: 36px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Progress bar ────────────────────────────────────────────── */
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.3s ease;
+    z-index: 200;
+  }
+
+  /* ── Typography helpers ──────────────────────────────────────── */
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  h1 { font-size: clamp(2.4rem, 4vw, 3.4rem); font-weight: 800; line-height: 1.1; }
+  h2 { font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight: 700; line-height: 1.2; }
+  h3 { font-size: 1.1rem; font-weight: 700; color: var(--accent); }
+  p, li { font-size: clamp(0.95rem, 1.3vw, 1.1rem); line-height: 1.65; color: var(--text); }
+  .muted { color: var(--muted); }
+
+  /* ── Layout primitives ───────────────────────────────────────── */
+  .cols { display: grid; gap: 28px; }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+  /* ── Card ────────────────────────────────────────────────────── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+  }
+  .card.accent-l { border-left: 3px solid var(--accent); }
+  .card.accent-t { border-top: 3px solid var(--accent2); }
+  .card.warn-l   { border-left: 3px solid var(--warn); }
+  .card.green-l  { border-left: 3px solid var(--accent3); }
+
+  /* ── Badge / tag ─────────────────────────────────────────────── */
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 9px;
+    border-radius: 20px;
+    border: 1px solid;
+  }
+  .tag-blue  { color: var(--accent);  border-color: var(--accent);  background: rgba(91,127,255,0.1); }
+  .tag-purple{ color: var(--accent2); border-color: var(--accent2); background: rgba(155,91,255,0.1); }
+  .tag-green { color: var(--accent3); border-color: var(--accent3); background: rgba(62,207,178,0.1); }
+  .tag-warn  { color: var(--warn);    border-color: var(--warn);    background: rgba(255,179,71,0.1); }
+
+  /* ── Code block ──────────────────────────────────────────────── */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    color: #c9d1d9;
+  }
+  .kw  { color: #79b8ff; }
+  .str { color: #9ecbff; }
+  .cmt { color: #5a6477; }
+  .val { color: #f8c555; }
+  .key { color: var(--accent3); }
+
+  /* ── Icon ────────────────────────────────────────────────────── */
+  .icon { font-size: 2rem; margin-bottom: 6px; display: block; }
+
+  /* ── Hero slide specific ─────────────────────────────────────── */
+  .hero-badge {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(91,127,255,0.12);
+    border: 1px solid rgba(91,127,255,0.3);
+    border-radius: 30px;
+    padding: 6px 18px;
+    font-size: 13px;
+    color: var(--accent);
+    width: fit-content;
+  }
+  .gradient-text {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Divider ─────────────────────────────────────────────────── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
+
+  /* ── Step list ───────────────────────────────────────────────── */
+  .step-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .step-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .step-num {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  /* ── Arch diagram ────────────────────────────────────────────── */
+  .arch-box {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    background: var(--surface);
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .arch-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 1.2rem;
+  }
+
+  /* ── Bullet list ─────────────────────────────────────────────── */
+  ul.bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  ul.bullets li::before { content: "→ "; color: var(--accent); font-weight: 700; }
+
+  /* ── Two-col with divider ────────────────────────────────────── */
+  .divider-v {
+    width: 1px;
+    background: var(--border);
+    align-self: stretch;
+  }
+
+  /* ── Highlight box ───────────────────────────────────────────── */
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(91,127,255,0.08), rgba(155,91,255,0.08));
+    border: 1px solid rgba(91,127,255,0.25);
+    border-radius: 14px;
+    padding: 20px 26px;
+  }
+
+  /* ── Section title slide ─────────────────────────────────────── */
+  .section-slide {
+    align-items: center;
+    text-align: center;
+  }
+  .section-slide h1 {
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+  }
+  .section-divider {
+    width: 60px;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    margin: 0 auto;
+  }
+
+  /* ── Keyboard shortcut hint ──────────────────────────────────── */
+  #key-hint {
+    position: fixed;
+    bottom: 74px;
+    right: 28px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  kbd {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 11px;
+  }
+
+  /* ── Hamburger menu ──────────────────────────────────────────── */
+  #menu-btn {
+    position: fixed;
+    top: 18px;
+    right: 20px;
+    z-index: 300;
+    background: rgba(22,26,36,0.9);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 18px;
+    padding: 6px 10px;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    transition: background 0.15s;
+    line-height: 1;
+  }
+  #menu-btn:hover { background: var(--border); }
+
+  #slide-menu {
+    display: none;
+    position: fixed;
+    top: 0; right: 0;
+    width: 280px;
+    height: 100vh;
+    background: rgba(16,20,30,0.97);
+    border-left: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    z-index: 250;
+    overflow-y: auto;
+    padding: 60px 0 24px;
+    flex-direction: column;
+  }
+  #slide-menu.open { display: flex; }
+
+  #slide-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  #slide-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 22px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: background 0.12s, color 0.12s;
+    cursor: pointer;
+  }
+  #slide-menu li a:hover,
+  #slide-menu li a.active { background: rgba(91,127,255,0.1); color: var(--text); }
+  #slide-menu li a .menu-num {
+    flex-shrink: 0;
+    width: 22px;
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+  }
+  #menu-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  #menu-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 240;
+  }
+  #menu-overlay.open { display: block; }
+
+  /* ── Mobile responsive ───────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .slide { padding: 40px 20px 80px; }
+    .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.4rem; }
+    #slide-menu { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="deck">
+
+  <!-- ── SLIDE 1: Hero ──────────────────────────────────────────── -->
+  <section class="slide active" id="s1">
+    <div class="hero-badge">
+      <span>🤖</span> v0.1.0 · Open Source · Releasing March 2026
+    </div>
+    <h1>
+      <span class="gradient-text">FridAI Core</span><br/>
+      <span style="font-weight:400; font-size:0.55em; color:var(--muted)">Governance-First AI Automation</span>
+    </h1>
+    <p style="max-width:640px; color:var(--muted); font-size:1.1rem; line-height:1.7">
+      A platform that lets AI assistants actually <em>do things</em> — write code, run data pipelines, manage Git —
+      while keeping humans firmly in control through approval gates, sandboxed execution, and full audit trails.
+    </p>
+    <div class="cols cols-4" style="max-width:640px">
+      <div class="tag tag-blue" style="text-align:center">MCP Hub</div>
+      <div class="tag tag-purple" style="text-align:center">Vector Memory</div>
+      <div class="tag tag-green" style="text-align:center">Sandbox</div>
+      <div class="tag tag-warn" style="text-align:center">Governance</div>
+    </div>
+    <p class="muted" style="font-size:0.85rem">Built by Garrett Schumacher · Python 3.11+ · 447+ tests</p>
+    <span class="slide-num">1 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 2: What is MCP? ─────────────────────────────────── -->
+  <section class="slide" id="s2">
+    <div class="eyebrow">Background Concept</div>
+    <h2>What's MCP?</h2>
+    <div class="cols cols-2" style="gap:36px">
+      <div>
+        <p style="margin-bottom:16px">
+          <strong>MCP (Model Context Protocol)</strong> is a JSON-RPC protocol for AI tool calling.
+          It lets an assistant like Claude or Gemini <em>discover and call external tools</em> using a consistent
+          message format.
+        </p>
+        <p style="margin-bottom:16px">
+          FridAI can connect to external MCP servers (local or remote) — for example GitHub, Google Toolbox,
+          or Jira — and proxy them through a single governed hub.
+        </p>
+        <p>
+          The problem: every AI assistant has to connect to <em>each one separately</em>, manage credentials
+          for each, and ends up with a jumbled list of 100+ tools from all sources combined.
+        </p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px">
+        <div class="arch-box" style="border-color:var(--accent); color:var(--accent)">AI Assistant (Claude / Gemini / Codex)</div>
+        <div class="arch-arrow">↓ one connection (MCP)</div>
+        <div class="arch-box" style="border-color:var(--accent2); color:var(--accent2); font-weight:700">🔐 FridAI MCP Hub · port 3921</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px">
+          <div class="arch-arrow" style="font-size:0.9rem">↙</div>
+          <div class="arch-arrow" style="font-size:0.9rem">↓</div>
+          <div class="arch-arrow" style="font-size:0.9rem">↘</div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px">
+          <div class="arch-box" style="font-size:0.75rem">GitHub MCP</div>
+          <div class="arch-box" style="font-size:0.75rem">Google Toolbox MCP</div>
+          <div class="arch-box" style="font-size:0.75rem">Jira MCP</div>
+        </div>
+        <p class="muted" style="font-size:0.78rem; text-align:center">FridAI sits in between — one secure gateway</p>
+      </div>
+    </div>
+    <span class="slide-num">2 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 3: The Problem ─────────────────────────────────── -->
+  <section class="slide" id="s3">
+    <div class="eyebrow">The Problem</div>
+    <h2>AI can <em>suggest</em>. What about actually <em>doing</em>?</h2>
+    <div class="cols cols-3">
+      <div class="card warn-l">
+        <span class="icon">🔧</span>
+        <h3 style="color:var(--warn)">Tool Bloat</h3>
+        <p>AI assistants connected to dozens of MCP servers end up with hundreds of tools — confusing, slow, and hard to govern.</p>
+      </div>
+      <div class="card warn-l">
+        <span class="icon">🧠</span>
+        <h3 style="color:var(--warn)">Context Fatigue</h3>
+        <p>Each new session, the AI has to rediscover what automations exist. There's no persistent memory of "what we've built."</p>
+      </div>
+      <div class="card warn-l">
+        <span class="icon">⚠️</span>
+        <h3 style="color:var(--warn)">No Guardrails</h3>
+        <p>Raw AI tool calls have no approval gates, no audit trail, no sandbox. When something goes wrong, there's no record of what happened.</p>
+      </div>
+    </div>
+    <div class="highlight-box">
+      <p style="text-align:center; font-size:1.05rem">FridAI solves all three — with a single hub that <strong>aggregates</strong> tools, <strong>remembers</strong> automations, and enforces <strong>governance</strong> on every action.</p>
+    </div>
+    <span class="slide-num">3 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 4: Enterprise Framing ──────────────────────────── -->
+  <section class="slide" id="s4">
+    <div class="eyebrow">Why This Matters at Enterprise Scale</div>
+    <h2>MCP + Agentic workflows need a <em>governance layer</em></h2>
+    <div class="cols cols-3" style="gap:20px">
+      <div class="card accent-l">
+        <span class="icon">🗂️</span>
+        <h3>Data stays where it belongs</h3>
+        <p style="font-size:0.9rem; margin-top:8px">Local LLM support via Ollama means inference can run entirely on-premise — no data sent to third-party APIs. Network-isolated Docker sandboxes enforce data containment at the execution layer.</p>
+        <br/>
+        <div style="display:flex; gap:6px; flex-wrap:wrap">
+          <span class="tag tag-blue">On-premise LLMs</span>
+          <span class="tag tag-blue">Network isolation</span>
+        </div>
+      </div>
+      <div class="card warn-l">
+        <span class="icon">✅</span>
+        <h3 style="color:var(--warn)">Every action has a human decision on record</h3>
+        <p style="font-size:0.9rem; margin-top:8px">Sensitive operations require an explicit approval before execution. Each approval record stores who requested it, who approved it, a summary of what was authorized, and timestamps — queryable at any time.</p>
+        <br/>
+        <div style="display:flex; gap:6px; flex-wrap:wrap">
+          <span class="tag tag-warn">Approval gates</span>
+          <span class="tag tag-warn">Full audit trail</span>
+        </div>
+      </div>
+      <div class="card green-l">
+        <span class="icon">🔧</span>
+        <h3 style="color:var(--accent3)">Scope AI access per deployment</h3>
+        <p style="font-size:0.9rem; margin-top:8px">Deployment profiles control exactly which tools the AI can see and call. Run separate hub instances per team or environment — analysts, engineers, and data ops each get a scoped, purpose-built tool set.</p>
+        <br/>
+        <div style="display:flex; gap:6px; flex-wrap:wrap">
+          <span class="tag tag-green">Profile-scoped tools</span>
+          <span class="tag tag-green">Per-environment posture</span>
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box" style="padding:14px 20px">
+      <p style="font-size:0.95rem; text-align:center">Built governance-first — not bolted on after. Every execution path enforces the same lifecycle: validate → approve → sandbox → audit.</p>
+    </div>
+    <span class="slide-num">4 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 5: Profile System ──────────────────────────────── -->
+  <section class="slide" id="s5">
+    <div class="eyebrow">Access Control · Governance Layer</div>
+    <h2>Profile System — Scoping What AI Can See &amp; Do</h2>
+    <div class="cols cols-2" style="gap:28px; align-items:start">
+      <div style="display:flex; flex-direction:column; gap:16px">
+        <div class="card accent-l">
+          <h3>What a profile controls</h3>
+          <ul class="bullets" style="margin-top:8px; font-size:0.88rem">
+            <li><strong>Tool visibility</strong> — glob patterns filter the tool catalog</li>
+            <li><strong>Handler autonomy</strong> — READ_ONLY auto-approved, SENSITIVE gated</li>
+            <li><strong>LLM token budget</strong> — cap inference cost per deployment</li>
+            <li><strong>Notification routing</strong> — Slack / email / CLI per environment</li>
+            <li><strong>Memory backend</strong> — local JSON vs Pinecone vs GCS</li>
+          </ul>
+        </div>
+        <div class="card warn-l">
+          <h3 style="color:var(--warn)">The key security insight</h3>
+          <p style="font-size:0.88rem; margin-top:8px">Profile is set <strong>server-side</strong> via <code>FRIDAI_PROFILE</code> — the caller cannot change it. The AI cannot call tools it cannot see.</p>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:16px">
+        <div class="card green-l">
+          <h3 style="color:var(--accent3)">Current state</h3>
+          <p style="font-size:0.88rem; margin-top:8px">One profile per hub deployment. All callers on that instance share the same scoped tool set. Separate hub deployments per audience (analysts vs engineers vs data ops).</p>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:10px">
+            <span class="tag tag-green">default preset</span>
+            <span class="tag tag-green">production preset</span>
+          </div>
+        </div>
+        <div class="card" style="border-left:3px solid var(--accent2); background: linear-gradient(135deg, rgba(155,91,255,0.05), rgba(91,127,255,0.05))">
+          <h3 style="color:var(--accent2)">Future state — roadmap</h3>
+          <p style="font-size:0.88rem; margin-top:8px">Single hub with <strong>API-key-scoped profiles</strong>. Each team or user gets their own tool set and autonomy level — all from one deployment.</p>
+          <div style="margin-top:10px; display:flex; flex-direction:column; gap:4px">
+            <span style="font-size:0.8rem; color:var(--muted)">analysts → read-only data tools only</span>
+            <span style="font-size:0.8rem; color:var(--muted)">engineers → full git + file handlers</span>
+            <span style="font-size:0.8rem; color:var(--muted)">data ops → pipeline + infra handlers</span>
+          </div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:10px">
+            <span class="tag tag-purple">~30 lines of code</span>
+            <span class="tag tag-purple">extension point designed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="slide-num">5 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 6: Architecture Overview ───────────────────────── -->
+  <section class="slide" id="s6">
+    <div class="eyebrow">Architecture</div>
+    <h2>Three services + optional extensions</h2>
+    <div class="cols cols-4">
+      <div class="card accent-l">
+        <h3>MCP Hub</h3>
+        <p class="muted" style="font-size:0.78rem; margin: 4px 0 8px">Port 3921</p>
+        <p style="font-size:0.88rem">The AI-facing gateway. Authenticates requests, filters available tools per user role, routes to the right service.</p>
+        <br/>
+        <span class="tag tag-blue">AI Entry Point</span>
+      </div>
+      <div class="card" style="border-left:3px solid var(--accent2)">
+        <h3 style="color:var(--accent2)">System Engine</h3>
+        <p class="muted" style="font-size:0.78rem; margin: 4px 0 8px">Port 8000</p>
+        <p style="font-size:0.88rem">Runs automations. Validates spec files, checks for required approvals, executes handlers, writes audit logs.</p>
+        <br/>
+        <span class="tag tag-purple">Core Executor</span>
+      </div>
+      <div class="card green-l">
+        <h3 style="color:var(--accent3)">Memory Service</h3>
+        <p class="muted" style="font-size:0.78rem; margin: 4px 0 8px">Port 3922</p>
+        <p style="font-size:0.88rem">Stores descriptions of all your automations. AI can search them semantically — "find something that cleans CSV data."</p>
+        <br/>
+        <span class="tag tag-green">Semantic Search</span>
+      </div>
+      <div class="card" style="border-left:3px solid var(--accent3)">
+        <h3 style="color:var(--accent3)">Common Library</h3>
+        <p class="muted" style="font-size:0.78rem; margin: 4px 0 8px">Shared code (not a service)</p>
+        <p style="font-size:0.88rem">Secrets, notifications (Slack / email / CLI), shared data models. The foundation everything else is built on.</p>
+        <br/>
+        <span class="tag tag-green">Foundation</span>
+      </div>
+    </div>
+    <div class="highlight-box" style="padding:14px 20px">
+      <p style="font-size:0.9rem; text-align:center">Plus an optional <strong>Local LLM plugin</strong> — run Qwen or DeepSeek models locally via Ollama for fully offline operation.</p>
+    </div>
+    <span class="slide-num">6 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 7: Specs — the central concept ──────────────────── -->
+  <section class="slide" id="s7">
+    <div class="eyebrow">Core Concept</div>
+    <h2>Specs: Automation as Code</h2>
+    <div class="cols cols-2" style="gap:36px; align-items:start">
+      <div>
+        <p style="margin-bottom:14px">
+          Everything in FridAI is driven by a <strong>spec file</strong> — a YAML document that declares
+          exactly what an automation does, step by step.
+        </p>
+        <p style="margin-bottom:14px">
+          Think of it like a recipe: each step names a <strong>handler</strong> (a built-in action),
+          provides its inputs, and optionally flags that it needs human approval or sandboxed execution.
+        </p>
+        <ul class="bullets" style="margin-top:8px">
+          <li>Human-readable intent field</li>
+          <li>Ordered task list with typed parameters</li>
+          <li>Per-task approval and sandbox flags</li>
+          <li>AI-searchable via the Memory service</li>
+          <li>Validated before any execution begins</li>
+        </ul>
+      </div>
+      <pre><span class="kw">spec:</span>
+  <span class="key">id:</span> <span class="str">spec.git_pipeline</span>
+  <span class="key">intent:</span> <span class="str">"Create branch, commit changes,
+          push for review"</span>
+
+  <span class="key">tasks:</span>
+    - <span class="key">id:</span> <span class="str">create_branch</span>
+      <span class="key">handler:</span> <span class="str">git_branch</span>
+      <span class="key">params:</span>
+        <span class="key">name:</span> <span class="str">feature/my-change</span>
+        <span class="key">create:</span> <span class="val">true</span>
+
+    - <span class="key">id:</span> <span class="str">commit_work</span>
+      <span class="key">handler:</span> <span class="str">git_commit</span>
+      <span class="key">params:</span>
+        <span class="key">message:</span> <span class="str">"feat: add new feature"</span>
+
+    - <span class="key">id:</span> <span class="str">push_branch</span>
+      <span class="key">handler:</span> <span class="str">git_push</span>
+      <span class="key">requires_approval:</span> <span class="val">true</span>  <span class="cmt"># ← human gate</span>
+      <span class="key">sandbox:</span>
+        <span class="key">required:</span> <span class="val">true</span>
+        <span class="key">providers:</span> [<span class="str">docker</span>]</pre>
+    </div>
+    <span class="slide-num">7 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 8: Handlers ─────────────────────────────────────── -->
+  <section class="slide" id="s8">
+    <div class="eyebrow">Current State · v0.1.0</div>
+    <h2>Handlers — what's shipping today</h2>
+    <p style="color:var(--muted); max-width:680px">Handlers are the atomic actions FridAI can execute. Each one is self-describing — its class, approval requirement, and sandbox flag are declared right alongside the code.</p>
+    <div class="cols cols-3">
+      <div class="card accent-l">
+        <h3>Files &amp; Data</h3>
+        <ul class="bullets" style="margin-top:8px; font-size:0.88rem">
+          <li><code>file</code> — read files &amp; list dirs</li>
+          <li><code>file_write</code> — write / append</li>
+          <li><code>apply_patch</code> — apply unified diff</li>
+          <li><code>gcs_read / gcs_write</code> — Cloud Storage</li>
+          <li><code>bigquery_query</code> — run SQL</li>
+          <li><code>dataflow_submit</code> — Dataflow jobs</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left:3px solid var(--accent2)">
+        <h3 style="color:var(--accent2)">Git &amp; HTTP</h3>
+        <ul class="bullets" style="margin-top:8px; font-size:0.88rem">
+          <li><code>git_read</code> — status / log / fetch</li>
+          <li><code>git_clone</code> — clone repo</li>
+          <li><code>git_branch</code> — create / checkout</li>
+          <li><code>git_commit</code> — commit changes</li>
+          <li><code>git_push</code> — push (force defaults off)</li>
+          <li><code>http_get</code> — GET / HEAD requests</li>
+        </ul>
+      </div>
+      <div class="card green-l">
+        <h3 style="color:var(--accent3)">System &amp; LLM</h3>
+        <ul class="bullets" style="margin-top:8px; font-size:0.88rem">
+          <li><code>bundle</code> — regenerate spec bundle</li>
+          <li><code>repo</code> — prepare repo sync</li>
+          <li><code>noop</code> — dry-run placeholder</li>
+          <li><code>llm.generate</code> — local Ollama inference <span class="tag tag-green" style="font-size:0.7rem">plugin</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="background:var(--code-bg); border-color:var(--border)">
+      <p style="font-size:0.85rem">New handlers install as <strong>plugins</strong> — a separate Python package that self-registers via entry points. No changes to FridAI core. Next slide shows what's on the roadmap.</p>
+    </div>
+    <span class="slide-num">8 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 9: Handler Governance Classes + Roadmap ────────── -->
+  <section class="slide" id="s9">
+    <div class="eyebrow">Handler Governance · Roadmap</div>
+    <h2>Handler classes &amp; what's coming next</h2>
+    <div class="cols cols-2" style="gap:28px; align-items:start">
+
+      <!-- Left: governance class explanation with handler examples -->
+      <div style="display:flex; flex-direction:column; gap:12px">
+        <p style="color:var(--muted); font-size:0.88rem">Every handler belongs to a governance class (read_only, sensitive, infrastructure; financial/memory reserved). The class helps determine approvals and sandbox posture.</p>
+
+        <div class="card green-l" style="padding:14px 18px">
+          <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:6px">
+            <h3 style="color:var(--accent3)">READ_ONLY</h3>
+            <span class="tag tag-green" style="font-size:0.72rem">often auto-approved · sandbox optional</span>
+          </div>
+          <p style="font-size:0.84rem; color:var(--muted); margin-bottom:8px">Low-risk reads. In governed profiles, some still require approval or sandboxing (e.g., GCS reads).</p>
+          <div style="display:flex; flex-wrap:wrap; gap:6px">
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">file</code>
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">git_read</code>
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">http_get</code>
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">noop</code>
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">llm.generate</code>
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">gcs_read</code>
+          </div>
+        </div>
+
+        <div class="card warn-l" style="padding:14px 18px">
+          <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:6px">
+            <h3 style="color:var(--warn)">SENSITIVE</h3>
+            <span class="tag tag-warn" style="font-size:0.72rem">approval-gated in strict profiles · many sandboxed 🐳</span>
+          </div>
+          <p style="font-size:0.84rem; color:var(--muted); margin-bottom:8px">Mutating or data-exfiltrating. Most run inside Docker. Require sign-off when the profile demands it.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:6px">
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">file_write</code>
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">git_clone</code>
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">git_commit</code>
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">git_push</code>
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">apply_patch</code>
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">gcs_write</code>
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">bigquery_query</code>
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">dataflow_submit</code>
+          </div>
+        </div>
+
+        <div class="card" style="padding:14px 18px; border-left:3px solid var(--accent2)">
+          <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:6px">
+            <h3 style="color:var(--accent2)">INFRASTRUCTURE</h3>
+            <span class="tag tag-purple" style="font-size:0.72rem">always require approval</span>
+          </div>
+          <p style="font-size:0.84rem; color:var(--muted); margin-bottom:8px">Infrastructure-level operations. No exceptions — human sign-off is mandatory regardless of profile.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:6px">
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px">repo</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: roadmap -->
+      <div style="display:flex; flex-direction:column; gap:12px">
+        <p style="font-size:0.78rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted)">On the Roadmap</p>
+
+        <div class="card green-l" style="padding:14px 18px">
+          <h3 style="color:var(--accent3)">LLM plugin — available today (Ollama)</h3>
+          <p style="font-size:0.84rem; color:var(--muted); margin:6px 0 8px"><code>llm.generate</code> ships as an optional plugin. An example spec (<code>llm_code_refactor</code>) shows a multi-step flow; output binding is still a placeholder.</p>
+          <p style="font-size:0.78rem; color:var(--muted); margin-bottom:8px">Three more specialized handlers are planned next:</p>
+          <div style="display:flex; flex-wrap:wrap; gap:6px">
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px; opacity:0.7">llm.analyze</code>
+            <span style="font-size:0.78rem; color:var(--muted); align-self:center">structured analysis</span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px">
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px; opacity:0.7">llm.summarize</code>
+            <span style="font-size:0.78rem; color:var(--muted); align-self:center">condense long content</span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px">
+            <code style="font-size:0.78rem; background:var(--code-bg); padding:2px 7px; border-radius:4px; opacity:0.7">llm.chat</code>
+            <span style="font-size:0.78rem; color:var(--muted); align-self:center">multi-turn conversations</span>
+          </div>
+        </div>
+
+        <div class="card" style="border-left:3px solid var(--muted); padding:14px 18px; opacity:0.8">
+          <h3 style="color:var(--muted)">Cloud storage expansion <span style="font-weight:400; font-size:0.8rem">v0.3.0+</span></h3>
+          <ul class="bullets" style="font-size:0.84rem; margin-top:6px">
+            <li>AWS S3 read / write handler</li>
+          </ul>
+        </div>
+
+        <div class="card" style="border-left:3px solid var(--muted); padding:14px 18px; opacity:0.8">
+          <h3 style="color:var(--muted)">Integrations <span style="font-weight:400; font-size:0.8rem">v0.3.0+</span></h3>
+          <ul class="bullets" style="font-size:0.84rem; margin-top:6px">
+            <li>Jira / Linear issue tracking</li>
+            <li>GitHub Actions trigger</li>
+            <li>Slack / Discord approval bot</li>
+          </ul>
+        </div>
+
+        <div class="card" style="border-left:3px solid var(--muted); padding:14px 18px; opacity:0.7">
+          <h3 style="color:var(--muted)">Long-range execution</h3>
+          <ul class="bullets" style="font-size:0.84rem; margin-top:6px">
+            <li>Kubernetes sandbox runtime</li>
+            <li>Distributed execution (Celery / Dask)</li>
+            <li>Scheduled / cron spec runs</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <span class="slide-num">9 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 10: Governance Flow ──────────────────────────────── -->
+  <section class="slide" id="s10">
+    <div class="eyebrow">Governance</div>
+    <h2>Every execution follows the same lifecycle</h2>
+    <div class="cols cols-2" style="gap:40px; align-items:center">
+      <ol class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div>
+            <strong>Validate</strong>
+            <p class="muted" style="font-size:0.88rem">Spec schema is checked. All referenced handlers must exist in the registry. Params are type-checked before anything runs.</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div>
+            <strong>Check Approvals</strong>
+            <p class="muted" style="font-size:0.88rem">Any task with <code>requires_approval: true</code> must have a recorded human approval. Missing one? Execution stops immediately.</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div>
+            <strong>Execute (with optional Sandbox)</strong>
+            <p class="muted" style="font-size:0.88rem">Tasks run in order. Tasks marked <code>sandbox.required: true</code> run inside Docker with no network by default, non-root user, and resource limits.</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div>
+            <strong>Notify &amp; Record</strong>
+            <p class="muted" style="font-size:0.88rem">Results are sent via Slack, email, or CLI. Run history entries are written; sandbox artifact manifests are signed. Full audit trail, always.</p>
+          </div>
+        </li>
+      </ol>
+      <div style="display:flex; flex-direction:column; gap:8px; align-items:center">
+        <div class="arch-box" style="width:100%; border-color:var(--accent); color:var(--accent)">📋 Validate Spec</div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-box" style="width:100%; border-color:var(--warn); color:var(--warn)">🔒 Check Approvals</div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-box" style="width:100%; border-color:var(--accent2); color:var(--accent2)">⚙️ Execute Handlers</div>
+        <div style="display:flex; gap:8px; width:100%; font-size:0.8rem">
+          <div class="arch-box" style="flex:1; font-size:0.75rem; border-color:var(--muted)">Direct</div>
+          <div class="arch-box" style="flex:1; font-size:0.75rem; border-color:var(--accent3); color:var(--accent3)">🐳 Sandbox</div>
+        </div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-box" style="width:100%; border-color:var(--accent3); color:var(--accent3)">📝 Notify + Audit Log</div>
+      </div>
+    </div>
+    <span class="slide-num">10 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 11: The Sandbox ───────────────────────────────────── -->
+  <section class="slide" id="s11">
+    <div class="eyebrow">Security</div>
+    <h2>The Docker Sandbox</h2>
+    <p style="color:var(--muted); max-width:700px">For high-risk operations, FridAI runs code inside a hardened Docker container. Five phases of hardening went into this — it's production-grade isolation.</p>
+    <div class="cols cols-2">
+      <div>
+        <div class="card green-l" style="margin-bottom:12px">
+          <h3 style="color:var(--accent3)">Default profile locks down</h3>
+          <ul class="bullets" style="margin-top:8px; font-size:0.88rem">
+            <li>Non-root user (uid 1000) — never runs as admin</li>
+            <li>All Linux capabilities dropped</li>
+            <li>Network disabled by default</li>
+            <li>Read-only filesystem</li>
+            <li>512 MB RAM · 1 CPU · 256 max processes</li>
+            <li>Seccomp filters + AppArmor on Linux</li>
+          </ul>
+        </div>
+        <div class="card warn-l">
+          <h3 style="color:var(--warn)">Artifact signing</h3>
+          <p style="font-size:0.88rem">Sandbox manifests are signed with <strong>HMAC-SHA256</strong> and include per-file SHA256 hashes for integrity verification.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="border-left:3px solid var(--accent2)">
+          <h3 style="color:var(--accent2)">Sandbox profiles</h3>
+          <p style="font-size:0.88rem; margin-bottom:12px">Security posture is driven by sandbox profile YAML:</p>
+          <ul class="bullets" style="font-size:0.88rem">
+            <li><strong>default</strong> — network=none, 512MB/1CPU/256 PIDs</li>
+            <li><strong>dev</strong> — more permissive for development</li>
+            <li><strong>production</strong> — locked-down baseline</li>
+            <li><strong>local-dev</strong> — local development overrides</li>
+          </ul>
+          <br/>
+          <p class="muted" style="font-size:0.8rem">Defined in <code>packages/system/sandbox/profiles/*.yaml</code> and selected via <code>FRIDAI_PROFILE</code> when sandbox runs</p>
+        </div>
+      </div>
+    </div>
+    <span class="slide-num">11 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 12: Approval Workflow ────────────────────────────── -->
+  <section class="slide" id="s12">
+    <div class="eyebrow">Human-in-the-Loop</div>
+    <h2>Approvals — humans stay in control</h2>
+    <div class="cols cols-2" style="gap:36px; align-items:start">
+      <div>
+        <p style="margin-bottom:16px">
+          Any task can be flagged <code>requires_approval: true</code>.
+          Before that task runs, someone must explicitly sign off — via CLI, or through the AI assistant itself.
+        </p>
+        <p style="margin-bottom:16px">Approvals are a <strong>three-state machine</strong>:</p>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px">
+          <div class="arch-box" style="border-color:var(--warn); color:var(--warn); padding:8px 14px; font-size:0.85rem">PENDING</div>
+          <span class="muted">→</span>
+          <div class="arch-box" style="border-color:var(--accent3); color:var(--accent3); padding:8px 14px; font-size:0.85rem">APPROVED</div>
+          <span class="muted">or</span>
+          <div class="arch-box" style="border-color:#ff6b6b; color:#ff6b6b; padding:8px 14px; font-size:0.85rem">DENIED</div>
+        </div>
+        <p style="margin-bottom:12px">Each approval record stores:</p>
+        <ul class="bullets" style="font-size:0.88rem">
+          <li>Handler ID and class (SENSITIVE / INFRASTRUCTURE)</li>
+          <li>Who requested it and who approved it</li>
+          <li>Timestamps for full traceability</li>
+          <li>A summary of what was approved</li>
+        </ul>
+      </div>
+      <div>
+        <div class="card accent-l" style="margin-bottom:12px">
+          <h3>AI-Assisted Approval Flow</h3>
+          <p style="font-size:0.88rem; margin-top:8px">An AI agent can call <code>spec_approval_request</code> over MCP, poll <code>approvals.status/{record_id}</code>, and continue once a human records a decision via <code>spec_approval_record</code> or CLI.</p>
+        </div>
+        <div class="card" style="border-left:3px solid var(--muted)">
+          <p class="muted" style="font-size:0.85rem">This is what makes FridAI different from just calling APIs directly — every sensitive action has a documented human decision attached to it.</p>
+        </div>
+        <br/>
+        <pre style="font-size:0.75rem"><span class="cmt"># CLI approval request</span>
+<span class="kw">fridai</span> approvals request <span class="val">--handler-id</span> git_push <span class="val">--handler-class</span> sensitive <span class="val">--spec-hash</span> &lt;hash&gt; <span class="val">--summary</span> <span class="str">"Push branch"</span> <span class="val">--requested-by</span> cli
+
+<span class="cmt"># Approve or deny</span>
+<span class="kw">fridai</span> approvals decide &lt;record_id&gt; <span class="val">--decision</span> approve <span class="val">--approver</span> cli</pre>
+      </div>
+    </div>
+    <span class="slide-num">12 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 13: Memory Service ──────────────────────────────── -->
+  <section class="slide" id="s13">
+    <div class="eyebrow">Memory &amp; Discovery</div>
+    <h2>AI-searchable automation library</h2>
+    <div class="cols cols-2" style="gap:36px; align-items:start">
+      <div>
+        <p style="margin-bottom:14px">
+          The Memory Service solves a real problem: as you build more automations, how does the AI know what already exists?
+        </p>
+        <p style="margin-bottom:14px">
+          Each spec gets published as a <strong>Memory Card</strong> — a structured description with intent, tags,
+          and a vector embedding. The AI can then <em>search by meaning</em>, not just exact name.
+        </p>
+        <div class="highlight-box" style="margin-bottom:14px">
+          <p style="font-size:0.9rem; font-style:italic">"Find something that cleans CSV data"</p>
+          <p class="muted" style="font-size:0.82rem; margin-top:6px">→ Returns <code>data_pipeline</code> spec, even though the words don't match exactly</p>
+        </div>
+        <p class="muted" style="font-size:0.88rem">Pinecone search uses local SentenceTransformers embeddings; the local JSONL store provides fast keyword search.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px">
+        <div class="card green-l">
+          <h3 style="color:var(--accent3)">Storage backends</h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px">
+            <div class="tag tag-blue" style="text-align:center">Local JSON</div>
+            <div class="tag tag-green" style="text-align:center">Pinecone</div>
+            <div class="tag tag-green" style="text-align:center">GCS (stub/live)</div>
+            <div class="tag tag-purple" style="text-align:center">Hybrid (Pinecone + GCS)</div>
+          </div>
+          <p style="font-size:0.82rem; margin-top:10px; color:var(--muted)">Start local, scale to cloud when you're ready.</p>
+        </div>
+        <div class="card">
+          <h3>Publishing a spec</h3>
+          <pre style="font-size:0.75rem; margin-top:8px; background:none; border:none; padding:0"><span class="kw">fridai</span> spec publish</pre>
+          <p class="muted" style="font-size:0.82rem; margin-top:6px">Makes the spec discoverable to AI assistants in future sessions.</p>
+        </div>
+      </div>
+    </div>
+    <span class="slide-num">13 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 14: MCP Hub Detail ──────────────────────────────── -->
+  <section class="slide" id="s14">
+    <div class="eyebrow">MCP Hub</div>
+    <h2>One gateway for AI, governance for everything</h2>
+    <div class="cols cols-2" style="gap:36px; align-items:start">
+      <div>
+        <p style="margin-bottom:14px">The MCP Hub is what AI assistants actually connect to. It exposes a curated tool catalog — <code>spec_*</code>, <code>approvals_*</code>, <code>callbacks_*</code>, <code>system_*</code>, plus handler wrappers — regardless of how many underlying services exist.</p>
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <div class="card accent-l" style="padding:12px 16px">
+            <code style="font-size:0.82rem; color:var(--accent)">spec_validate</code>
+            <span class="muted" style="font-size:0.82rem"> — check a spec before running</span>
+          </div>
+          <div class="card accent-l" style="padding:12px 16px">
+            <code style="font-size:0.82rem; color:var(--accent)">spec_exec</code>
+            <span class="muted" style="font-size:0.82rem"> — run an automation</span>
+          </div>
+          <div class="card accent-l" style="padding:12px 16px">
+            <code style="font-size:0.82rem; color:var(--accent)">spec_run_status</code>
+            <span class="muted" style="font-size:0.82rem"> — poll run status</span>
+          </div>
+          <div class="card accent-l" style="padding:12px 16px">
+            <code style="font-size:0.82rem; color:var(--accent)">spec_find</code>
+            <span class="muted" style="font-size:0.82rem"> — semantic search for automations</span>
+          </div>
+          <div class="card accent-l" style="padding:12px 16px">
+            <code style="font-size:0.82rem; color:var(--accent)">spec_approval_request / record</code>
+            <span class="muted" style="font-size:0.82rem"> — manage approvals</span>
+          </div>
+          <div class="card accent-l" style="padding:12px 16px">
+            <code style="font-size:0.82rem; color:var(--accent)">spec_callbacks_register / resume</code>
+            <span class="muted" style="font-size:0.82rem"> — pause and resume long runs</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px">
+        <div class="card" style="border-left:3px solid var(--accent2)">
+          <h3 style="color:var(--accent2)">Deployment-level profiles</h3>
+          <p style="font-size:0.88rem; margin-top:6px">The active profile is set once, server-side, via <code>FRIDAI_PROFILE</code>. All callers on that instance see the same filtered tool set. Per-user scoping is not supported yet — different audiences get separate hub deployments.</p>
+        </div>
+        <div class="card warn-l">
+          <h3 style="color:var(--warn)">Tool filtering</h3>
+          <p style="font-size:0.88rem; margin-top:6px">Tool visibility is filtered by the active profile’s allowlist patterns. Smaller context = faster, cheaper, less confused AI.</p>
+        </div>
+        <div class="card green-l">
+          <h3 style="color:var(--accent3)">Metrics built in</h3>
+          <p style="font-size:0.88rem; margin-top:6px">Latency/error metrics are tracked and exposed via the MCP hub metrics endpoint. Know when things slow down before users complain.</p>
+        </div>
+      </div>
+    </div>
+    <span class="slide-num">14 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 15: Hub Profiles — Who Sees What ────────────────── -->
+  <section class="slide" id="s15">
+    <div class="eyebrow">MCP Hub · Profiles</div>
+    <h2>Profiles — one deployment, one posture</h2>
+    <p style="color:var(--muted); max-width:700px">A profile (preset) is a YAML file that controls which tools are visible, which handler classes run autonomously, what notifications fire, and how much LLM budget is allowed. The active profile is set server-side via <code>FRIDAI_PROFILE</code> — not by the caller.</p>
+    <div class="cols cols-3" style="gap:20px">
+
+      <!-- default profile -->
+      <div class="card accent-l">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
+          <h3>default</h3>
+          <span class="tag tag-blue">dev / local</span>
+        </div>
+        <ul class="bullets" style="font-size:0.83rem; gap:5px">
+          <li>All handler classes auto-approved — fully autonomous execution</li>
+          <li>All MCP tools &amp; resources visible (<code>"*"</code>)</li>
+          <li>Notifications: disabled</li>
+          <li>Memory: local JSON</li>
+          <li>Sandbox: Docker (<code>sandbox-base:latest</code>)</li>
+          <li>LLM budget: none</li>
+        </ul>
+        <p class="muted" style="font-size:0.78rem; margin-top:10px">Great for local development where you own the machine and trust all actions.</p>
+      </div>
+
+      <!-- production preset -->
+      <div class="card" style="border-left:3px solid var(--warn)">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
+          <h3 style="color:var(--warn)">production</h3>
+          <span class="tag tag-warn">governed / prod</span>
+        </div>
+        <ul class="bullets" style="font-size:0.83rem; gap:5px">
+          <li>Only <code>READ_ONLY</code> handlers auto-approved</li>
+          <li><code>SENSITIVE</code> &amp; <code>INFRASTRUCTURE</code> require approval by default</li>
+          <li>MCP tools/resources: inherited from base (<code>"*"</code>) unless restricted</li>
+          <li>Notifications: Slack + CLI enabled</li>
+          <li>Memory: Pinecone (index <code>fridai-prod</code>)</li>
+          <li>Remotes: <code>github_remote</code> enabled (local remotes off)</li>
+        </ul>
+        <p class="muted" style="font-size:0.78rem; margin-top:10px">Production posture with approvals, notifications, and remote GitHub MCP.</p>
+      </div>
+
+      <!-- how profiles work -->
+      <div style="display:flex; flex-direction:column; gap:12px">
+        <div class="card" style="border-left:3px solid var(--accent2)">
+          <h3 style="color:var(--accent2)">How tool scoping works</h3>
+          <p style="font-size:0.83rem; margin-top:6px">Profiles define tool patterns using glob syntax. The hub filters the tool list before the AI even sees it:</p>
+          <pre style="font-size:0.75rem; margin-top:8px; background:none; border:none; padding:0"><span class="cmt"># example profile MCP section</span>
+<span class="key">enabled_tools:</span>
+  - <span class="str">spec_*</span>      <span class="cmt"># all spec tools</span>
+  - <span class="str">runs.*</span>      <span class="cmt"># run history</span>
+  - <span class="str">approvals.*</span> <span class="cmt"># approval ops</span></pre>
+          <p class="muted" style="font-size:0.78rem; margin-top:8px">The AI can't call what it can't see.</p>
+        </div>
+        <div class="card green-l">
+          <h3 style="color:var(--accent3)">Custom presets</h3>
+          <p style="font-size:0.83rem; margin-top:6px">New presets live in <code>config/presets/</code>. Run a different instance of the hub per deployment target — e.g. one for analysts, one for engineers — each with its own posture and autonomy level.</p>
+        </div>
+        <div class="highlight-box" style="padding:12px 16px">
+          <p style="font-size:0.82rem; text-align:center">One profile per instance · all callers see the same scoped tool set</p>
+        </div>
+      </div>
+    </div>
+    <span class="slide-num">15 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 16: Local LLMs ──────────────────────────────────── -->
+  <section class="slide" id="s16">
+    <div class="eyebrow">Optional Plugin</div>
+    <h2>Local LLM support — fully offline operation</h2>
+    <div class="cols cols-2" style="gap:36px; align-items:start">
+      <div>
+        <p style="margin-bottom:14px">
+          The optional <code>llm</code> plugin adds a <strong>local inference handler</strong> backed by Ollama.
+          Run AI models entirely on your own machine — no API keys, no data leaving your network.
+        </p>
+        <p style="margin-bottom:14px">
+          The <code>llm.generate</code> handler integrates with governance metadata and token budget enforcement,
+          and can be sandboxed when configured.
+        </p>
+        <div class="card warn-l">
+          <h3 style="color:var(--warn)">Recommended models</h3>
+          <ul class="bullets" style="font-size:0.88rem; margin-top:8px">
+            <li><strong>qwen2.5:3b</strong> — fast, great for tool-calling</li>
+            <li><strong>qwen2.5-coder:7b</strong> — code generation tasks</li>
+            <li><strong>deepseek-r1:7b-qwen-distill-q4_K_M</strong> — analysis &amp; reasoning</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="border-left:3px solid var(--accent2); margin-bottom:12px">
+          <h3 style="color:var(--accent2)">Token budget management</h3>
+          <p style="font-size:0.88rem; margin-top:6px">Each <code>llm.generate</code> call checks the configured token budget (<code>llm.budget_tokens</code>) and fails with <code>BUDGET_EXCEEDED</code> if the call would exceed it.</p>
+        </div>
+        <div class="card green-l">
+          <h3 style="color:var(--accent3)">Plugin auto-discovery</h3>
+          <p style="font-size:0.88rem; margin-top:6px">The <code>llm</code> package registers itself via Python entry points. Install the package and it's automatically available as a handler — no config changes needed.</p>
+        </div>
+        <br/>
+        <pre style="font-size:0.78rem"><span class="cmt"># In a spec task</span>
+<span class="kw">handler:</span> <span class="str">llm.generate</span>
+<span class="key">params:</span>
+  <span class="key">model:</span> <span class="str">qwen2.5-coder:7b</span>
+  <span class="key">prompt:</span> <span class="str">"Summarize this CSV..."</span>
+  <span class="key">max_tokens:</span> <span class="val">512</span></pre>
+      </div>
+    </div>
+    <span class="slide-num">16 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 17: Who is this for? ────────────────────────────── -->
+  <section class="slide" id="s17">
+    <div class="eyebrow">Use Cases</div>
+    <h2>Who uses FridAI?</h2>
+    <div class="cols cols-2" style="gap:24px">
+      <div class="card accent-l">
+        <span class="icon">📊</span>
+        <h3>Data Analysts</h3>
+        <p style="font-size:0.9rem; margin-top:6px">Define data cleaning and reporting pipelines as specs. Run them via Claude with pre-approved (and optionally sandboxed) handlers. Get consistent, auditable results every time — no ad-hoc scripts.</p>
+        <br/>
+        <div style="display:flex; gap:6px; flex-wrap:wrap">
+          <span class="tag tag-green">CSV pipelines</span>
+          <span class="tag tag-green">Report generation</span>
+          <span class="tag tag-green">Sandboxed</span>
+        </div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--accent2)">
+        <span class="icon">🛠️</span>
+        <h3 style="color:var(--accent2)">DevOps / Engineers</h3>
+        <p style="font-size:0.9rem; margin-top:6px">Automate Git workflows, PR creation, config rotation. Approval gates on production-touching tasks ensure nothing ships without a sign-off — even when AI is driving.</p>
+        <br/>
+        <div style="display:flex; gap:6px; flex-wrap:wrap">
+          <span class="tag tag-purple">Git automation</span>
+          <span class="tag tag-purple">Approval-gated</span>
+          <span class="tag tag-purple">Audit trail</span>
+        </div>
+      </div>
+      <div class="card warn-l">
+        <span class="icon">🛡️</span>
+        <h3 style="color:var(--warn)">Compliance &amp; Audit Teams</h3>
+        <p style="font-size:0.9rem; margin-top:6px">Every AI action over sensitive data has a recorded human decision attached — who requested it, who approved it, and what was run. Network-isolated sandboxing keeps data contained. Local LLMs mean nothing leaves your environment.</p>
+        <br/>
+        <div style="display:flex; gap:6px; flex-wrap:wrap">
+          <span class="tag tag-warn">Approval records</span>
+          <span class="tag tag-warn">Data isolation</span>
+          <span class="tag tag-warn">Signed artifacts</span>
+        </div>
+      </div>
+      <div class="card green-l">
+        <span class="icon">🤖</span>
+        <h3 style="color:var(--accent3)">AI-forward Developers</h3>
+        <p style="font-size:0.9rem; margin-top:6px">Build governed AI automation workflows without writing a custom backend. Use Claude or Gemini as the brain, FridAI as the muscle — with guardrails built in from day one.</p>
+        <br/>
+        <div style="display:flex; gap:6px; flex-wrap:wrap">
+          <span class="tag tag-green">MCP-native</span>
+          <span class="tag tag-green">Extensible</span>
+          <span class="tag tag-green">YAML-driven</span>
+        </div>
+      </div>
+    </div>
+    <span class="slide-num">17 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 18: Getting Started ─────────────────────────────── -->
+  <section class="slide" id="s18">
+    <div class="eyebrow">Getting Started</div>
+    <h2>From zero to running in minutes</h2>
+    <div class="cols cols-2" style="gap:36px; align-items:start">
+      <div>
+        <ol class="step-list">
+          <li>
+            <div class="step-num">1</div>
+            <div>
+              <strong>Install dependencies</strong>
+              <pre style="margin-top:8px; font-size:0.78rem"><span class="kw">conda</span> env create <span class="val">-f</span> environment.yml
+<span class="kw">conda</span> activate fridai-core</pre>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <div>
+              <strong>Start the services</strong>
+              <pre style="margin-top:8px; font-size:0.78rem"><span class="kw">mcp</span> start        <span class="cmt"># system + hub + memory</span></pre>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <div>
+              <strong>Write a spec or use a built-in one</strong>
+              <pre style="margin-top:8px; font-size:0.78rem"><span class="kw">fridai</span> validate
+<span class="kw">fridai</span> exec <span class="val">--spec</span> <span class="str">spec.data_pipeline</span></pre>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">4</div>
+            <div>
+              <strong>Connect your AI assistant</strong>
+              <p class="muted" style="font-size:0.85rem; margin-top:4px">Point Claude Desktop (via STDIO bridge) or any MCP-compatible client to the hub on <code>localhost:3921</code> and start automating.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px">
+        <div class="card green-l">
+          <h3 style="color:var(--accent3)">Minimal mode — no cloud required</h3>
+          <pre style="font-size:0.78rem; margin-top:8px; background:none; border:none; padding:0"><span class="key">FRIDAI_PROFILE</span>=<span class="str">minimal</span> mcp start</pre>
+          <p class="muted" style="font-size:0.82rem; margin-top:6px">Runs completely offline. No Docker, no Pinecone, no credentials. Great for first run or local development.</p>
+        </div>
+        <div class="card accent-l">
+          <h3>CLI at a glance</h3>
+          <pre style="font-size:0.75rem; margin-top:8px; background:none; border:none; padding:0"><span class="kw">fridai</span> validate               <span class="cmt"># validate specs</span>
+<span class="kw">fridai</span> exec <span class="val">--spec</span> spec.data_pipeline <span class="cmt"># run a spec</span>
+<span class="kw">fridai</span> approvals list         <span class="cmt"># view approvals</span>
+<span class="kw">fridai</span> approvals request      <span class="cmt"># request approval</span>
+<span class="kw">fridai</span> approvals decide       <span class="cmt"># approve/deny</span>
+<span class="kw">fridai</span> spec find <span class="str">"csv"</span>       <span class="cmt"># search memory</span></pre>
+        </div>
+        <div class="card" style="border-left:3px solid var(--muted)">
+          <p class="muted" style="font-size:0.82rem">447+ tests including adversarial security suites. Production-grade architecture — open source release targeting March 2026.</p>
+        </div>
+      </div>
+    </div>
+    <span class="slide-num">18 / 19</span>
+  </section>
+
+  <!-- ── SLIDE 19: Summary ──────────────────────────────────────── -->
+  <section class="slide" id="s19">
+    <div class="eyebrow">Summary</div>
+    <h2>FridAI Core — the short version</h2>
+    <div class="cols cols-3" style="margin-top:4px">
+      <div class="card" style="border-top:3px solid var(--accent); text-align:center">
+        <span class="icon" style="font-size:2.4rem">🔌</span>
+        <h3 style="text-align:center">One connection</h3>
+        <p style="font-size:0.88rem; margin-top:6px; text-align:center">AI assistants connect to one MCP hub instead of dozens of separate services. Fewer tools, better focus, single auth layer.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent2); text-align:center">
+        <span class="icon" style="font-size:2.4rem">📋</span>
+        <h3 style="text-align:center; color:var(--accent2)">Spec-driven</h3>
+        <p style="font-size:0.88rem; margin-top:6px; text-align:center">Automations are YAML files — readable, versionable, shareable. AI discovers them via semantic search. Humans approve the risky bits.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent3); text-align:center">
+        <span class="icon" style="font-size:2.4rem">🛡️</span>
+        <h3 style="text-align:center; color:var(--accent3)">Governance first</h3>
+        <p style="font-size:0.88rem; margin-top:6px; text-align:center">Every action is validated, logged, and optionally sandboxed. Approval gates keep humans in the loop. Full audit trail, always.</p>
+      </div>
+    </div>
+    <div class="highlight-box" style="text-align:center; padding:22px 32px">
+      <p style="font-size:1.1rem; font-weight:600; margin-bottom:8px">Let AI assistants move fast. Keep humans in control.</p>
+      <p class="muted">v0.1.0 · Python 3.11+ · MIT License · 447+ tests</p>
+      <div style="margin-top:14px">
+        <a href="https://github.com/garrettschumacher/fridai-core" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:rgba(91,127,255,0.12); border:1px solid rgba(91,127,255,0.35); border-radius:30px; padding:8px 20px; color:var(--accent); text-decoration:none; font-size:0.9rem; font-weight:600; transition:background 0.15s">
+          <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+      <div style="margin-top:12px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap">
+        <span class="tag tag-blue">MCP Aggregation</span>
+        <span class="tag tag-purple">Vector Memory</span>
+        <span class="tag tag-green">Docker Sandbox</span>
+        <span class="tag tag-warn">Approval Gates</span>
+        <span class="tag tag-green">Audit Trail</span>
+        <span class="tag tag-blue">Local LLMs</span>
+      </div>
+    </div>
+    <span class="slide-num">19 / 19</span>
+  </section>
+
+</div><!-- /deck -->
+
+<!-- ── Hamburger button ──────────────────────────────────────── -->
+<button id="menu-btn" onclick="toggleMenu()" title="Slide list">&#9776;</button>
+
+<!-- ── Slide menu panel ─────────────────────────────────────── -->
+<div id="menu-overlay" onclick="closeMenu()"></div>
+<nav id="slide-menu">
+  <button id="menu-close" onclick="closeMenu()">&#10005;</button>
+  <ul>
+    <li><a onclick="goTo(1)"><span class="menu-num">1</span>Hero — FridAI Core</a></li>
+    <li><a onclick="goTo(2)"><span class="menu-num">2</span>What's MCP?</a></li>
+    <li><a onclick="goTo(3)"><span class="menu-num">3</span>The Problem</a></li>
+    <li><a onclick="goTo(4)"><span class="menu-num">4</span>Enterprise Framing</a></li>
+    <li><a onclick="goTo(5)"><span class="menu-num">5</span>Profile System</a></li>
+    <li><a onclick="goTo(6)"><span class="menu-num">6</span>Architecture Overview</a></li>
+    <li><a onclick="goTo(7)"><span class="menu-num">7</span>Specs: Automation as Code</a></li>
+    <li><a onclick="goTo(8)"><span class="menu-num">8</span>Handlers — Shipping Today</a></li>
+    <li><a onclick="goTo(9)"><span class="menu-num">9</span>Handler Classes &amp; Roadmap</a></li>
+    <li><a onclick="goTo(10)"><span class="menu-num">10</span>Governance Flow</a></li>
+    <li><a onclick="goTo(11)"><span class="menu-num">11</span>The Docker Sandbox</a></li>
+    <li><a onclick="goTo(12)"><span class="menu-num">12</span>Approvals</a></li>
+    <li><a onclick="goTo(13)"><span class="menu-num">13</span>Memory Service</a></li>
+    <li><a onclick="goTo(14)"><span class="menu-num">14</span>MCP Hub Detail</a></li>
+    <li><a onclick="goTo(15)"><span class="menu-num">15</span>Hub Profiles</a></li>
+    <li><a onclick="goTo(16)"><span class="menu-num">16</span>Local LLMs</a></li>
+    <li><a onclick="goTo(17)"><span class="menu-num">17</span>Use Cases</a></li>
+    <li><a onclick="goTo(18)"><span class="menu-num">18</span>Getting Started</a></li>
+    <li><a onclick="goTo(19)"><span class="menu-num">19</span>Summary</a></li>
+  </ul>
+</nav>
+
+<div id="nav">
+  <button id="btn-prev" onclick="navigate(-1)" disabled>&#8592;</button>
+  <span id="slide-counter">1 / 19</span>
+  <button id="btn-next" onclick="navigate(1)">&#8594;</button>
+</div>
+
+<div id="key-hint"><kbd>←</kbd> <kbd>→</kbd> to navigate</div>
+
+<script>
+  const TOTAL = 19;
+  let current = 1;
+
+  function goTo(n) {
+    if (n < 1 || n > TOTAL) return;
+    document.getElementById('s' + current).classList.remove('active');
+    current = n;
+    document.getElementById('s' + current).classList.add('active');
+    document.getElementById('slide-counter').textContent = current + ' / ' + TOTAL;
+    document.getElementById('btn-prev').disabled = current === 1;
+    document.getElementById('btn-next').disabled = current === TOTAL;
+    document.getElementById('progress').style.width = ((current / TOTAL) * 100) + '%';
+    // Hash navigation
+    history.replaceState(null, '', '#slide-' + current);
+    // Update menu active state
+    document.querySelectorAll('#slide-menu li a').forEach((a, i) => {
+      a.classList.toggle('active', i + 1 === current);
+    });
+    closeMenu();
+  }
+
+  function navigate(dir) { goTo(current + dir); }
+
+  // Hamburger menu
+  function toggleMenu() {
+    document.getElementById('slide-menu').classList.toggle('open');
+    document.getElementById('menu-overlay').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('slide-menu').classList.remove('open');
+    document.getElementById('menu-overlay').classList.remove('open');
+  }
+
+  // Nav auto-hide — show on activity, fade after 2.5s idle
+  const nav = document.getElementById('nav');
+  let hideTimer;
+  function showNav() {
+    nav.classList.add('visible');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => nav.classList.remove('visible'), 1500);
+  }
+  document.addEventListener('mousemove', showNav, { passive: true });
+  document.addEventListener('touchstart', showNav, { passive: true });
+  document.addEventListener('keydown', showNav, { passive: true });
+  nav.addEventListener('mouseenter', () => { clearTimeout(hideTimer); nav.classList.add('visible'); });
+  nav.addEventListener('mouseleave', () => { hideTimer = setTimeout(() => nav.classList.remove('visible'), 1000); });
+  // Show briefly on load
+  showNav();
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeMenu(); return; }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') navigate(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp') navigate(-1);
+  });
+
+  // Touch / swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
+  // Read hash on load
+  (function initFromHash() {
+    const m = location.hash.match(/^#slide-(\d+)$/);
+    const start = m ? Math.min(Math.max(parseInt(m[1], 10), 1), TOTAL) : 1;
+    if (start !== 1) {
+      document.getElementById('s1').classList.remove('active');
+      document.getElementById('s' + start).classList.add('active');
+      current = start;
+      document.getElementById('slide-counter').textContent = current + ' / ' + TOTAL;
+      document.getElementById('btn-prev').disabled = current === 1;
+      document.getElementById('btn-next').disabled = current === TOTAL;
+    }
+    document.querySelectorAll('#slide-menu li a').forEach((a, i) => {
+      a.classList.toggle('active', i + 1 === current);
+    });
+    document.getElementById('progress').style.width = ((current / TOTAL) * 100) + '%';
+  })();
+</script>
+</body>
+</html>

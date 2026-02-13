@@ -43,15 +43,15 @@ export default function DocumentViewer({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-50 flex justify-end"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.2 }}
         >
           {/* Backdrop */}
           <motion.div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -60,17 +60,17 @@ export default function DocumentViewer({
 
           {/* Panel */}
           <motion.div
-            className="relative flex h-full w-full flex-col border-l border-line/50 bg-bg/95 backdrop-blur-xl md:w-[80%] lg:w-[75%]"
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            className="relative flex h-[95vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-line/50 bg-bg/95 shadow-2xl backdrop-blur-xl"
+            initial={{ opacity: 0, scale: 0.96, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 12 }}
+            transition={{ type: 'spring', damping: 28, stiffness: 320 }}
             role="dialog"
             aria-modal="true"
             aria-label={title || 'Document viewer'}
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-line/50 px-5 py-3">
+            <div className="flex shrink-0 items-center justify-between border-b border-line/50 px-5 py-2">
               <h2 className="truncate text-sm font-medium text-muted">
                 {title || ''}
               </h2>
