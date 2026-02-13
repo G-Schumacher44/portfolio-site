@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.garrettschumacher.com/sitemap.xml
-
+Sitemap: https://garrettschumacher.com/sitemap.xml

@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.garrettschumacher.com/</loc>
+    <loc>https://garrettschumacher.com/</loc>
+    <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.garrettschumacher.com/files/charts_gallery.html</loc>
+    <loc>https://garrettschumacher.com/technical-showcase</loc>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.garrettschumacher.com/files/reports_gallery.html</loc>
+    <loc>https://garrettschumacher.com/files/charts_gallery.html</loc>
   </url>
   <url>
-    <loc>https://www.garrettschumacher.com/files/plots_gallery.html</loc>
+    <loc>https://garrettschumacher.com/files/reports_gallery.html</loc>
   </url>
   <url>
-    <loc>https://www.garrettschumacher.com/files/media/00_analyst_toolkit_modular_demo.html</loc>
+    <loc>https://garrettschumacher.com/files/plots_gallery.html</loc>
   </url>
   <url>
-    <loc>https://www.garrettschumacher.com/files/media/01_analyst_toolkit_pipeline_demo.html</loc>
+    <loc>https://garrettschumacher.com/files/media/00_analyst_toolkit_modular_demo.html</loc>
   </url>
   <url>
-    <loc>https://www.garrettschumacher.com/files/media/Executive_Retail_Returns_Report.html</loc>
+    <loc>https://garrettschumacher.com/files/media/01_analyst_toolkit_pipeline_demo.html</loc>
   </url>
   <url>
-    <loc>https://www.garrettschumacher.com/files/media/Executive_Retention_Report.html</loc>
+    <loc>https://garrettschumacher.com/files/media/Executive_Retail_Returns_Report.html</loc>
   </url>
   <url>
-    <loc>https://www.garrettschumacher.com/files/media/mod_eval_demo_notebook.html</loc>
+    <loc>https://garrettschumacher.com/files/media/Executive_Retention_Report.html</loc>
   </url>
   <url>
-    <loc>https://www.garrettschumacher.com/files/media/scenario_04_cart_behavior_analysis.html</loc>
+    <loc>https://garrettschumacher.com/files/media/mod_eval_demo_notebook.html</loc>
   </url>
   <url>
-    <loc>https://www.garrettschumacher.com/files/media/storycrafting.html</loc>
+    <loc>https://garrettschumacher.com/files/media/scenario_04_cart_behavior_analysis.html</loc>
+  </url>
+  <url>
+    <loc>https://garrettschumacher.com/files/media/storycrafting.html</loc>
   </url>
 </urlset>
