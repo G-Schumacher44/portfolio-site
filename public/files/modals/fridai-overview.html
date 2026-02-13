@@ -27,6 +27,7 @@
     overflow: hidden;
     height: 100vh;
     width: 100vw;
+    outline: none;
   }
 
   /* ── Deck shell ────────────────────────────────────────────── */
@@ -1420,6 +1421,10 @@
     });
     document.getElementById('progress').style.width = ((current / TOTAL) * 100) + '%';
   })();
+
+  // Claim focus so keyboard nav works immediately without clicking first
+  document.body.setAttribute('tabindex', '-1');
+  document.body.focus();
 </script>
 </body>
 </html>
