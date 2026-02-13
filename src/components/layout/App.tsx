@@ -22,7 +22,7 @@ function AppShell() {
         <>
           {/* Fixed background layers — persist as user scrolls */}
           <TerminalAnimation />
-          <div className="pointer-events-none fixed inset-0 z-0 flex items-center justify-center">
+          <div className="pointer-events-none fixed inset-0 z-0 hidden items-center justify-center md:flex">
             <img
               src="/img/logos/transparent_logo_centered.svg"
               alt=""
