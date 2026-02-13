@@ -50,7 +50,7 @@ export default function TechnicalShowcasePage() {
             </div>
           </div>
 
-          <div className="mt-8 grid gap-8 lg:grid-cols-2">
+          <div className="mt-6 grid gap-8 lg:grid-cols-2">
             {technicalProjects.map((project) => (
               <button
                 key={project.slug}
@@ -92,6 +92,34 @@ export default function TechnicalShowcasePage() {
                 </div>
               </button>
             ))}
+          </div>
+          {/* Contact strip */}
+          <div id="showcase-contact" className="mt-10 rounded-3xl border-[3px] border-[#2b2a27] bg-[#fff7e6] p-6 shadow-[6px_6px_0_#2b2a27]">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <div className="text-[11px] uppercase tracking-[0.3em] text-[#2b2a27]/60">Let's Talk</div>
+                <p className="mt-1 text-sm font-semibold text-[#2b2a27]">Open to full-time, contract, and freelance roles.</p>
+                <p className="mt-0.5 text-xs text-[#2b2a27]/70">Want to dig into the architecture or discuss a project? Reach out.</p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ borderColor: '#2b2a27', backgroundColor: '#2b2a27', color: '#fff7e6' }}
+                  className="inline-flex items-center gap-2 rounded-full border-2 px-4 py-2 text-xs font-semibold transition-opacity hover:opacity-80"
+                >
+                  Book a Call
+                </a>
+                <a
+                  href="mailto:garrettschumacher44@gmail.com"
+                  style={{ borderColor: '#2b2a27', color: '#2b2a27', backgroundColor: '#fff7e6' }}
+                  className="inline-flex items-center gap-2 rounded-full border-2 px-4 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
+                >
+                  Email Me
+                </a>
+              </div>
+            </div>
           </div>
         </section>
       </main>

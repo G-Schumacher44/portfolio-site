@@ -1,10 +1,13 @@
 import { useScrollDirection } from '../../hooks/useScrollDirection';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 export default function MicroBanner() {
   const scrollDir = useScrollDirection();
   const visible = scrollDir === 'up';
+  const { pathname } = useLocation();
+  const contactHref = pathname === '/technical-showcase' ? '#showcase-contact' : '#contact';
 
   return (
     <AnimatePresence>
@@ -22,9 +25,7 @@ export default function MicroBanner() {
           "
         >
           <a
-            href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
-            target="_blank"
-            rel="noopener noreferrer"
+            href={contactHref}
             className="
               flex items-center justify-center gap-3 px-4 py-2
               text-sm text-muted no-underline transition-colors
@@ -34,7 +35,7 @@ export default function MicroBanner() {
             <span className="rounded-full bg-brand/15 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-brand">
               Available
             </span>
-            <span>Book a Free Consultation — Let's discuss your data project</span>
+            <span>Let's Talk — Open to full-time, contract, and freelance roles</span>
             <ArrowRight size={14} className="text-brand" />
           </a>
         </motion.div>
