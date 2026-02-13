@@ -13,9 +13,11 @@ export default function TerminalAnimation() {
   const scripts = hero.terminalScripts;
   const lines = scripts[scriptIndex];
 
+  // Detect mobile — skip animation entirely on small screens
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   useEffect(() => {
-    if (reduced) {
-      setDisplayedLines(lines);
+    if (reduced || isMobile) {
       return;
     }
 
@@ -60,6 +62,8 @@ export default function TerminalAnimation() {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
   }, [displayedLines]);
+
+  if (isMobile) return null;
 
   return (
     <div
