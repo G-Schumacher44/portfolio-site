@@ -40,6 +40,16 @@ export default function HeroCTAs() {
           </Button>
         </div>
       </div>
+
+      {/* Hiring Manager shortcut */}
+      <div className="text-center">
+        <span className="mb-3 block text-xs font-medium uppercase tracking-widest text-muted">
+          Hiring Manager?
+        </span>
+        <Button variant="primary" href="/quick-view">
+          Quick View — 5 min read
+        </Button>
+      </div>
     </div>
   );
 }

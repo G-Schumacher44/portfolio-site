@@ -72,13 +72,13 @@ body {
   background: var(--color-muted);
 }
 
-a {
+a:not([class]) {
   color: var(--color-brand);
   text-decoration: none;
   transition: color 0.2s;
 }
 
-a:hover {
+a:not([class]):hover {
   text-decoration: underline;
 }
 

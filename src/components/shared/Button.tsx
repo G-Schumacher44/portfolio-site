@@ -27,9 +27,8 @@ export default function Button({
   const variants = {
     primary: `
       relative overflow-hidden
-      border border-brand/60 bg-[#1a2a3f] text-brand
-      hover:bg-[#1e3248] hover:border-brand/80
-      hover:shadow-[0_0_24px_rgba(102,153,204,0.25)]
+      border border-brand bg-brand
+      hover:opacity-90
       active:scale-[0.98]
     `,
     secondary: `
@@ -46,11 +45,14 @@ export default function Button({
 
   const cls = `${base} ${variants[variant]} ${className}`;
 
+  const style = variant === 'primary' ? { backgroundColor: '#6699cc', color: '#ffffff', borderColor: '#6699cc' } : undefined;
+
   if (href) {
     return (
       <a
         href={href}
         className={cls}
+        style={style}
         {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       >
         {children}
@@ -59,7 +61,7 @@ export default function Button({
   }
 
   return (
-    <button className={cls} onClick={onClick}>
+    <button className={cls} style={style} onClick={onClick}>
       {children}
     </button>
   );
