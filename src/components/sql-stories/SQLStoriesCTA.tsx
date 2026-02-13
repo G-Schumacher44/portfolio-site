@@ -17,6 +17,7 @@ export default function SQLStoriesCTA() {
               src="/img/logos/transparent_logo_centered.svg"
               alt=""
               className="h-20 w-20 object-contain opacity-40 transition-opacity group-hover:opacity-60"
+              loading="lazy"
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand/20 transition-all group-hover:bg-brand/30 group-hover:shadow-[0_0_20px_rgba(102,153,204,0.3)]">

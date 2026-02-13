@@ -161,6 +161,7 @@ function ModalContent({
             src="/img/logos/transparent_logo_centered.svg"
             alt=""
             className="h-[400px] w-[400px] object-contain opacity-[0.06]"
+            loading="lazy"
           />
         </div>
 

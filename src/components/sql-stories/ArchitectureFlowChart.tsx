@@ -548,6 +548,7 @@ export default function ArchitectureFlowChart({ isOpen, onClose }: ArchitectureF
                 src={lightboxSrc}
                 alt="Expanded view"
                 className="max-h-[85vh] max-w-[min(1200px,95vw)] rounded-xl border border-line shadow-2xl"
+                loading="lazy"
               />
             </motion.div>
           </motion.div>
