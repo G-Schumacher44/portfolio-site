@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import Section from '../layout/Section';
 import GlassPanel from '../shared/GlassPanel';
+import { trackTechnicalShowcaseOpen } from '../../utils/analytics';
 
 const strips = [
-  { src: '/img/tech_showcase/comic_strips/fridai/fridai_origins.png', alt: 'FridAI Origins' },
   { src: '/img/tech_showcase/comic_strips/fridai/ollama_farm.png', alt: 'Ollama Farm' },
   { src: '/img/tech_showcase/comic_strips/fridai/release_strip.png', alt: 'Preview Release' },
 ];
@@ -32,13 +32,14 @@ export default function TechnicalShowcaseCTA() {
             </p>
             <Link
               to="/technical-showcase"
+              onClick={() => trackTechnicalShowcaseOpen('technical_showcase_cta')}
               className="mt-4 inline-flex items-center gap-2 rounded-full border border-brand/40 bg-brand/10 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/70 hover:bg-brand/20"
             >
               Open the Sunday Funnies &rarr;
             </Link>
           </div>
 
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 gap-2">
             {strips.map((strip) => (
               <button
                 key={strip.src}

@@ -6,6 +6,7 @@ import type { CaseStudyData } from '../../types';
 import inventorySkuSample from '../../data/inventorySkuSample.json';
 import retentionDashboard from '../../data/retentionDashboard.json';
 import DocumentViewer from '../shared/DocumentViewer';
+import { trackGenerateLead } from '../../utils/analytics';
 
 interface CaseStudyModalProps {
   study: CaseStudyData | null;
@@ -253,6 +254,7 @@ function CaseStudyModalContent({
                         href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => trackGenerateLead('calendar', 'case_study_modal_inventory')}
                         className="inline-flex items-center gap-2 rounded-lg border border-brand/40 bg-brand/15 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/60 hover:bg-brand/25"
                       >
                         Book a Discovery Call
@@ -301,6 +303,7 @@ function CaseStudyModalContent({
                         href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => trackGenerateLead('calendar', 'case_study_modal_retention')}
                         className="inline-flex items-center gap-2 rounded-lg border border-brand/40 bg-brand/15 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/60 hover:bg-brand/25"
                       >
                         Book a Discovery Call

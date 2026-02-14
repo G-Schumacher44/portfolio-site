@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Navbar from '../components/layout/Navbar';
 import { technicalProjects } from '../data/technicalProjects';
 import TechnicalProjectModal from '../components/technical-showcase/TechnicalProjectModal';
+import { trackGenerateLead, trackTechnicalShowcaseModalOpen } from '../utils/analytics';
 
 export default function TechnicalShowcasePage() {
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
@@ -54,7 +55,11 @@ export default function TechnicalShowcasePage() {
             {technicalProjects.map((project) => (
               <button
                 key={project.slug}
-                onClick={() => setActiveSlug(project.slug)}
+                onClick={() => {
+                  trackTechnicalShowcaseModalOpen(project.slug);
+                  setActiveSlug(project.slug);
+                }}
+                aria-label={`Open ${project.title} technical panel`}
                 className="group flex h-full flex-col overflow-hidden rounded-3xl border-[3px] border-[#2b2a27] bg-white text-left shadow-[6px_6px_0_#2b2a27] transition-transform hover:-translate-y-1"
               >
                 <div className="flex items-center justify-between border-b-[3px] border-[#2b2a27] bg-[#fff3d6] px-4 py-3">
@@ -106,13 +111,15 @@ export default function TechnicalShowcasePage() {
                   href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackGenerateLead('calendar', 'technical_showcase_page')}
                   style={{ borderColor: '#2b2a27', backgroundColor: '#2b2a27', color: '#fff7e6' }}
                   className="inline-flex items-center gap-2 rounded-full border-2 px-4 py-2 text-xs font-semibold transition-opacity hover:opacity-80"
                 >
                   Book a Call
                 </a>
                 <a
-                  href="mailto:garrettschumacher44@gmail.com"
+                  href="mailto:me@garrettschumacher.com"
+                  onClick={() => trackGenerateLead('email', 'technical_showcase_page')}
                   style={{ borderColor: '#2b2a27', color: '#2b2a27', backgroundColor: '#fff7e6' }}
                   className="inline-flex items-center gap-2 rounded-full border-2 px-4 py-2 text-xs font-semibold transition-opacity hover:opacity-70"
                 >

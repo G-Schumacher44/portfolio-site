@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState, type ReactNode } from 'react';
+import { useEffect, useCallback, useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Loader2 } from 'lucide-react';
@@ -19,6 +19,8 @@ export default function DocumentViewer({
   children,
 }: DocumentViewerProps) {
   const [iframeLoading, setIframeLoading] = useState(true);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const iframeKeyCleanupRef = useRef<(() => void) | null>(null);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -27,14 +29,36 @@ export default function DocumentViewer({
     [onClose]
   );
 
+  const handleIframeLoad = useCallback(() => {
+    setIframeLoading(false);
+
+    // Capture Escape when focus is inside iframe content.
+    iframeKeyCleanupRef.current?.();
+    const iframeDoc = iframeRef.current?.contentDocument;
+    if (!iframeDoc) return;
+
+    const handleIframeKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      e.preventDefault();
+      onClose();
+    };
+
+    iframeDoc.addEventListener('keydown', handleIframeKeyDown);
+    iframeKeyCleanupRef.current = () => {
+      iframeDoc.removeEventListener('keydown', handleIframeKeyDown);
+    };
+  }, [onClose]);
+
   useEffect(() => {
     if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
+      window.addEventListener('keydown', handleKeyDown, true);
       document.body.style.overflow = 'hidden';
       setIframeLoading(true);
     }
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keydown', handleKeyDown, true);
+      iframeKeyCleanupRef.current?.();
+      iframeKeyCleanupRef.current = null;
       document.body.style.overflow = '';
     };
   }, [isOpen, handleKeyDown]);
@@ -43,7 +67,7 @@ export default function DocumentViewer({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+          className="fixed inset-0 z-[90] flex items-center justify-center p-4 sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -93,11 +117,12 @@ export default function DocumentViewer({
                     </div>
                   )}
                   <iframe
+                    ref={iframeRef}
                     src={src}
                     title={title || 'Content'}
                     className="absolute inset-0 h-full w-full border-0"
                     loading="lazy"
-                    onLoad={() => setIframeLoading(false)}
+                    onLoad={handleIframeLoad}
                   />
                 </>
               ) : (

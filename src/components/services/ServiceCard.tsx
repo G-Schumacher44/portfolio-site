@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type KeyboardEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BarChart3, LayoutDashboard, Workflow, Bot, ChevronDown } from 'lucide-react';
 import type { ServiceData } from '../../types';
@@ -26,13 +26,26 @@ interface ServiceCardProps {
 export default function ServiceCard({ service }: ServiceCardProps) {
   const [expanded, setExpanded] = useState(false);
   const Icon = iconMap[service.icon] || BarChart3;
+  const toggleExpanded = () => setExpanded((prev) => !prev);
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLElement>) => {
+    if (e.currentTarget !== e.target) return;
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();
+    toggleExpanded();
+  };
 
   return (
     <GlassPanel
       as="article"
       hover
-      onClick={() => setExpanded(!expanded)}
-      className="text-left"
+      onClick={toggleExpanded}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      ariaExpanded={expanded}
+      ariaLabel={`${expanded ? 'Collapse' : 'Expand'} details for ${service.title}`}
+      className="text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
     >
       <div className="mb-3 inline-flex rounded-xl bg-brand/10 p-2.5">
         <Icon size={22} className="text-brand" />

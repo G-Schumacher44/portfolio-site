@@ -8,6 +8,7 @@ import rehypeRaw from 'rehype-raw';
 import mermaid from 'mermaid';
 import type { TechnicalProject } from '../../data/technicalProjects';
 import DocumentViewer from '../shared/DocumentViewer';
+import { trackFridaiDeckOpen, trackGenerateLead } from '../../utils/analytics';
 
 type DocLink = { label: string; href: string };
 const DOC_EXTENSIONS = ['.md', '.py', '.txt', '.csv'];
@@ -307,6 +308,65 @@ export default function TechnicalProjectModal({
 
   const companionContent = companionOpen ? companionDetails[companionOpen] : null;
   const projectComicStrips = project?.comicStrips ?? (project?.comicStrip ? [project.comicStrip] : []);
+  const isAnyNestedModalOpen = Boolean(activePlot || storyboardOpen || deckOpen || companionOpen || docOpen);
+
+  const handleCloseAll = () => {
+    setActivePlot(null);
+    setStoryboardOpen(false);
+    setDeckOpen(false);
+    setCompanionOpen(null);
+    setDocOpen(null);
+    onClose();
+  };
+
+  useEffect(() => {
+    if (!project) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+
+      if (docOpen) {
+        setDocOpen(null);
+        return;
+      }
+      if (activePlot) {
+        setActivePlot(null);
+        return;
+      }
+      if (deckOpen) {
+        setDeckOpen(false);
+        return;
+      }
+      if (storyboardOpen) {
+        setStoryboardOpen(false);
+        return;
+      }
+      if (companionOpen) {
+        setCompanionOpen(null);
+        return;
+      }
+      setActivePlot(null);
+      setStoryboardOpen(false);
+      setDeckOpen(false);
+      setCompanionOpen(null);
+      setDocOpen(null);
+      onClose();
+    };
+
+    window.addEventListener('keydown', handleKeyDown, true);
+    return () => window.removeEventListener('keydown', handleKeyDown, true);
+  }, [project, docOpen, activePlot, deckOpen, storyboardOpen, companionOpen, onClose]);
+
+  useEffect(() => {
+    if (!project) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [project, isAnyNestedModalOpen]);
 
   if (!project) return null;
 
@@ -323,7 +383,7 @@ export default function TechnicalProjectModal({
             >
               <motion.div
                 className="absolute inset-0 bg-black/50"
-                onClick={onClose}
+                onClick={handleCloseAll}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -360,7 +420,7 @@ export default function TechnicalProjectModal({
                     <p className="mt-1 text-sm text-[#2b2a27]">{project.subtitle}</p>
                   </div>
                   <button
-                    onClick={onClose}
+                    onClick={handleCloseAll}
                     className="rounded-full border-2 border-[#2b2a27] bg-white p-2"
                     aria-label="Close panel"
                   >
@@ -439,7 +499,10 @@ export default function TechnicalProjectModal({
                             Slide deck — architecture, design decisions, and roadmap.
                           </p>
                           <button
-                            onClick={() => setDeckOpen(true)}
+                            onClick={() => {
+                              trackFridaiDeckOpen('technical_showcase_modal');
+                              setDeckOpen(true);
+                            }}
                             className="mt-3 rounded-xl border-[3px] border-[#2b2a27] bg-[#fff7e6] px-4 py-2 text-xs font-semibold uppercase tracking-widest text-[#2b2a27] transition-colors hover:bg-[#2b2a27] hover:text-[#fff7e6]"
                           >
                             Open Deck →
@@ -1347,7 +1410,8 @@ export default function TechnicalProjectModal({
                           Want to talk through the architecture or be notified at release? Reach out directly.
                         </p>
                         <a
-                          href="mailto:garrettschumacher44@gmail.com"
+                          href="mailto:me@garrettschumacher.com"
+                          onClick={() => trackGenerateLead('email', `technical_showcase_modal_${slug}`)}
                           className="inline-flex items-center gap-2 rounded-lg border border-brand/40 bg-brand/10 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/60 hover:bg-brand/20"
                         >
                           Get in touch

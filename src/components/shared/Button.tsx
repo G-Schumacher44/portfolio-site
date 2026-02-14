@@ -1,4 +1,10 @@
 import { type ReactNode } from 'react';
+import {
+  trackEvent,
+  trackGenerateLead,
+  trackResumeOpen,
+  trackTechnicalShowcaseOpen,
+} from '../../utils/analytics';
 
 interface ButtonProps {
   children: ReactNode;
@@ -47,10 +53,37 @@ export default function Button({
 
   const style = variant === 'primary' ? { backgroundColor: '#6699cc', color: '#ffffff', borderColor: '#6699cc' } : undefined;
 
+  const getCtaLabel = (target: string) => {
+    if (target.startsWith('mailto:')) return 'email_cta';
+    if (target.includes('calendar.app.google')) return 'calendar_cta';
+    if (target.startsWith('/')) return 'internal_nav_cta';
+    return 'external_cta';
+  };
+
+  const handleClick = () => {
+    if (href) {
+      trackEvent('cta_click', 'button', getCtaLabel(href));
+      if (href.includes('/pdf/gschumacher_resume.pdf')) {
+        trackResumeOpen('button');
+      }
+      if (href.startsWith('/technical-showcase')) {
+        trackTechnicalShowcaseOpen('button');
+      }
+      if (href.startsWith('mailto:')) {
+        trackGenerateLead('email', 'button');
+      }
+      if (href.includes('calendar.app.google')) {
+        trackGenerateLead('calendar', 'button');
+      }
+    }
+    onClick?.();
+  };
+
   if (href) {
     return (
       <a
         href={href}
+        onClick={handleClick}
         className={cls}
         style={style}
         {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
@@ -61,7 +94,7 @@ export default function Button({
   }
 
   return (
-    <button className={cls} style={style} onClick={onClick}>
+    <button className={cls} style={style} onClick={handleClick}>
       {children}
     </button>
   );

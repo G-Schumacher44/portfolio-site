@@ -89,11 +89,10 @@ export default function ServicesSection() {
           </Button>
           <Button
             variant="ghost"
-            href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
-            external
+            href="mailto:me@garrettschumacher.com?subject=Interview%20Request"
             className="border border-line/50 hover:border-line"
           >
-            Schedule an Interview
+            Schedule Interview via Email
           </Button>
         </div>
       </div>

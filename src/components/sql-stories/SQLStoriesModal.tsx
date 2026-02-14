@@ -16,6 +16,7 @@ import SQLStoriesNarrative from './SQLStoriesNarrative';
 import CaseStudyModal from './CaseStudyModal';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import type { CaseStudyData } from '../../types';
+import { trackGenerateLead } from '../../utils/analytics';
 
 interface SQLStoriesModalProps {
   isOpen: boolean;
@@ -275,19 +276,18 @@ function ModalContent({
                   href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackGenerateLead('calendar', 'sql_stories_modal')}
                   className="inline-flex items-center gap-2 rounded-lg border border-brand/30 bg-brand/10 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/50 hover:bg-brand/20"
                 >
                   Book a Discovery Call
                   <ExternalLink size={12} />
                 </a>
                 <a
-                  href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="mailto:me@garrettschumacher.com?subject=Interview%20Request"
+                  onClick={() => trackGenerateLead('email', 'sql_stories_modal')}
                   className="inline-flex items-center gap-2 rounded-lg border border-line/40 bg-surface/60 px-4 py-2 text-xs font-semibold text-text transition-all hover:border-brand/30 hover:text-brand"
                 >
-                  Schedule an Interview
-                  <ExternalLink size={12} className="opacity-50" />
+                  Schedule Interview via Email
                 </a>
               </div>
             </div>
