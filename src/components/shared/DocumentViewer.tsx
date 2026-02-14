@@ -50,11 +50,12 @@ export default function DocumentViewer({
   }, [onClose]);
 
   useEffect(() => {
-    if (isOpen) {
-      window.addEventListener('keydown', handleKeyDown, true);
-      document.body.style.overflow = 'hidden';
-      setIframeLoading(true);
-    }
+    if (!isOpen) return;
+
+    window.addEventListener('keydown', handleKeyDown, true);
+    document.body.style.overflow = 'hidden';
+    setIframeLoading(true);
+
     return () => {
       window.removeEventListener('keydown', handleKeyDown, true);
       iframeKeyCleanupRef.current?.();
