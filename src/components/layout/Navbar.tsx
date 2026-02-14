@@ -73,9 +73,9 @@ export default function Navbar() {
 
         {/* Logo + Brand name — far left */}
         <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={() => scrollTo('/')}
           className="flex shrink-0 items-center gap-2 transition-opacity hover:opacity-80"
-          aria-label="GS Analytics — scroll to top"
+          aria-label="GS Analytics — go to main page"
         >
           <img
             src="/img/logos/transparent_logo_centered.svg"

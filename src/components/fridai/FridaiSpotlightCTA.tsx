@@ -3,9 +3,14 @@ import { Link } from 'react-router-dom';
 import Section from '../layout/Section';
 import GlassPanel from '../shared/GlassPanel';
 import DocumentViewer from '../shared/DocumentViewer';
+import { trackFridaiDeckOpen, trackTechnicalShowcaseOpen } from '../../utils/analytics';
 
 export default function FridaiSpotlightCTA() {
   const [deckOpen, setDeckOpen] = useState(false);
+  const handleOpenDeck = () => {
+    trackFridaiDeckOpen('fridai_spotlight_cta');
+    setDeckOpen(true);
+  };
 
   return (
     <Section id="fridai-spotlight" glow glowVariant="accent">
@@ -47,13 +52,14 @@ export default function FridaiSpotlightCTA() {
 
           <div className="flex flex-wrap items-center gap-3">
             <button
-              onClick={() => setDeckOpen(true)}
+              onClick={handleOpenDeck}
               className="inline-flex items-center gap-2 rounded-full border border-brand/50 bg-brand/10 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/80 hover:bg-brand/20"
             >
               View Project Overview →
             </button>
             <Link
               to="/technical-showcase"
+              onClick={() => trackTechnicalShowcaseOpen('fridai_spotlight_cta')}
               className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/60 px-4 py-2 text-xs font-medium text-muted transition-all hover:border-muted/40 hover:text-text"
             >
               Full Technical Showcase

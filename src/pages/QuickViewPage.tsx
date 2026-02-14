@@ -1,5 +1,11 @@
 import Navbar from '../components/layout/Navbar';
 import { FileText, Linkedin, Calendar, ExternalLink } from 'lucide-react';
+import {
+  trackGenerateLead,
+  trackQuickViewLink,
+  trackResumeOpen,
+  trackTechnicalShowcaseOpen,
+} from '../utils/analytics';
 
 const skills = [
   'SQL', 'Python', 'dbt', 'BigQuery', 'PostgreSQL', 'Airflow',
@@ -30,6 +36,9 @@ const pinned = [
 ];
 
 export default function QuickViewPage() {
+  const toEventKey = (value: string) =>
+    value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+
   return (
     <>
       <Navbar />
@@ -92,6 +101,7 @@ export default function QuickViewPage() {
                   href={p.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackQuickViewLink(`pinned_${toEventKey(p.title)}`)}
                   className="flex items-start justify-between gap-4 bg-card px-4 py-3.5 transition-colors hover:bg-surface group"
                 >
                   <div className="min-w-0 flex-1">
@@ -109,14 +119,30 @@ export default function QuickViewPage() {
 
           {/* More work */}
           <div className="mb-8 flex flex-wrap gap-3 text-xs">
-            <a href="/" className="text-brand hover:underline">Full portfolio →</a>
+            <a
+              href="/"
+              onClick={() => trackQuickViewLink('full_portfolio')}
+              className="text-brand hover:underline"
+            >
+              Full portfolio →
+            </a>
             <span className="text-line">|</span>
-            <a href="/technical-showcase" className="text-brand hover:underline">Technical showcase →</a>
+            <a
+              href="/technical-showcase"
+              onClick={() => {
+                trackQuickViewLink('technical_showcase');
+                trackTechnicalShowcaseOpen('quick_view_page');
+              }}
+              className="text-brand hover:underline"
+            >
+              Technical showcase →
+            </a>
             <span className="text-line">|</span>
             <a
               href="https://github.com/G-Schumacher44"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackQuickViewLink('github')}
               className="text-brand hover:underline"
             >
               GitHub →
@@ -129,6 +155,10 @@ export default function QuickViewPage() {
               href="/pdf/gschumacher_resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                trackQuickViewLink('resume_pdf');
+                trackResumeOpen('quick_view_page');
+              }}
               className="inline-flex items-center gap-2 rounded-full bg-brand px-4 py-2 text-xs font-semibold text-white transition-opacity hover:opacity-90"
             >
               <FileText size={13} />
@@ -138,6 +168,7 @@ export default function QuickViewPage() {
               href="https://linkedin.com/in/garrett-schumacher-243a5513a"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackQuickViewLink('linkedin')}
               className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-xs font-semibold text-text transition-colors hover:border-brand/50 hover:text-brand"
             >
               <Linkedin size={13} />
@@ -147,6 +178,10 @@ export default function QuickViewPage() {
               href="https://calendar.app.google/49XfSdvBVQMz9Zni9"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                trackQuickViewLink('book_a_call');
+                trackGenerateLead('calendar', 'quick_view_page');
+              }}
               className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-xs font-semibold text-text transition-colors hover:border-brand/50 hover:text-brand"
             >
               <Calendar size={13} />

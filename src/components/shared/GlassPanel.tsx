@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import { type KeyboardEventHandler, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 
 interface GlassPanelProps {
@@ -7,6 +7,11 @@ interface GlassPanelProps {
   hover?: boolean;
   as?: 'div' | 'article' | 'section';
   onClick?: () => void;
+  onKeyDown?: KeyboardEventHandler<HTMLElement>;
+  role?: string;
+  tabIndex?: number;
+  ariaLabel?: string;
+  ariaExpanded?: boolean;
 }
 
 export default function GlassPanel({
@@ -15,6 +20,11 @@ export default function GlassPanel({
   hover = false,
   as = 'div',
   onClick,
+  onKeyDown,
+  role,
+  tabIndex,
+  ariaLabel,
+  ariaExpanded,
 }: GlassPanelProps) {
   const Component = motion.create(as);
 
@@ -38,6 +48,11 @@ export default function GlassPanel({
       }
       transition={{ duration: 0.3, ease: 'easeOut' }}
       onClick={onClick}
+      onKeyDown={onKeyDown}
+      role={role}
+      tabIndex={tabIndex}
+      aria-label={ariaLabel}
+      aria-expanded={ariaExpanded}
     >
       {children}
     </Component>

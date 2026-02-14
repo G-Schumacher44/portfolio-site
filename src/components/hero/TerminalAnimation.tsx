@@ -68,12 +68,15 @@ export default function TerminalAnimation() {
   return (
     <div
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+      aria-hidden="true"
+      role="presentation"
       style={{
         perspective: '800px',
       }}
     >
       <pre
         ref={containerRef}
+        aria-hidden="true"
         className="
           h-full overflow-hidden whitespace-pre-wrap
           font-mono text-sm leading-relaxed text-teal-500/20

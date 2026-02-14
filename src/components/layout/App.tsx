@@ -1,12 +1,17 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, lazy, Suspense } from 'react';
+import { useEffect } from 'react';
 import TerminalAnimation from '../hero/TerminalAnimation';
 import MicroBanner from './MicroBanner';
 import Footer from './Footer';
-
-const MainPage = lazy(() => import('../../pages/MainPage'));
-const TechnicalShowcasePage = lazy(() => import('../../pages/TechnicalShowcasePage'));
-const QuickViewPage = lazy(() => import('../../pages/QuickViewPage'));
+import MainPage from '../../pages/MainPage';
+import TechnicalShowcasePage from '../../pages/TechnicalShowcasePage';
+import QuickViewPage from '../../pages/QuickViewPage';
+import {
+  initAnalytics,
+  trackPageView,
+  trackTechnicalShowcaseOpen,
+} from '../../utils/analytics';
+import { applyRouteSeo } from '../../utils/seo';
 
 function AppShell() {
   const location = useLocation();
@@ -15,6 +20,15 @@ function AppShell() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, [location.pathname]);
+
+  useEffect(() => {
+    applyRouteSeo(location.pathname);
+    initAnalytics();
+    trackPageView(`${location.pathname}${location.search}`);
+    if (location.pathname === '/technical-showcase') {
+      trackTechnicalShowcaseOpen('route_view');
+    }
+  }, [location.pathname, location.search]);
 
   return (
     <>
@@ -33,13 +47,11 @@ function AppShell() {
       )}
 
       <MicroBanner />
-      <Suspense fallback={null}>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/technical-showcase" element={<TechnicalShowcasePage />} />
-          <Route path="/quick-view" element={<QuickViewPage />} />
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/technical-showcase" element={<TechnicalShowcasePage />} />
+        <Route path="/quick-view" element={<QuickViewPage />} />
+      </Routes>
       <Footer />
     </>
   );

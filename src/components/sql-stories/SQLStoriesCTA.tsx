@@ -3,13 +3,21 @@ import { Play } from 'lucide-react';
 import Section from '../layout/Section';
 import GlassPanel from '../shared/GlassPanel';
 import SQLStoriesModal from './SQLStoriesModal';
+import { trackSqlStoriesModalOpen } from '../../utils/analytics';
 
 export default function SQLStoriesCTA() {
   const [open, setOpen] = useState(false);
 
   return (
     <Section id="sql-stories" glow glowVariant="accent">
-      <button onClick={() => setOpen(true)} className="group w-full text-left">
+      <button
+        onClick={() => {
+          trackSqlStoriesModalOpen('sql_stories_cta');
+          setOpen(true);
+        }}
+        className="group w-full text-left"
+        aria-label="Open My SQL Stories case studies"
+      >
         <GlassPanel hover className="flex items-center gap-5 sm:gap-8">
           {/* Logo accent */}
           <div className="relative flex-shrink-0">
