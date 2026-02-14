@@ -360,13 +360,12 @@ export default function TechnicalProjectModal({
   useEffect(() => {
     if (!project) return;
 
-    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      document.body.style.overflow = '';
     };
-  }, [project, isAnyNestedModalOpen]);
+  }, [project]);
 
   if (!project) return null;
 
