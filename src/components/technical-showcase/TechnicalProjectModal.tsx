@@ -308,8 +308,6 @@ export default function TechnicalProjectModal({
 
   const companionContent = companionOpen ? companionDetails[companionOpen] : null;
   const projectComicStrips = project?.comicStrips ?? (project?.comicStrip ? [project.comicStrip] : []);
-  const isAnyNestedModalOpen = Boolean(activePlot || storyboardOpen || deckOpen || companionOpen || docOpen);
-
   const handleCloseAll = () => {
     setActivePlot(null);
     setStoryboardOpen(false);
