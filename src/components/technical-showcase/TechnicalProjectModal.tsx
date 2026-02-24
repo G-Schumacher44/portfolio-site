@@ -679,7 +679,8 @@ export default function TechnicalProjectModal({
                           {/* Origin story — anchors the whole section */}
                           <div className="rounded-2xl border-[3px] border-[#2b2a27] bg-[#fff3d6] p-4 text-sm text-[#2b2a27]">
                             Started as notebook-first cleanup helpers and evolved into a full MCP-ready
-                            QA engine that can run from Claude Desktop, FridAI, VS Code, or direct JSON-RPC.
+                            QA engine that can run from any MCP-compatible client (Claude, Gemini,
+                            Codex, VS Code MCP, etc.) or direct JSON-RPC.
                           </div>
 
                           {/* How it works + what it ships */}
@@ -775,7 +776,7 @@ export default function TechnicalProjectModal({
                             </div>
                             <ul className="mt-3 space-y-2 text-xs text-[#2b2a27]">
                               {[
-                                { label: 'Expanded host presets (Claude Desktop, VS Code, FridAI)', status: 'in progress' },
+                                { label: 'Expanded host presets (Claude, Gemini, Codex, VS Code MCP)', status: 'in progress' },
                                 { label: 'Additional golden templates for common data domains', status: 'planned' },
                                 { label: 'More cockpit diagnostics and scoring dimensions', status: 'planned' },
                                 { label: 'Deeper cloud execution patterns and deployment docs', status: 'planned' },
