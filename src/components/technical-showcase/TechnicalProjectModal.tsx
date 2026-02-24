@@ -659,9 +659,27 @@ export default function TechnicalProjectModal({
 
                       {isAnalystToolkit && (
                         <>
+                          <div className="rounded-2xl border-[3px] border-[#2b2a27] bg-[#fff0c2] p-4">
+                            <div className="flex items-center justify-between gap-3">
+                              <div>
+                                <div className="text-[10px] font-bold uppercase tracking-widest text-[#2b2a27]/70">
+                                  Release Update
+                                </div>
+                                <p className="mt-1 text-sm text-[#2b2a27]">
+                                  Analyst Toolkit now ships as an MCP tool server with session-based
+                                  pipeline chaining and an executive data health cockpit.
+                                </p>
+                              </div>
+                              <span className="rounded-full border-2 border-[#2b2a27] bg-white px-2 py-0.5 text-[9px] uppercase tracking-widest text-[#2b2a27]">
+                                Version 0.4.x
+                              </span>
+                            </div>
+                          </div>
+
                           {/* Origin story — anchors the whole section */}
                           <div className="rounded-2xl border-[3px] border-[#2b2a27] bg-[#fff3d6] p-4 text-sm text-[#2b2a27]">
-                            Grew from scattered snippets into a package that enforces hygiene and repeatability — now the foundation for every analytics project I ship.
+                            Started as notebook-first cleanup helpers and evolved into a full MCP-ready
+                            QA engine that can run from Claude Desktop, FridAI, VS Code, or direct JSON-RPC.
                           </div>
 
                           {/* How it works + what it ships */}
@@ -670,12 +688,13 @@ export default function TechnicalProjectModal({
                               How It Works
                             </div>
                             <p className="mt-2 text-sm text-[#2b2a27]">
-                              Centralizes reusable ETL, schema checks, duplicate/outlier detection, and
-                              clean exports into a configurable toolkit. Run interactively in Jupyter or
-                              as automated pipelines to enforce hygiene across projects.
+                              Every module is exposed as a callable MCP tool. You can run manual notebook
+                              workflows, CLI pipelines, or chain server calls in memory via session_id
+                              (diagnostics → infer → normalize → dedupe → outliers → impute →
+                              validate → final audit) without intermediate file handoffs.
                             </p>
                             <div className="mt-3 flex flex-wrap gap-2 text-[10px] uppercase tracking-widest">
-                              {['Python', 'Pandas', 'YAML', 'Jupyter', 'CLI', 'Gemini', 'ChatGPT‑4o'].map(
+                              {['MCP', 'Python', 'FastAPI', 'JSON-RPC', 'Docker', 'GCS', 'YAML', 'CLI'].map(
                                 (tool) => (
                                   <span
                                     key={tool}
@@ -689,10 +708,10 @@ export default function TechnicalProjectModal({
                             <div className="mt-4 border-t border-[#2b2a27]/10 pt-3">
                               <div className="mb-2 text-[9px] font-bold uppercase tracking-widest text-[#2b2a27]/60">Ships With</div>
                               <ul className="space-y-1 text-xs text-[#2b2a27]">
-                                <li>Config‑driven ETL modules and pipelines</li>
-                                <li>Validation, profiling, and QA reports</li>
-                                <li>Duplicate/outlier detection utilities</li>
-                                <li>Clean CSV exports and rendered HTML notebooks</li>
+                                <li>MCP tool server with HTTP /rpc + stdio transport</li>
+                                <li>Session-based pipeline mode for in-memory chaining</li>
+                                <li>Auto-heal tools + final certification audit report</li>
+                                <li>0-100 Data Health Score and Healing Ledger history</li>
                               </ul>
                             </div>
                           </div>
@@ -703,9 +722,10 @@ export default function TechnicalProjectModal({
                               Problems &amp; Solutions
                             </div>
                             <ul className="mt-2 space-y-2 text-sm text-[#2b2a27]">
-                              <li>Teams re‑build cleaning steps → config‑driven ETL and reusable modules.</li>
-                              <li>Ad hoc diagnostics → standardized validation and profiling.</li>
-                              <li>Fragile hand‑offs → clean exports with logs for repeatability.</li>
+                              <li>Notebook-only workflows → MCP tools callable from any compatible host.</li>
+                              <li>One-off cleanup scripts → reusable module pipelines with typed configs.</li>
+                              <li>Lost transformation context → session_id state + Healing Ledger audit trail.</li>
+                              <li>Manual quality checks → cockpit health scoring and final certification step.</li>
                             </ul>
                           </div>
 
@@ -755,10 +775,10 @@ export default function TechnicalProjectModal({
                             </div>
                             <ul className="mt-3 space-y-2 text-xs text-[#2b2a27]">
                               {[
-                                { label: 'Cloud DB integrations (BigQuery, Snowflake)', status: 'planned' },
-                                { label: 'Expanded profiling (bias checks, drift detection)', status: 'planned' },
-                                { label: 'Stakeholder‑ready report builders', status: 'in progress' },
-                                { label: 'CLI wizard for new project scaffolds', status: 'planned' },
+                                { label: 'Expanded host presets (Claude Desktop, VS Code, FridAI)', status: 'in progress' },
+                                { label: 'Additional golden templates for common data domains', status: 'planned' },
+                                { label: 'More cockpit diagnostics and scoring dimensions', status: 'planned' },
+                                { label: 'Deeper cloud execution patterns and deployment docs', status: 'planned' },
                               ].map((item) => (
                                 <li key={item.label} className="flex items-start gap-2">
                                   <span className={`mt-0.5 shrink-0 rounded-full px-1.5 py-0.5 text-[8px] uppercase tracking-widest ${
@@ -801,6 +821,7 @@ export default function TechnicalProjectModal({
                               <div className="mb-2 text-[9px] font-bold uppercase tracking-widest text-[#2b2a27]/60">Reference Docs</div>
                               <div className="flex flex-wrap gap-2 text-xs">
                                 {[
+                                  { label: 'MCP Server Guide', href: 'https://github.com/G-Schumacher44/analyst_toolkit/blob/main/resource_hub/mcp_server_guide.md' },
                                   { label: 'Config Guide', href: 'https://github.com/G-Schumacher44/analyst_toolkit/blob/main/resource_hub/config_guide.md' },
                                   { label: 'Usage Guide', href: 'https://github.com/G-Schumacher44/analyst_toolkit/blob/main/resource_hub/usage_guide.md' },
                                   { label: 'Notebook Guide', href: 'https://github.com/G-Schumacher44/analyst_toolkit/blob/main/resource_hub/notebook_usage_guide.md' },
@@ -810,6 +831,7 @@ export default function TechnicalProjectModal({
                               <div className="flex flex-wrap gap-2 text-xs">
                                 {[
                                   { label: 'Core Toolkit', href: 'https://github.com/G-Schumacher44/analyst_toolkit' },
+                                  { label: 'GHCR MCP Image', href: 'https://github.com/G-Schumacher44/analyst_toolkit/pkgs/container/analyst-toolkit-mcp' },
                                   { label: 'Starter Kit', href: 'https://github.com/G-Schumacher44/analyst_toolkit_starter_kit' },
                                   { label: 'Deployment Utility', href: 'https://github.com/G-Schumacher44/analyst_toolkit_deployment_utility' },
                                 ].map((link) => renderDocLink(link, setDocOpen))}

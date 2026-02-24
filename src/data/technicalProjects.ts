@@ -45,13 +45,13 @@ export const technicalProjects: TechnicalProject[] = [
   {
     slug: 'analyst-toolkit',
     title: 'Analyst Toolkit',
-    subtitle: 'Starter Kit + Deployment Utility (packaged together).',
+    subtitle: 'MCP Server + Self-Healing Data Audit engine.',
     image: '/comic_imgs/analyst_toolkit_logo.png',
     imageAlt: 'Analyst Toolkit logo',
     summary:
-      'A pragmatic toolbox for spinning up analytics projects fast, then shipping them safely.',
-    tags: ['SQL', 'ETL', 'QA', 'Templates'],
-    callout: 'Built to reduce “quick asks” from hours to minutes.',
+      'A modular QA and preprocessing platform that runs in notebooks, CLI, or as an MCP tool server with in-memory pipeline chaining.',
+    tags: ['MCP', 'Data QA', 'Pipeline Mode', 'Auto-Heal', 'Docker'],
+    callout: 'Now available as an MCP server with session-based tool chaining.',
     comicStrip: {
       src: '/img/tech_showcase/comic_strips/analyst_toolkit/analyst_toolkit_origins.png',
       alt: 'Analyst Toolkit origins comic strip',

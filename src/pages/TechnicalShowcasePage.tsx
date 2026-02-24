@@ -55,6 +55,7 @@ export default function TechnicalShowcasePage() {
             {technicalProjects.map((project) => (
               <button
                 key={project.slug}
+                id={project.slug}
                 onClick={() => {
                   trackTechnicalShowcaseModalOpen(project.slug);
                   setActiveSlug(project.slug);
@@ -67,6 +68,11 @@ export default function TechnicalShowcasePage() {
                   {project.slug === 'fridai-core' && (
                     <span className="rounded-full border-2 border-[#2b2a27] bg-[#2b2a27] px-2 py-0.5 text-[9px] uppercase tracking-widest text-[#fff7e6]">
                       Dev Preview
+                    </span>
+                  )}
+                  {project.slug === 'analyst-toolkit' && (
+                    <span className="rounded-full border-2 border-[#2b2a27] bg-[#fff0c2] px-2 py-0.5 text-[9px] uppercase tracking-widest text-[#2b2a27]">
+                      Latest Update
                     </span>
                   )}
                 </div>

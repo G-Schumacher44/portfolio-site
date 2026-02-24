@@ -30,12 +30,22 @@ export default function TechnicalShowcaseCTA() {
               Engineer-to-engineer breakdowns, but with a little cartoon energy. Each project
               becomes its own panel — click in for the technical deep-dive.
             </p>
+            <div className="mt-3 inline-flex rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-brand">
+              Analyst Toolkit now available as an MCP server
+            </div>
             <Link
               to="/technical-showcase"
               onClick={() => trackTechnicalShowcaseOpen('technical_showcase_cta')}
               className="mt-4 inline-flex items-center gap-2 rounded-full border border-brand/40 bg-brand/10 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/70 hover:bg-brand/20"
             >
               Open the Sunday Funnies &rarr;
+            </Link>
+            <Link
+              to="/technical-showcase#analyst-toolkit"
+              onClick={() => trackTechnicalShowcaseOpen('technical_showcase_cta_analyst_release')}
+              className="mt-2 inline-flex items-center gap-2 rounded-full border border-brand/40 bg-surface/80 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/70 hover:bg-brand/10"
+            >
+              View Analyst Toolkit details &rarr;
             </Link>
           </div>
 
