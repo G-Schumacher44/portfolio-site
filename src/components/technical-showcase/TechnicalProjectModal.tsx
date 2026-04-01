@@ -51,6 +51,7 @@ export default function TechnicalProjectModal({
 }) {
   const [activePlot, setActivePlot] = useState<{ src: string; alt: string } | null>(null);
   const [storyboardOpen, setStoryboardOpen] = useState(false);
+  const [dashboardStoryboardOpen, setDashboardStoryboardOpen] = useState(false);
   const [deckOpen, setDeckOpen] = useState(false);
   const [companionOpen, setCompanionOpen] = useState<
     'starter' | 'deploy' | 'datalake-exten' | 'datalake-pipelines' | 'backfill-bear' | 'ecom-generator' | null
@@ -100,6 +101,26 @@ export default function TechnicalProjectModal({
       alt: 'Imputation comparison plot',
     },
   ];
+  const analystToolkitDashboardPanels = [
+    {
+      src: '/img/projects/sample_cockpit_dashboard.png',
+      alt: 'Executive cockpit dashboard preview',
+      label: 'Screen 1 - Executive Cockpit',
+      annotation: 'A run-level overview built for quick triage: recent activity, module status, and launch surfaces in one place so you can see what happened without digging through logs.',
+    },
+    {
+      src: '/img/projects/sample_diagnostics_dashboard.png',
+      alt: 'Diagnostics dashboard preview',
+      label: 'Screen 2 - Diagnostics Dashboard',
+      annotation: 'Schema checks, distribution profiling, duplicate signals, and anomaly flags are surfaced in a single diagnostics artifact so quality issues are obvious before cleanup continues.',
+    },
+    {
+      src: '/img/projects/sample_final_audit_dashboard.png',
+      alt: 'Final audit dashboard preview',
+      label: 'Screen 3 - Final Audit',
+      annotation: 'The final certification view summarizes healed outputs, audit findings, and overall readiness so downstream consumers get a clean handoff with evidence attached.',
+    },
+  ];
   const modelEvalPanels = [
     {
       src: '/img/tech_showcase/model_eval/story_panel_01.png',
@@ -147,12 +168,14 @@ export default function TechnicalProjectModal({
     : isModelEval
       ? modelEvalPanels
       : [];
+  const dashboardStoryboardPanels = isAnalystToolkit ? analystToolkitDashboardPanels : [];
   const plotArtifacts = isAnalystToolkit
     ? analystToolkitArtifacts
     : isModelEval
       ? modelEvalArtifacts
       : [];
   const hasStoryboard = storyboardPanels.length > 0;
+  const hasDashboardStoryboard = dashboardStoryboardPanels.length > 0;
   const hasArtifacts = plotArtifacts.length > 0;
   const storyboardTitle = isModelEval ? 'Evaluation Storyboard' : 'Notebook Walkthrough';
   const storyboardDescription = isModelEval
@@ -165,6 +188,9 @@ export default function TechnicalProjectModal({
   const storyboardModalFooter = isModelEval
     ? 'Diagnostics, validation dashboards, and plot viewer snapshots.'
     : 'Panels show the toolkit running against a real dataset: missingness flagging, correlation analysis, duplication checks, outlier detection, and imputation — each stage config-driven and repeatable.';
+  const dashboardStoryboardTitle = 'Analyst Toolkit — Dashboard Screens';
+  const dashboardStoryboardSubtitle = 'Three artifact-first screens from the MCP-era release.';
+  const dashboardStoryboardFooter = 'Cockpit, diagnostics, and final audit views show what the toolkit now produces beyond the original notebook pipeline.';
   const artifactDescription = isModelEval
     ? 'Diagnostics, feature importance, and performance curves — click any plot to zoom.'
     : 'Diagnostics, outliers, duplicates, and imputation — click any plot to zoom.';
@@ -311,6 +337,7 @@ export default function TechnicalProjectModal({
   const handleCloseAll = () => {
     setActivePlot(null);
     setStoryboardOpen(false);
+    setDashboardStoryboardOpen(false);
     setDeckOpen(false);
     setCompanionOpen(null);
     setDocOpen(null);
@@ -339,12 +366,17 @@ export default function TechnicalProjectModal({
         setStoryboardOpen(false);
         return;
       }
+      if (dashboardStoryboardOpen) {
+        setDashboardStoryboardOpen(false);
+        return;
+      }
       if (companionOpen) {
         setCompanionOpen(null);
         return;
       }
       setActivePlot(null);
       setStoryboardOpen(false);
+      setDashboardStoryboardOpen(false);
       setDeckOpen(false);
       setCompanionOpen(null);
       setDocOpen(null);
@@ -353,7 +385,7 @@ export default function TechnicalProjectModal({
 
     window.addEventListener('keydown', handleKeyDown, true);
     return () => window.removeEventListener('keydown', handleKeyDown, true);
-  }, [project, docOpen, activePlot, deckOpen, storyboardOpen, companionOpen, onClose]);
+  }, [project, docOpen, activePlot, deckOpen, storyboardOpen, dashboardStoryboardOpen, companionOpen, onClose]);
 
   useEffect(() => {
     if (!project) return;
@@ -404,7 +436,7 @@ export default function TechnicalProjectModal({
                       </div>
                       {isSpotlight && (
                         <span className="rounded-full border-2 border-[#2b2a27] bg-[#2b2a27] px-2 py-0.5 text-[9px] uppercase tracking-widest text-[#fff7e6]">
-                          Dev Preview · Mar 2026
+                          Dev Preview · Jun 2026
                         </span>
                       )}
                     </div>
@@ -533,6 +565,41 @@ export default function TechnicalProjectModal({
                       <div className="rounded-2xl border-[3px] border-[#2b2a27] bg-[#fff2d9] px-4 py-3">
                         <p className="text-sm text-[#2b2a27]">{project.summary}</p>
                       </div>
+                      {hasDashboardStoryboard && (
+                        <div className="rounded-2xl border-[3px] border-[#2b2a27] bg-white p-4">
+                          <div className="text-[11px] uppercase tracking-[0.3em] text-[#2b2a27]">
+                            Dashboard Storyboard
+                          </div>
+                          <p className="mt-1 text-xs text-[#2b2a27]">
+                            Three artifact-first screens from the MCP release. Click any to expand, or open the full sequence.
+                          </p>
+                          <div className="mt-3 grid gap-3 sm:grid-cols-3">
+                            {dashboardStoryboardPanels.map((panel) => (
+                              <button
+                                key={panel.src}
+                                onClick={() => setActivePlot({ src: panel.src, alt: panel.alt })}
+                                className="rounded-xl border-[3px] border-[#2b2a27] bg-[#fff7e6] p-2 text-left transition-transform hover:-translate-y-0.5"
+                              >
+                                <div className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[#2b2a27]">
+                                  {panel.label}
+                                </div>
+                                <img
+                                  src={panel.src}
+                                  alt={panel.alt}
+                                  className="h-24 w-full object-contain"
+                                  loading="lazy"
+                                />
+                              </button>
+                            ))}
+                          </div>
+                          <button
+                            onClick={() => setDashboardStoryboardOpen(true)}
+                            className="mt-3 inline-flex rounded-full border-2 border-[#2b2a27] bg-[#fff0c2] px-4 py-2 text-[10px] font-semibold uppercase tracking-widest text-[#2b2a27]"
+                          >
+                            Open Storyboard
+                          </button>
+                        </div>
+                      )}
                       {hasStoryboard && (
                         <div className="rounded-2xl border-[3px] border-[#2b2a27] bg-white p-4">
                           <div className="text-[11px] uppercase tracking-[0.3em] text-[#2b2a27]">
@@ -671,7 +738,7 @@ export default function TechnicalProjectModal({
                                 </p>
                               </div>
                               <span className="rounded-full border-2 border-[#2b2a27] bg-white px-2 py-0.5 text-[9px] uppercase tracking-widest text-[#2b2a27]">
-                                Version 0.4.x
+                                Version 0.5.0
                               </span>
                             </div>
                           </div>
@@ -776,10 +843,10 @@ export default function TechnicalProjectModal({
                             </div>
                             <ul className="mt-3 space-y-2 text-xs text-[#2b2a27]">
                               {[
-                                { label: 'Expanded host presets (Claude, Gemini, Codex, VS Code MCP)', status: 'in progress' },
-                                { label: 'Additional golden templates for common data domains', status: 'planned' },
-                                { label: 'More cockpit diagnostics and scoring dimensions', status: 'planned' },
-                                { label: 'Deeper cloud execution patterns and deployment docs', status: 'planned' },
+                                { label: 'Multi-user session coordination', status: 'in progress' },
+                                { label: 'Stronger durable state', status: 'in progress' },
+                                { label: 'Guided model-ready exports', status: 'planned' },
+                                { label: 'Richer operator surfaces', status: 'planned' },
                               ].map((item) => (
                                 <li key={item.label} className="flex items-start gap-2">
                                   <span className={`mt-0.5 shrink-0 rounded-full px-1.5 py-0.5 text-[8px] uppercase tracking-widest ${
@@ -787,7 +854,13 @@ export default function TechnicalProjectModal({
                                       ? 'bg-[#fff0c2] text-[#2b2a27]'
                                       : 'border border-[#2b2a27]/20 bg-transparent text-[#2b2a27]/50'
                                   }`}>{item.status}</span>
-                                  <span>{item.label}</span>
+                                  <span>
+                                    <span className="font-semibold">{item.label}</span>
+                                    {item.label === 'Multi-user session coordination' && ' - Detect duplicate local MCP server instances, improve session ownership, and harden cross-client workflows.'}
+                                    {item.label === 'Stronger durable state' && ' - Finish the SQLite persistence roadmap with safer structured serialization and tighter recovery semantics.'}
+                                    {item.label === 'Guided model-ready exports' && ' - Add presets and remediation loops that take a dataset from raw ingestion to a validation-green ML feature table.'}
+                                    {item.label === 'Richer operator surfaces' && ' - Expand cockpit and pipeline dashboards with clearer run comparisons, artifact lineage, and recovery guidance.'}
+                                  </span>
                                 </li>
                               ))}
                             </ul>
@@ -1424,7 +1497,7 @@ export default function TechnicalProjectModal({
                       <div className="space-y-3">
                         <div className="text-[11px] uppercase tracking-[0.3em] text-[#2b2a27]">Interested in this project?</div>
                         <p className="text-sm text-[#2b2a27]">
-                          FridAI Core is in active development — public dev preview planned for March 15, 2026. Repo is currently private.
+                          FridAI Core is in active development — public dev preview planned for June 15, 2026. Repo is currently private.
                         </p>
                         <p className="text-xs text-[#2b2a27]/60">
                           Want to talk through the architecture or be notified at release? Reach out directly.
@@ -1481,6 +1554,14 @@ export default function TechnicalProjectModal({
         subtitle={storyboardModalSubtitle}
         footer={storyboardModalFooter}
         onClose={() => setStoryboardOpen(false)}
+      />
+      <StoryboardModal
+        open={dashboardStoryboardOpen}
+        panels={dashboardStoryboardPanels}
+        title={dashboardStoryboardTitle}
+        subtitle={dashboardStoryboardSubtitle}
+        footer={dashboardStoryboardFooter}
+        onClose={() => setDashboardStoryboardOpen(false)}
       />
       <PlotViewerModal plot={activePlot} onClose={() => setActivePlot(null)} />
       <CompanionModal
@@ -2565,7 +2646,7 @@ function SystemFlowPreview({ onDocOpen }: { onDocOpen: (link: DocLink) => void }
             </p>
           </div>
           <div className="rounded-full border-2 border-[#2b2a27] bg-white px-4 py-2 text-[10px] uppercase tracking-widest">
-            Preview Release · March 15, 2026
+            Preview Release · June 15, 2026
           </div>
         </div>
       </section>

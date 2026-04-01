@@ -6,8 +6,8 @@ export const projects: ProjectData[] = [
     image: '/img/projects/analyst_toolkit_thumbnail.png',
     imageAlt: 'Analyst Toolkit Preview',
     description:
-      'A modular Python/YAML ETL framework that standardizes data ingestion, validation, and transformation workflows. Config-driven pipelines with built-in data quality checks.',
-    techStack: 'Python \u2022 YAML \u2022 ETL \u2022 Data Quality',
+      'A modular data QA and preprocessing toolkit — run as a Jupyter pipeline, CLI, or MCP server. v0.5.0 adds a full MCP platform: durable sessions, artifact dashboards, Docker + GCS support, and a 0–100 Data Health Score.',
+    techStack: 'Python \u2022 YAML \u2022 MCP Server \u2022 Docker \u2022 CLI',
     modalSrc: 'files/modals/analyst_toolkit_summary.html',
     links: [
       { label: 'View on GitHub', href: 'https://github.com/G-Schumacher44/analyst_toolkit', external: true },

@@ -5,7 +5,7 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-D1Q0RESQ6H"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);} 
+    function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-D1Q0RESQ6H');
   </script>
@@ -13,18 +13,66 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Analyst Toolkit</title>
-  
+
   <link rel="stylesheet" href="./modal.css" />
 </head>
 <body>
   <h1>Analyst Toolkit</h1>
-  <p class="muted">A modular package that streamlines ETL, validation, and diagnostics for fast, consistent analytics — in Jupyter or via CLI.</p>
+  <p class="muted">A modular package that streamlines ETL, validation, and diagnostics for fast, consistent analytics — run as a Jupyter notebook pipeline, CLI, or MCP server.</p>
 
-  
+  <style>
+    .release-banner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, rgba(102,153,204,0.15) 0%, rgba(102,153,204,0.05) 100%);
+      border: 1px solid var(--brand);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin: 18px 0;
+    }
+    .release-badge {
+      flex-shrink: 0;
+      background: var(--brand);
+      color: #0b1116;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: 6px;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+    .release-banner p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .release-banner strong {
+      color: var(--brand);
+    }
+
+    .slideshow { position: relative; }
+    .slideshow img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--line); display: block; margin: 8px auto; }
+    .slide-caption { text-align: center; font-size: 0.85rem; color: var(--muted); margin: 4px 0 10px; min-height: 1.2em; }
+    .slide-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 4px; }
+    .slide-btn { all: unset; cursor: pointer; background: var(--brand); color: #0b1116; border-radius: 8px; padding: 6px 10px; font-weight: 600; }
+    .slide-btn:hover { filter: brightness(1.05); }
+    .dots { display: flex; gap: 8px; align-items: center; justify-content: center; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #3a4150; border: 1px solid var(--line); cursor: default; }
+    .dot.active { background: var(--brand); }
+    .slide-counter { font-size: 0.8rem; color: var(--muted); min-width: 3em; text-align: center; }
+  </style>
+
+  <div class="release-banner">
+    <span class="release-badge">v0.5.0</span>
+    <p><strong>MCP Platform Upgrade</strong> — The toolkit is now a full MCP server: ingest inputs, manage durable sessions, serve artifact dashboards, and plug into Claude Desktop or any JSON-RPC 2.0 client. Docker + GCS + SQLite backend included.</p>
+  </div>
 
   <h2>System Summary</h2>
   <p>
-    Centralizes reusable ETL, schema checks, duplicate/outlier detection, and clean exports into a configurable toolkit. Run interactively or as automated pipelines to speed setup, enforce hygiene, and standardize results across projects.
+    Centralizes reusable ETL, schema checks, duplicate/outlier detection, and clean exports into a configurable toolkit. Run interactively in notebooks, as automated CLI pipelines, or as an MCP server — giving AI agents direct tool access to every module. Produces a 0–100 Data Health Score, Executive Cockpit, and ten standalone HTML dashboards per run.
   </p>
 
   <h2>Tech Stack</h2>
@@ -34,8 +82,12 @@
     <span class="pill">YAML</span>
     <span class="pill">Jupyter</span>
     <span class="pill">CLI</span>
+    <span class="pill">MCP Server</span>
+    <span class="pill">Docker</span>
+    <span class="pill">SQLite</span>
+    <span class="pill">GCS</span>
     <span class="pill">ChatGPT‑4o</span>
-    <span class="pill">Gemini CLI</span>
+    <span class="pill">Gemini CLI</span>
     <span class="pill">Gemini Code Assist</span>
   </p>
 
@@ -45,28 +97,19 @@
     <li>Validation/profiling configs and reports</li>
     <li>Duplicate/outlier detection utilities</li>
     <li>Clean CSV exports and HTML notebooks</li>
+    <li>Executive Cockpit + Data Health Score dashboard</li>
+    <li>Diagnostics, final audit, and data dictionary dashboards</li>
+    <li>MCP server exposing all modules as agent-callable tools</li>
   </ul>
 
-  <h2>HTML Dashboard</h2>
-  <style>
-    .slideshow{position:relative}
-    .slideshow img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line);display:block;margin:8px auto}
-    .slide-controls{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:6px}
-    .slide-btn{all:unset;cursor:pointer;background:var(--brand);color:#0b1116;border-radius:8px;padding:6px 10px;font-weight:600}
-    .slide-btn:hover{filter:brightness(1.05)}
-    .dots{display:flex;gap:8px;align-items:center;justify-content:center}
-    .dot{width:10px;height:10px;border-radius:50%;background:#3a4150;border:1px solid var(--line);cursor:default}
-    .dot.active{background:var(--brand)}
-  </style>
-  <div class="slideshow" id="atkSlideshow" aria-label="Analyst Toolkit HTML dashboard preview">
-    <img id="atkSlideImg" src="../../img/projects/db_screen_1.png" alt="Analyst Toolkit dashboard — screen 1" />
+  <h2>Dashboard Previews</h2>
+  <div class="slideshow" id="atkSlideshow" aria-label="Analyst Toolkit dashboard previews">
+    <img id="atkSlideImg" src="../../img/projects/db_screen_1.png" alt="HTML dashboard — screen 1" />
+    <p class="slide-caption" id="atkCaption">Notebook output — HTML dashboard, screen 1</p>
     <div class="slide-controls">
       <button class="slide-btn" id="atkPrevBtn" aria-label="Previous screen">Prev</button>
-      <div class="dots" role="tablist" aria-label="Slide navigation">
-        <button class="dot active" data-i="0" aria-label="Screen 1"></button>
-        <button class="dot" data-i="1" aria-label="Screen 2"></button>
-        <button class="dot" data-i="2" aria-label="Screen 3"></button>
-      </div>
+      <div class="dots" role="tablist" aria-label="Slide navigation" id="atkDots"></div>
+      <span class="slide-counter" id="atkCounter">1 / 6</span>
       <button class="slide-btn" id="atkNextBtn" aria-label="Next screen">Next</button>
     </div>
   </div>
@@ -75,23 +118,41 @@
     (function(){
       const img = document.getElementById('atkSlideImg');
       if (!img) return;
-      const sources = [
-        '../../img/projects/db_screen_1.png',
-        '../../img/projects/db_screen_2.png',
-        '../../img/projects/db_screen_3.png'
+      const slides = [
+        { src: '../../img/projects/db_screen_1.png',               caption: 'Notebook output — HTML dashboard, screen 1' },
+        { src: '../../img/projects/db_screen_2.png',               caption: 'Notebook output — HTML dashboard, screen 2' },
+        { src: '../../img/projects/db_screen_3.png',               caption: 'Notebook output — HTML dashboard, screen 3' },
+        { src: '../../img/projects/sample_cockpit_dashboard.png',  caption: 'v0.5.0 — Executive Cockpit: Data Health Score &amp; healing ledger' },
+        { src: '../../img/projects/sample_diagnostics_dashboard.png', caption: 'v0.5.0 — Diagnostics dashboard: schema, outliers &amp; duplicate flags' },
+        { src: '../../img/projects/sample_final_audit_dashboard.png', caption: 'v0.5.0 — Final Audit dashboard: certified output summary' },
       ];
       let i = 0;
-      const dots = Array.from(document.querySelectorAll('#atkSlideshow .dot'));
+      const captionEl = document.getElementById('atkCaption');
+      const counterEl = document.getElementById('atkCounter');
+      const dotsEl    = document.getElementById('atkDots');
+
+      // Build dots
+      slides.forEach((_, di) => {
+        const btn = document.createElement('button');
+        btn.className = 'dot' + (di === 0 ? ' active' : '');
+        btn.dataset.i = di;
+        btn.setAttribute('aria-label', 'Screen ' + (di + 1));
+        btn.setAttribute('role', 'tab');
+        dotsEl.appendChild(btn);
+      });
+      const dots = Array.from(dotsEl.querySelectorAll('.dot'));
+
       const setActive = (idx) => {
-        i = (idx + sources.length) % sources.length;
-        img.src = sources[i];
-        img.alt = `Analyst Toolkit dashboard — screen ${i+1}`;
+        i = (idx + slides.length) % slides.length;
+        img.src = slides[i].src;
+        img.alt = slides[i].caption.replace(/&amp;/g, '&');
+        captionEl.innerHTML = slides[i].caption;
+        counterEl.textContent = (i + 1) + ' / ' + slides.length;
         dots.forEach((d, di) => d.classList.toggle('active', di === i));
       };
-      const advance = () => setActive(i + 1);
-      // Manual navigation only: no timer, no image/dot click advance
-      document.getElementById('atkNextBtn').addEventListener('click', () => { advance(); });
-      document.getElementById('atkPrevBtn').addEventListener('click', () => { setActive(i - 1); });
+
+      document.getElementById('atkNextBtn').addEventListener('click', () => setActive(i + 1));
+      document.getElementById('atkPrevBtn').addEventListener('click', () => setActive(i - 1));
     })();
   </script>
 
@@ -100,17 +161,19 @@
     <li>Teams re‑build cleaning steps → config‑driven ETL and reusable modules.</li>
     <li>Ad hoc diagnostics → standardized validation and profiling.</li>
     <li>Fragile hand‑offs → clean exports with logs for repeatability.</li>
+    <li>No agent interface → MCP server exposes every module as a callable tool.</li>
+    <li>Ephemeral sessions → SQLite backend for durable, restart‑safe session state.</li>
   </ul>
 
   <h2>Task and Purpose</h2>
   <p>
-    Grew from scattered snippets into a package that enforces hygiene and repeatability — now a foundation for my analytics workflow.
+    Grew from scattered snippets into a full-stack data quality platform — notebook pipelines, CLI automation, and now an MCP server that lets AI agents run the entire toolkit without human hand-holding. A living foundation for my analytics workflow.
   </p>
 
   <h2>Future State</h2>
   <ul>
     <li>Cloud DB integrations (BigQuery, Snowflake).</li>
-    <li>Expanded profiling (bias checks, drift).</li>
+    <li>Expanded profiling (bias checks, drift detection).</li>
     <li>Stakeholder‑ready report builders.</li>
     <li>CLI wizard for new project scaffolds.</li>
   </ul>
@@ -136,6 +199,7 @@
   <h2>Links</h2>
   <ul>
     <li><a href="https://github.com/G-Schumacher44/analyst_toolkit" target="_blank" rel="noopener">Repository</a></li>
+    <li><a href="https://github.com/G-Schumacher44/analyst_toolkit/blob/main/resource_hub/mcp_server_guide.md" target="_blank" rel="noopener">MCP Server Guide</a></li>
     <li><a href="https://github.com/G-Schumacher44/analyst_toolkit_deployment_utility" target="_blank" rel="noopener">Deployment Utility</a></li>
     <li><a href="https://github.com/G-Schumacher44/analyst_toolkit_starter_kit" target="_blank" rel="noopener">Starter Kit</a></li>
     <li><a href="../media/01_analyst_toolkit_pipeline_demo.html" target="_blank" rel="noopener">Pipeline Demo (HTML)</a></li>
