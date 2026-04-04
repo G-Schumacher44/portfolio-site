@@ -568,7 +568,7 @@ export default function TechnicalProjectModal({
                       {hasDashboardStoryboard && (
                         <div className="rounded-2xl border-[3px] border-[#2b2a27] bg-white p-4">
                           <div className="text-[11px] uppercase tracking-[0.3em] text-[#2b2a27]">
-                            Dashboard Storyboard
+                            MCP Dashboard Walkthrough
                           </div>
                           <p className="mt-1 text-xs text-[#2b2a27]">
                             Three artifact-first screens from the MCP release. Click any to expand, or open the full sequence.
