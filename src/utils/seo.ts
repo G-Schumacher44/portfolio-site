@@ -33,6 +33,18 @@ const routeSeoMap: Record<string, RouteSeo> = {
     path: '/quick-view',
     pageType: 'ProfilePage',
   },
+  '/apps/privacy-policy': {
+    title: 'Privacy Policy | GardenBook',
+    description: 'Privacy Policy for the GardenBook iOS application. Your data belongs to you.',
+    path: '/apps/privacy-policy',
+    pageType: 'WebPage',
+  },
+  '/apps/gardenbook-support': {
+    title: 'GardenBook Support',
+    description: 'Support page for the GardenBook iOS application. Frequently asked questions and contact information.',
+    path: '/apps/gardenbook-support',
+    pageType: 'WebPage',
+  },
 };
 
 const personSchema = {
