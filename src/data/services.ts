@@ -58,7 +58,7 @@ export const services: ServiceData[] = [
     proofHref: '#technical-showcase-cta',
     proofLinks: [
       { label: 'Model Evaluation Suite', href: '#technical-showcase-cta' },
-      { label: 'Fridai Core', href: '#technical-showcase-cta' },
+      { label: 'Analyst Toolkit', href: '#technical-showcase-cta' },
     ],
   },
 ];

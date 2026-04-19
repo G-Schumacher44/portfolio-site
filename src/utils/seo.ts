@@ -33,6 +33,13 @@ const routeSeoMap: Record<string, RouteSeo> = {
     path: '/quick-view',
     pageType: 'ProfilePage',
   },
+  '/gardenbook': {
+    title: 'GardenBook | Product Story & Catalog Pipeline',
+    description:
+      'GardenBook is a shipped garden-planning app backed by a curated catalog pipeline for trusted plant data, validation, and app-ready exports.',
+    path: '/gardenbook',
+    pageType: 'WebPage',
+  },
   '/apps/privacy-policy': {
     title: 'Privacy Policy | GardenBook',
     description: 'Privacy Policy for the GardenBook iOS application. Your data belongs to you.',

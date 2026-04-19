@@ -1,0 +1,28 @@
+<svg width="1536" height="1024" viewBox="0 0 1536 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="heroGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(768 470) rotate(90) scale(360 740)">
+      <stop stop-color="#E8F0DF"/>
+      <stop offset="1" stop-color="#F6F0E4"/>
+    </radialGradient>
+  </defs>
+  <rect width="1536" height="1024" fill="url(#heroGlow)"/>
+  <g transform="translate(380 166)">
+    <rect width="776" height="692" rx="116" fill="#F7F2E9"/>
+    <g transform="translate(132 92)">
+      <path d="M146 314C188 314 221 321 243 336C265 321 298 314 340 314" stroke="#2D8A57" stroke-width="16" stroke-linecap="round"/>
+      <path d="M136 357C182 357 219 367 243 383C267 367 304 357 350 357" stroke="#2D8A57" stroke-width="16" stroke-linecap="round"/>
+      <path d="M129 400C180 400 220 414 243 436C266 414 306 400 357 400" stroke="#2D8A57" stroke-width="16" stroke-linecap="round"/>
+      <path d="M234 204C221 226 215 255 215 286C215 303 217 319 221 336" stroke="#2D8A57" stroke-width="18" stroke-linecap="round"/>
+      <path d="M243 196C275 196 303 206 325 225C348 245 362 273 367 306C319 306 281 293 254 267C232 244 219 216 216 189C225 193 234 196 243 196Z" fill="#5E8E2F"/>
+      <path d="M207 211C171 211 141 223 119 245C97 267 82 295 77 329C126 329 165 315 193 287C215 265 229 235 231 205C223 207 215 211 207 211Z" fill="#7BAF44"/>
+      <path d="M192 233C212 246 228 262 241 281" stroke="#F6F0E4" stroke-width="10" stroke-linecap="round"/>
+      <path d="M292 226C274 240 261 255 251 273" stroke="#EEF4DE" stroke-width="10" stroke-linecap="round"/>
+    </g>
+    <text x="388" y="556" text-anchor="middle" fill="#214B2A" font-family="Georgia, 'Times New Roman', serif" font-size="126" font-style="italic" letter-spacing="-3">
+      GardenBook
+    </text>
+    <text x="388" y="612" text-anchor="middle" fill="#6D735E" font-family="'Avenir Next', 'Helvetica Neue', Arial, sans-serif" font-size="28" letter-spacing="2.4">
+      PLAN YOUR GARDEN WITH CLARITY
+    </text>
+  </g>
+</svg>

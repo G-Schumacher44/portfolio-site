@@ -1,128 +1,140 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
 import Section from '../layout/Section';
-import GlassPanel from '../shared/GlassPanel';
+import FeatureCardShell from '../shared/FeatureCardShell';
 import { trackTechnicalShowcaseOpen } from '../../utils/analytics';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 const strips = [
-  { src: '/img/tech_showcase/comic_strips/fridai/ollama_farm.png', alt: 'Ollama Farm' },
-  { src: '/img/tech_showcase/comic_strips/fridai/release_strip.png', alt: 'Preview Release' },
+  {
+    src: '/img/tech_showcase/comic_strips/analyst_toolkit/analyst_toolkit_origins.png',
+    alt: 'Analyst Toolkit Origins',
+  },
+  {
+    src: '/img/tech_showcase/comic_strips/model_eval/model_eval_strip.png',
+    alt: 'Model Evaluation Story',
+  },
+  {
+    src: '/img/tech_showcase/comic_strips/datalakes/pipelines_main.png',
+    alt: 'Datalakes Pipeline Story',
+  },
+  {
+    src: '/img/tech_showcase/comic_strips/dirty_birds/dirty_birds_strip.png',
+    alt: 'Dirty Birds Story',
+  },
 ];
 
-export default function TechnicalShowcaseCTA() {
-  const [active, setActive] = useState<{ src: string; alt: string } | null>(null);
+interface TechnicalShowcaseCTAProps {
+  embedded?: boolean;
+}
 
-  return (
-    <Section id="technical-showcase-cta" glow glowVariant="accent">
-      <GlassPanel className="relative overflow-hidden">
-        <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-          <div>
-            <div className="text-[10px] uppercase tracking-[0.4em] text-brand/70">
-              Sunday Funnies Edition
+export default function TechnicalShowcaseCTA({
+  embedded = false,
+}: TechnicalShowcaseCTAProps) {
+  const [backgroundIndex, setBackgroundIndex] = useState(0);
+  const reduced = useReducedMotion();
+
+  useEffect(() => {
+    if (reduced) return;
+    const interval = window.setInterval(() => {
+      setBackgroundIndex((current) => (current + 1) % strips.length);
+    }, 3600);
+    return () => window.clearInterval(interval);
+  }, [reduced]);
+
+  const content = (
+      <FeatureCardShell
+        ambientClassName="bg-[radial-gradient(circle_at_top_left,rgba(255,215,127,0.08),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(83,64,24,0.08),transparent_32%)]"
+        innerClassName="border border-[#2b2a27]/60 bg-[#f3e6cf]/92 shadow-[inset_0_1px_0_rgba(255,255,255,0.24)]"
+      >
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-y-0 right-0 hidden w-[58%] overflow-hidden lg:block [perspective:1500px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={strips[backgroundIndex].src}
+                className="absolute inset-y-0 right-0 w-full origin-left overflow-hidden"
+                initial={
+                  reduced
+                    ? { opacity: 0 }
+                    : { opacity: 0, rotateY: -18, x: 24, scale: 0.98, filter: 'blur(1px)' }
+                }
+                animate={
+                  reduced
+                    ? { opacity: 0.22 }
+                    : { opacity: 0.27, rotateY: 0, x: 0, scale: 1.03, filter: 'blur(0px)' }
+                }
+                exit={
+                  reduced
+                    ? { opacity: 0 }
+                    : { opacity: 0, rotateY: 16, x: -20, scale: 0.985, filter: 'blur(1px)' }
+                }
+                transition={{ duration: reduced ? 0.2 : 0.78, ease: 'easeInOut' }}
+              >
+                <img
+                  src={strips[backgroundIndex].src}
+                  alt=""
+                  className="absolute -right-6 top-0 h-full w-full object-cover object-left mix-blend-multiply"
+                  loading="lazy"
+                />
+                <div className="absolute inset-y-0 left-0 w-10 bg-[linear-gradient(90deg,rgba(43,42,39,0.1),rgba(43,42,39,0.02),transparent)]" />
+                <div className="absolute inset-y-0 left-0 w-px bg-[#2b2a27]/20" />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(243,230,207,0.945)_0%,rgba(243,230,207,0.78)_44%,rgba(243,230,207,0.2)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.16),transparent_24%)]" />
+        </div>
+        <div className="grid min-h-[calc(26rem-1.5rem)] gap-6 px-6 py-8 md:px-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+          <div className="relative z-10">
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="inline-flex rounded-full border-2 border-[#2b2a27] bg-[#fff7e6] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#2b2a27]">
+                Sunday Funnies Edition
+              </div>
+              <div className="inline-flex rounded-full border-2 border-[#2b2a27] bg-[#fff0c2] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.26em] text-[#2b2a27]">
+                Featured: Analyst Toolkit MCP
+              </div>
             </div>
-            <h2 className="mt-3 text-2xl font-semibold text-brand">
+            <h2
+              className="mt-4 text-4xl font-black tracking-tight text-[#2b2a27] md:text-5xl"
+              style={{ textShadow: '1px 1px 0 rgba(0,0,0,0.12)' }}
+            >
               Technical Showcase (Comic Strip Cut)
             </h2>
-            <p className="mt-2 max-w-xl text-sm text-muted/80">
-              Engineer-to-engineer breakdowns, but with a little cartoon energy. Each project
-              becomes its own panel — click in for the technical deep-dive.
+            <p className="mt-4 max-w-xl text-base leading-7 text-[#2b2a27]/82 md:text-lg">
+              Engineer-to-engineer breakdowns with a little cartoon energy. Open the showcase for
+              the systems work: data quality engines, model-eval tooling, and lakehouse builds.
             </p>
-            <div className="mt-3 inline-flex rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-brand">
-              Analyst Toolkit now available as an MCP server
+            <div className="mt-4 max-w-md rounded-2xl border-2 border-[#2b2a27] bg-[#fff7e6]/92 px-4 py-3 text-sm leading-6 text-[#2b2a27]/80">
+              The current lead story is <span className="font-semibold">Analyst Toolkit</span> as
+              an MCP server: session-based tool chaining, audit dashboards, and a cleaner operator
+              surface for data QA workflows.
             </div>
             <Link
               to="/technical-showcase"
               onClick={() => trackTechnicalShowcaseOpen('technical_showcase_cta')}
-              className="mt-4 inline-flex items-center gap-2 rounded-full border border-brand/40 bg-brand/10 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/70 hover:bg-brand/20"
+              className="mt-5 inline-flex items-center gap-2 rounded-full border-2 border-[#2b2a27] bg-[#2b2a27] px-4 py-2 text-sm font-semibold text-[#fff7e6] transition-opacity hover:opacity-85"
             >
               Open the Sunday Funnies &rarr;
             </Link>
             <Link
               to="/technical-showcase#analyst-toolkit"
               onClick={() => trackTechnicalShowcaseOpen('technical_showcase_cta_analyst_release')}
-              className="mt-2 inline-flex items-center gap-2 rounded-full border border-brand/40 bg-surface/80 px-4 py-2 text-xs font-semibold text-brand transition-all hover:border-brand/70 hover:bg-brand/10"
+              className="mt-2 inline-flex items-center gap-2 rounded-full border-2 border-[#2b2a27] bg-[#fff7e6] px-4 py-2 text-sm font-semibold text-[#2b2a27] transition-colors hover:bg-[#fff0c2]"
             >
               View Analyst Toolkit details &rarr;
             </Link>
           </div>
-
-          <div className="grid grid-cols-2 gap-2">
-            {strips.map((strip) => (
-              <button
-                key={strip.src}
-                onClick={() => setActive(strip)}
-                className="group overflow-hidden rounded-xl border border-line/40 bg-surface/50 transition-transform hover:-translate-y-0.5"
-                aria-label={`View ${strip.alt}`}
-              >
-                <img
-                  src={strip.src}
-                  alt={strip.alt}
-                  className="h-28 w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
-                  loading="lazy"
-                />
-              </button>
-            ))}
-          </div>
         </div>
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(102,153,204,0.15),_transparent_60%)]" />
-      </GlassPanel>
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.3),_transparent_62%)]" />
+      </FeatureCardShell>
+  );
 
-      {createPortal(
-        <AnimatePresence>
-          {active && (
-            <motion.div
-              className="fixed inset-0 z-[70] flex items-center justify-center p-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <motion.div
-                className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-                onClick={() => setActive(null)}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              />
-              <motion.div
-                className="relative max-h-[88vh] w-[92vw] max-w-4xl overflow-hidden rounded-3xl border-[3px] border-[#2b2a27] bg-white shadow-[10px_10px_0_#2b2a27]"
-                initial={{ opacity: 0, y: 16, scale: 0.97 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 16, scale: 0.97 }}
-                transition={{ duration: 0.22, ease: 'easeOut' }}
-                role="dialog"
-                aria-modal="true"
-                aria-label={active.alt}
-              >
-                <div className="flex items-center justify-between border-b-[3px] border-[#2b2a27] bg-[#fff3d6] px-5 py-2.5">
-                  <span className="text-[11px] uppercase tracking-[0.4em] text-[#2b2a27]">
-                    {active.alt}
-                  </span>
-                  <button
-                    onClick={() => setActive(null)}
-                    className="rounded-full border-2 border-[#2b2a27] bg-white p-1.5 transition-colors hover:bg-[#fff3d6]"
-                    aria-label="Close"
-                  >
-                    <X size={16} />
-                  </button>
-                </div>
-                <div className="max-h-[calc(88vh-52px)] overflow-y-auto">
-                  <img
-                    src={active.src}
-                    alt={active.alt}
-                    className="w-full"
-                    style={{ borderRadius: 0, border: 'none', margin: 0, boxShadow: 'none' }}
-                    loading="lazy"
-                  />
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>,
-        document.body,
-      )}
+  if (embedded) return content;
+
+  return (
+    <Section id="technical-showcase-cta" glow glowVariant="accent">
+      {content}
     </Section>
   );
 }

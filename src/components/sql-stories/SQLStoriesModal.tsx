@@ -173,7 +173,7 @@ function ModalContent({
               QuickKart: Year One
             </h2>
             <p className="text-xs text-muted/60">
-              A simulated e-commerce company — three real analytical decisions, fully worked.
+              A simulated e-commerce company — three real analytical decisions.
             </p>
           </div>
           <button
