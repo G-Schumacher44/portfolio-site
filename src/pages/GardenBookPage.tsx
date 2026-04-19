@@ -398,29 +398,36 @@ function AppTab() {
 
         {/* Right — screen, crossfades on chapter or device change */}
         <div className="sticky top-20">
-          <AnimatePresence mode="wait">
-            <motion.button
-              key={`${active}-${device}`}
-              onClick={() => setLightbox(true)}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.28, ease: 'easeOut' }}
-              className="group relative w-full overflow-hidden rounded-[2rem] bg-[linear-gradient(160deg,#1e3d28_0%,#142a1c_100%)] p-4 shadow-[0_12px_40px_rgba(12,24,16,0.22)] transition-transform hover:-translate-y-0.5 focus:outline-none"
+          <motion.button
+            onClick={() => setLightbox(true)}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.28, ease: 'easeOut' }}
+            className="group relative w-full overflow-hidden rounded-[2rem] bg-[linear-gradient(160deg,#1e3d28_0%,#142a1c_100%)] p-4 shadow-[0_12px_40px_rgba(12,24,16,0.22)] transition-transform hover:-translate-y-0.5 focus:outline-none"
+          >
+            <div
+              className="relative mx-auto overflow-hidden rounded-[1.5rem] shadow-[0_8px_30px_rgba(6,14,10,0.35)]"
+              style={{ width: device === 'iphone' ? '52%' : '100%' }}
             >
-              <img
-                src={src}
-                alt={chapter.title}
-                className="mx-auto block rounded-[1.5rem] shadow-[0_8px_30px_rgba(6,14,10,0.35)]"
-                style={{ width: device === 'iphone' ? '52%' : '100%', height: 'auto' }}
-              />
-              <div className="absolute inset-0 flex items-end justify-end rounded-[2rem] p-5 opacity-0 transition-opacity group-hover:opacity-100">
-                <span className="rounded-full border border-[#dce5c6]/30 bg-[#0f2018]/70 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-[#eef4df] backdrop-blur-sm">
-                  expand
-                </span>
-              </div>
-            </motion.button>
-          </AnimatePresence>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.img
+                  key={src}
+                  src={src}
+                  alt={chapter.title}
+                  className="block w-full"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.22, ease: 'easeInOut' }}
+                />
+              </AnimatePresence>
+            </div>
+            <div className="absolute inset-0 flex items-end justify-end rounded-[2rem] p-5 opacity-0 transition-opacity group-hover:opacity-100">
+              <span className="rounded-full border border-[#dce5c6]/30 bg-[#0f2018]/70 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-[#eef4df] backdrop-blur-sm">
+                expand
+              </span>
+            </div>
+          </motion.button>
         </div>
       </div>
 
@@ -462,8 +469,9 @@ function PipelineTab() {
         <h2 className="mt-2 font-serif text-3xl font-semibold text-[#173021]">How the catalog gets built.</h2>
         <p className="mt-3 max-w-2xl text-base leading-8 text-[#324633]">
           The plant catalog inside GardenBook is not scraped and shipped raw. It runs through a
-          7-stage pipeline — from raw collection through AI enrichment, human review, validation,
-          and deterministic generation — before it ever touches the app.
+          7-stage pipeline — from trusted source collection and raw staging through human
+          normalization, validation, reporting, and deterministic generation — before it ever
+          touches the app.
         </p>
       </div>
 
