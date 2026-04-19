@@ -16,6 +16,12 @@ const skills = [
 
 const pinned = [
   {
+    title: 'GardenBook',
+    outcome: 'Live App Store garden planning app with a local-first product model, curated plant knowledge pipeline, and on-device AI roadmap.',
+    stack: 'SwiftUI · SQLite · Catalog Pipeline · Local-first AI',
+    href: 'https://apps.apple.com/us/app/gardenbook/id6762165125',
+  },
+  {
     title: 'Ecom Datalake Pipelines',
     outcome: 'Medallion architecture (Bronze→Silver→Gold) with 147 automated data quality tests and Airflow orchestration.',
     stack: 'dbt · DuckDB · BigQuery · Airflow',

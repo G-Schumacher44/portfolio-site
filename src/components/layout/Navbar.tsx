@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import { navigation, resourceHubUrl } from '../../data/navigation';
+import { navigation } from '../../data/navigation';
 import { useScrollSpy } from '../../hooks/useScrollSpy';
 
 const sectionIds = ['sql-stories', 'technical-showcase-cta', 'services', 'contact'];
@@ -141,20 +141,18 @@ export default function Navbar() {
           Quick View
         </button>
 
-        {/* Analytics Resource Hub — far right */}
-        <a
-          href={resourceHubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+        {/* GardenBook */}
+        <button
+          onClick={() => scrollTo('/gardenbook')}
           className="
-            hidden shrink-0 items-center gap-1.5 rounded-lg border border-brand/30
-            bg-brand/5 px-3 py-1.5 text-xs font-medium text-brand
-            transition-all hover:border-brand/50 hover:bg-brand/10
+            hidden shrink-0 items-center gap-1.5 rounded-lg border border-[#3d7a4a]/40
+            bg-[#1c3d27]/8 px-3 py-1.5 text-xs font-medium text-[#3d7a4a]
+            transition-all hover:border-[#3d7a4a]/60 hover:bg-[#1c3d27]/14
             md:flex
           "
         >
-          Analytics Resource Hub ↗
-        </a>
+          🌿 GardenBook
+        </button>
 
         {/* Mobile hamburger */}
         <button
@@ -211,15 +209,12 @@ export default function Navbar() {
                   ← Main Page
                 </button>
               )}
-              <a
-                href={resourceHubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMobileOpen(false)}
-                className="block w-full rounded-lg px-3 py-2 text-left text-sm text-brand hover:bg-surface"
+              <button
+                onClick={() => scrollTo('/gardenbook')}
+                className="block w-full rounded-lg px-3 py-2 text-left text-sm text-[#3d7a4a] hover:bg-surface"
               >
-                Analytics Resource Hub ↗
-              </a>
+                🌿 GardenBook
+              </button>
             </div>
           </motion.div>
         )}

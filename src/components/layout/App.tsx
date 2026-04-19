@@ -7,6 +7,7 @@ import MainPage from '../../pages/MainPage';
 import TechnicalShowcasePage from '../../pages/TechnicalShowcasePage';
 import QuickViewPage from '../../pages/QuickViewPage';
 import PrivacyPolicyPage from '../../pages/PrivacyPolicyPage';
+import GardenBookPage from '../../pages/GardenBookPage';
 import GardenBookSupportPage from '../../pages/GardenBookSupportPage';
 import {
   initAnalytics,
@@ -51,6 +52,7 @@ function AppShell() {
       <MicroBanner />
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route path="/gardenbook" element={<GardenBookPage />} />
         <Route path="/technical-showcase" element={<TechnicalShowcasePage />} />
         <Route path="/quick-view" element={<QuickViewPage />} />
         <Route path="/apps/privacy-policy" element={<PrivacyPolicyPage />} />

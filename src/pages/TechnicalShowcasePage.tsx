@@ -65,11 +65,6 @@ export default function TechnicalShowcasePage() {
               >
                 <div className="flex items-center justify-between border-b-[3px] border-[#2b2a27] bg-[#fff3d6] px-4 py-3">
                   <span className="text-xs font-semibold uppercase tracking-[0.3em]">{project.title}</span>
-                  {project.slug === 'fridai-core' && (
-                    <span className="rounded-full border-2 border-[#2b2a27] bg-[#2b2a27] px-2 py-0.5 text-[9px] uppercase tracking-widest text-[#fff7e6]">
-                      Dev Preview
-                    </span>
-                  )}
                   {project.slug === 'analyst-toolkit' && (
                     <span className="rounded-full border-2 border-[#2b2a27] bg-[#fff0c2] px-2 py-0.5 text-[9px] uppercase tracking-widest text-[#2b2a27]">
                       Latest Update

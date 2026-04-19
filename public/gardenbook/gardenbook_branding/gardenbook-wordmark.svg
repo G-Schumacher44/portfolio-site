@@ -1,0 +1,11 @@
+<svg width="1360" height="420" viewBox="0 0 1360 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1360" height="420" rx="84" fill="#F6F0E4"/>
+  <path d="M146 274C185 274 214 281 234 295C253 281 282 274 321 274" stroke="#2D8A57" stroke-width="12" stroke-linecap="round"/>
+  <path d="M138 304C180 304 213 313 234 327C255 313 288 304 330 304" stroke="#2D8A57" stroke-width="12" stroke-linecap="round"/>
+  <path d="M231 185C219 205 214 230 214 257C214 272 216 286 220 298" stroke="#2D8A57" stroke-width="14" stroke-linecap="round"/>
+  <path d="M239 177C265 177 288 185 306 201C324 218 335 240 339 268C301 268 269 257 248 236C229 218 219 194 217 170C224 173 231 177 239 177Z" fill="#5E8E2F"/>
+  <path d="M208 188C179 188 155 197 138 215C120 233 109 255 105 281C146 281 178 270 201 251C218 235 229 212 231 184C223 186 215 188 208 188Z" fill="#7BAF44"/>
+  <text x="382" y="268" fill="#214B2A" font-family="Georgia, 'Times New Roman', serif" font-size="148" font-style="italic" letter-spacing="-4">
+    GardenBook
+  </text>
+</svg>

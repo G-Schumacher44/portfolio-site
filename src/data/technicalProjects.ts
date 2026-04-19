@@ -15,34 +15,6 @@ export type TechnicalProject = {
 
 export const technicalProjects: TechnicalProject[] = [
   {
-    slug: 'fridai-core',
-    title: 'FridAI Core',
-    subtitle: 'MCP hub + vector memory + agentic automation + governance engine.',
-    image: '/img/projects/comic_fridai_core.png',
-    imageAlt: 'FridAI Core comic banner',
-    summary:
-      'An open-source platform for governed AI execution at scale. Unifies MCP tool routing, vector memory, and spec-driven workflows behind a single governance-first runtime.',
-    tags: ['MCP', 'Agents', 'Memory', 'Automation', 'Governance'],
-    callout: 'Most ambitious build. The one I want engineers to grill me on.',
-    comicStrips: [
-      {
-        src: '/img/tech_showcase/comic_strips/fridai/fridai_origins.png',
-        alt: 'FridAI origins comic strip',
-        label: 'Origins',
-      },
-      {
-        src: '/img/tech_showcase/comic_strips/fridai/ollama_farm.png',
-        alt: 'FridAI local model farm comic strip',
-        label: 'Ollama Farm',
-      },
-      {
-        src: '/img/tech_showcase/comic_strips/fridai/release_strip.png',
-        alt: 'FridAI preview release comic strip',
-        label: 'Preview Release',
-      },
-    ],
-  },
-  {
     slug: 'analyst-toolkit',
     title: 'Analyst Toolkit',
     subtitle: 'MCP Server + Self-Healing Data Audit engine.',

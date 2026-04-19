@@ -92,3 +92,11 @@ export function trackSqlStoriesModalOpen(source: string) {
 export function trackFridaiDeckOpen(source: string) {
   trackEvent('fridai_core_slide_deck_open', 'showcase_modal', source);
 }
+
+export function trackGardenBookOpen(source: string) {
+  trackEvent('gardenbook_open', 'gardenbook', source);
+}
+
+export function trackGardenBookOutbound(label: string) {
+  trackEvent('gardenbook_outbound_click', 'gardenbook', label);
+}
